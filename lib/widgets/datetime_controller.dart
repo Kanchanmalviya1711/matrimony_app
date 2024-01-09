@@ -11,7 +11,7 @@ class DateTimePickerController extends GetxController {
       context: Get.context!,
       initialDate: DateTime.now(),
       firstDate: DateTime(1990),
-      lastDate: DateTime(2024),
+      lastDate: DateTime(2030),
       builder: (context, child) {
         return calenderTheme(child, context);
       },

@@ -223,6 +223,9 @@ class PrimaryColors {
   // Amber
   Color get amber700 => const Color(0xFFfd7e14);
   Color get amber800 => const Color(0xFFFF9F43);
+
+  Color get blogBoxColor => const Color(0xFFff8d3c);
+
   Color get headerColor => const Color(0xFF2E3551);
   Color get profileView => const Color(0xFFf6af04);
   Color get onlineAvail => const Color(0xFF5BBC71);
@@ -245,6 +248,7 @@ class PrimaryColors {
   // Gray
   Color get gray => const Color(0XFF808080);
   Color get hobbies => const Color(0XFFEFEFEF);
+  Color get profileData => const Color(0XFF718FA0);
   Color get gray200 => const Color(0XFFF2F0EC);
   Color get gray400 => const Color(0XFFC5C4C4);
   Color get gray50 => const Color(0XFFF8FDFF);
@@ -261,7 +265,7 @@ class PrimaryColors {
 
   // Green
   Color get green600 => const Color(0XFF28C76F);
-  Color get activeBackgroundColor => const Color.fromARGB(40, 202, 200, 197);
+  Color get activeBackgroundColor => const Color.fromARGB(40, 20, 20, 20);
 
   //grey
   Color get subHeadingColor => const Color(0XFF2f2b3d);
@@ -271,6 +275,8 @@ class PrimaryColors {
 
   // RedD
   Color get red600D8 => const Color.fromARGB(215, 202, 5, 25);
+  Color get pink => Color.fromARGB(255, 255, 94, 255);
+
   Color get bellIconNotification => const Color(0XFFEA5455);
 
   // White

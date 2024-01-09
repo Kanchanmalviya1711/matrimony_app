@@ -153,7 +153,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   if (_formKey.currentState!.validate()) {
                                     controller.login();
                                   }
-                                  // Get.toNamed(AppRoutes.homeScreen);
                                 },
                               ),
                         const SizedBox(height: 10),
@@ -164,7 +163,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 20,
                             ),
                             SizedBox(
-                              width: 150,
                               child: CustomElevatedButton(
                                 buttonStyle: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(

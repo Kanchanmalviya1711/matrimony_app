@@ -42,16 +42,19 @@ class CustomPaginationView extends StatelessWidget {
             ),
             noMoreItemsIndicatorBuilder: (context) {
               return SizedBox(
-                  height: 50,
+                  height: 30,
                   child: Center(
                     child: Text(
-                      'No more items to display.',
-                      style: TextStyle(color: appTheme.orange),
+                      "No More Data",
+                      style: TextStyle(
+                        color: appTheme.black900,
+                      ),
                     ),
                   ));
             },
             firstPageErrorIndicatorBuilder: (_) {
-              print("PPPPPPPPPP ${_pagingController.error.toString()}");
+              print(
+                  "PPPPPPjhs zxcgzhdv hxgvz hxzgcvgc yxcgfzjPPP ${_pagingController.error.toString()}");
               return ElevatedButton(
                   onPressed: () => _pagingController.refresh(),
                   child: Text(_pagingController.error.toString()));

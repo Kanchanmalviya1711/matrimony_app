@@ -1,11 +1,12 @@
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:matrimony_app/core/app_export.dart';
+import 'package:matrimony_app/core/constants/api_network.dart';
 import 'package:matrimony_app/presentation/ProfileListScreen/controller/profileLists_controller.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
 import 'package:matrimony_app/widgets/custom_image_view.dart';
 import 'package:matrimony_app/widgets/custom_pagination_view.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 
 class ProfileListsScreen extends StatefulWidget {
   const ProfileListsScreen({Key? key}) : super(key: key);
@@ -62,6 +63,11 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
     }
   }
 
+  var status = [
+    {"id": "1", "title": "Accepted"},
+    {"id": "2", "title": "Pending"},
+    {"id": "3", "title": "Declined"},
+  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -99,15 +105,13 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
                         children: [
                           Column(
                             children: [
-                              CachedNetworkImage(
-                                height: size.height * 0.3,
-                                imageUrl: p1["imagePath"],
-                                placeholder: (context, url) => CustomImageView(
-                                    imagePath: ImageConstant.couple1,
-                                    width: 300),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
-                              )
+                              Stack(
+                                children: [
+                                  MyImageWidget(
+                                      imageUrl: ApiNetwork.imageUrl +
+                                          p1["imagePath"]),
+                                ],
+                              ),
                             ],
                           ),
                           Padding(
@@ -141,9 +145,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
                                     ],
                                   ),
                                   Text(
-                                    p1["emailAddress"]
-                                        .toString()
-                                        .capitalizeFirst!,
+                                    p1["emailAddress"].toString(),
                                     style: const TextStyle(
                                       fontSize: 14,
                                       color: Colors.grey,
@@ -189,7 +191,11 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
                                   ),
                                   const SizedBox(width: 5),
                                   ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      profileListController.sendFriendRequest(
+                                          p1["id"].toString(),
+                                          status[1]["id"].toString());
+                                    },
                                     child: const Text('Send Interest'),
                                   ),
                                   const SizedBox(width: 5),
@@ -214,5 +220,43 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
         ),
       ],
     );
+  }
+}
+
+class MyImageWidget extends StatelessWidget {
+  final String? imageUrl; // Make sure imageUrl is nullable
+
+  MyImageWidget({required this.imageUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return imageUrl != null
+        ? Image.network(
+            imageUrl!,
+            loadingBuilder: (BuildContext context, Widget child,
+                ImageChunkEvent? loadingProgress) {
+              if (loadingProgress == null) {
+                return child; // Image is fully loaded
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            (loadingProgress.expectedTotalBytes ?? 1)
+                        : null,
+                  ),
+                );
+              }
+            },
+            errorBuilder:
+                (BuildContext context, Object error, StackTrace? stackTrace) {
+              return CustomImageView(
+                imagePath: ImageConstant.couple1,
+              ); // Display an error icon if the image fails to load
+            },
+          )
+        : CustomImageView(
+            imagePath: ImageConstant.couple1,
+          ); // Display a static image if imageUrl is null
   }
 }

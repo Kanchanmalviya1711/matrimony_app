@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
@@ -12,6 +14,7 @@ class HomepageController extends GetxController {
   final rxRequestStatus = Rx<Status>(Status.success);
   var slidersList = [].obs;
   var menusList = [].obs;
+  var getAppSettingsDetails = [].obs;
   var firstName = TextEditingController();
   var pageKey = 1;
   var perPage = 20;
@@ -22,7 +25,7 @@ class HomepageController extends GetxController {
   String apiUrl = ApiNetwork.slidersList;
 
   Future<void> getSliders() async {
-    // print("Checking if the API is working ");
+    print("Checking if the API is working slider");
     rxRequestStatus.value = Status.loading;
     try {
       // Make the POST request using Dio
@@ -35,9 +38,9 @@ class HomepageController extends GetxController {
         }),
       );
       if (value.data['status'] == "success") {
-        // print("Data: ${value.data['payload']['data']}");
+        print("Data: ${value.data['payload']['data']}");
         slidersList.assignAll(value.data['payload']['data']);
-        // print("Updated slidersList: $slidersList");
+        print("Updated slidersList: $slidersList");
         rxRequestStatus.value = Status.success;
       } else {
         rxRequestStatus.value = Status.error;
@@ -77,7 +80,7 @@ class HomepageController extends GetxController {
       if (value.data['status'] == "success") {
         print("Data: ${value.data['payload']['data']}");
         menusList.assignAll(value.data['payload']['data']);
-        print("Updated slidersList: $slidersList");
+        print("Updated Menus: $slidersList");
         rxRequestStatus.value = Status.success;
       } else {
         rxRequestStatus.value = Status.error;
@@ -92,6 +95,32 @@ class HomepageController extends GetxController {
     } finally {
       // Reset status
       rxRequestStatus.value = Status.success;
+    }
+  }
+
+  //AppSettings Api Calling
+
+  getAppSettings({page, perPageRecord}) async {
+    print("get about pageeee");
+
+    try {
+      var payload = {"page": "", "per_page_record": "10"};
+      var value = await api.post(
+          ApiNetwork.getAppSettings, jsonEncode(payload), true,
+          isCookie: true);
+      if (value['status'] == "success") {
+        print("fsdfdsf pradhufjsdf ${value['payload']['data']}");
+        getAppSettingsDetails.value = value['payload']['data'];
+
+        print("object");
+        print("fgdfgfdgdfg fdg $getAppSettingsDetails");
+
+        return getAppSettingsDetails;
+      }
+    } catch (e) {
+      customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
+      rxRequestStatus.value = Status.error;
+      print("Error Appsettings , $e ");
     }
   }
 }

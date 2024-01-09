@@ -3,6 +3,7 @@ import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/custom_widget/custom_drawer.dart';
 import 'package:matrimony_app/presentation/ProfileListScreen/ui/profileLists_screen.dart';
 import 'package:matrimony_app/presentation/home/controller/home_controller.dart';
+import 'package:matrimony_app/presentation/home/homepage/controller/homepage_controller.dart';
 import 'package:matrimony_app/presentation/home/homepage/homepage.dart';
 import 'package:matrimony_app/presentation/notifications/ui/notifications_screen.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
@@ -20,6 +21,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+  HomepageController controller = Get.put(HomepageController());
   HomeController homeController = Get.put(HomeController());
   int currentIndex = 0;
 
@@ -44,15 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
             scaffoldKey.currentState!.openDrawer();
           },
         ),
-        title: "S & M ",
+        title: "S & M",
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.search,
-              color: appTheme.whiteA700,
-            ),
-          ),
           IconButton(
             onPressed: () {
               Get.offNamed(
@@ -63,6 +58,44 @@ class _HomeScreenState extends State<HomeScreen> {
               Icons.account_circle,
               color: appTheme.whiteA700,
             ),
+          ),
+          PopupMenuButton<String>(
+            surfaceTintColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide(color: appTheme.whiteA700),
+            ),
+            icon: Icon(
+              Icons.more_vert,
+              color: appTheme.whiteA700,
+            ),
+            onSelected: (value) {
+              if (value == "0") {
+                Get.toNamed(AppRoutes.ourServiceScreen);
+              } else if (value == "1") {
+                Get.toNamed(AppRoutes.blogScreen);
+              } else if (value == "2") {
+                Get.toNamed(AppRoutes.testimonialsScreen);
+              } else if (value == "3") {
+                Get.toNamed(AppRoutes.allProfilesScreen);
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return List.generate(
+                controller.menusList.length,
+                (index) {
+                  return PopupMenuItem<String>(
+                    value: index.toString(),
+                    child: Text(
+                      controller.menusList[index]["menu"]["name"] == null
+                          ? "No data"
+                          : controller.menusList[index]["menu"]["name"] ??
+                              "No data",
+                    ),
+                  );
+                },
+              );
+            },
           ),
         ],
       ),

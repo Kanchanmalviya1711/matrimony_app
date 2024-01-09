@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
+import 'package:matrimony_app/core/constants/session_manager.dart';
 import 'package:matrimony_app/custom_widget/custom_snackbar.dart';
 import 'package:matrimony_app/data/apiClient/api_client.dart';
 import 'package:matrimony_app/data/apiClient/http_response.dart';
+import 'package:matrimony_app/routes/app_routes.dart';
 
 class ProfileListController extends GetxController {
   NetworkHttpServices api = NetworkHttpServices();
@@ -30,28 +32,64 @@ class ProfileListController extends GetxController {
   );
 
   final rxRequestStatus = Status.success.obs;
-  var attendanceList = [];
+  var usersList = [];
   var firstName = TextEditingController().obs;
   var pageKey = 1;
   var perPage = 20;
 
   getUsers({page, perPageRecord}) async {
-    var payload = {"page": pageKey, "per_page_record": perPage};
+    var payload = {
+      "page": pageKey,
+      "per_page_record": perPage,
+      "gender": SessionManager.getGender() == "1" ? "2" : "1"
+    };
 
     try {
       var value =
           await api.post(ApiNetwork.usersList, jsonEncode(payload), true);
       if (value['status'] == "success") {
         print("fsdfdsf pradhufjsdf ${value['payload']['data']}");
-        attendanceList = value['payload']['data'];
+        usersList = value['payload']['data'];
         print("object");
-        print("fgdfgfdgdfg fdg $attendanceList");
-
-        return attendanceList;
+        print("fgdfgfdgdfg fdg $usersList");
+        return usersList;
       }
     } catch (e) {
       customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
       rxRequestStatus.value = Status.error;
+    }
+  }
+
+// Friend Request Api Call
+
+  sendFriendRequest(String userId, String statusValue) async {
+    var payload = {
+      "sender_id": {"id": json.decode(SessionManager.getUserId().toString())},
+      "receiver_id": {"id": userId},
+      "status": statusValue
+    };
+    print("payload $payload");
+    rxRequestStatus.value = Status.loading;
+    try {
+      var value = await api.post(
+          ApiNetwork.friendRequest, jsonEncode(payload), true,
+          isCookie: true);
+      if (value['success'] == true) {
+        rxRequestStatus.value = Status.success;
+        print('Friend request sent successfully');
+        customFlutterToast(msg: value['message']);
+      } else {
+        rxRequestStatus.value = Status.error;
+        print("Error , $value ");
+        customFlutterToast(
+            backgroundColor: Colors.green, msg: value['message']);
+      }
+      Get.offNamed(AppRoutes.homeScreen);
+    } catch (e) {
+      rxRequestStatus.value = Status.error;
+      print("Error , $e ");
+      customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
+      throw Exception('Failed to send friend request.');
     }
   }
 }

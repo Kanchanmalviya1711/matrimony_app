@@ -3,7 +3,6 @@ class ImageConstant {
   static String imagePath = 'assets/images';
   static String svgPath = 'assets/svg';
   static String board = '$svgPath/board.svg';
-
   // iPhone 14 Pro - 102 images
   static String hrPicture1 = '$imagePath/splash.png';
   static String hrPicture = '$imagePath/splash.png';
@@ -13,7 +12,9 @@ class ImageConstant {
   static String logoImg = '$imagePath/logoImg.png';
   static String logowhite = '$imagePath/logowhite.png';
   static String prize = '$imagePath/prize.png';
+  static String contactUs = '$imagePath/contact.png';
   static String trust = '$imagePath/trust.png';
+  static String ourTeam = '$imagePath/ourTeam.png';
   static String rings = '$imagePath/rings.png';
   static String myProfile = '$imagePath/myProfile.jpg';
   // iPhone 14 Pro - 104 images
@@ -74,7 +75,10 @@ class ImageConstant {
   static String productivity = '$svgPath/productivity.svg';
   static String departments = '$svgPath/user.svg';
   static String manpower = '$svgPath/manpower.svg';
-  static String contact = '$svgPath/contactus.svg';
+  static String contact = '$svgPath/phone.svg';
+  static String blog = '$svgPath/blogWebsite.svg';
+  static String allProfiles = '$svgPath/allProfiles.svg';
+  static String testimonials = '$svgPath/testimonial.svg';
   static String discipline = '$svgPath/discipline.svg';
   static String attendence = '$svgPath/attendence.svg';
   static String interview = '$svgPath/interview.svg';
@@ -90,8 +94,8 @@ class ImageConstant {
   static String darkMode = '$svgPath/darkModeIcon.svg';
   static String lightMode = '$svgPath/lightModeIcon.svg';
   static String backCross = '$svgPath/cross.svg';
+  static String groupAbout = '$svgPath/groupabout.svg';
   static String circleCross = '$svgPath/crosscircle.svg';
-
   //Jpg Images
   static String couple1 = '$imagePath/1.png';
   static String couple2 = '$imagePath/2.png';
@@ -105,4 +109,5 @@ class ImageConstant {
   static String profile4 = '$imagePath/profilePic4.png';
   static String profile5 = '$imagePath/profilePic5.png';
   static String profile6 = '$imagePath/profilePic6.png';
+  static String ourServices = '$imagePath/ourServices.png';
 }

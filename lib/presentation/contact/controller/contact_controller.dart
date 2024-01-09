@@ -1,68 +1,41 @@
 import 'dart:convert';
-import 'package:dio/dio.dart';
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
-import 'package:matrimony_app/core/constants/session_manager.dart';
 import 'package:matrimony_app/custom_widget/custom_snackbar.dart';
 import 'package:matrimony_app/data/apiClient/api_client.dart';
 import 'package:matrimony_app/data/apiClient/http_response.dart';
 
-class ContactController extends GetxController {
+class ContactUsController extends GetxController {
   NetworkHttpServices api = NetworkHttpServices();
 
   final rxRequestStatus = Rx<Status>(Status.success);
-  var allProfiles = [].obs;
+  var getContactUsDetails = [].obs;
 
   var firstName = TextEditingController();
   var pageKey = 1;
   var perPage = 10;
 
-  Dio dio = Dio();
-
-  String apiUrl = ApiNetwork.allProfilesList;
-
-  Future<void> getAllContact() async {
-    print("all profiles Checking if the API is working ");
+  getContact() async {
+    print("get contact pageeee");
     rxRequestStatus.value = Status.loading;
-    // Prepare the request parameters
-    var params = {
-      "page": pageKey.toString(),
-      "per_page_record": perPage.toString(),
-    };
-    print("$params,cheking payload");
     try {
-      var value = await dio.post(
-        apiUrl,
-        data: jsonEncode(params),
-        options: Options(headers: {
-          "Content-Type": "application/json",
-          'Authorization': 'Bearer ${SessionManager.getToken()}',
-          "Cookie": 'jwtToken=${SessionManager.getToken()}',
-        }),
-      );
+      var payload = {"page": "", "per_page_record": "10"};
+      var value = await api.post(
+          ApiNetwork.getContactUsDetails, jsonEncode(payload), true,
+          isCookie: true);
+      if (value['status'] == "success") {
+        print("fsdfdsf pradhufjsdf ${value['payload']['data']}");
+        getContactUsDetails.value = value['payload']['data'];
+        rxRequestStatus.value = Status.success;
+        print("object");
+        print("new data fetch contact $getContactUsDetails");
 
-      if (value.statusCode == 403) {
-        // Handle 403 status code (Forbidden)
-        rxRequestStatus.value = Status.error;
-        customFlutterToast(
-          msg: "Access forbidden. Please check your permissions.",
-          backgroundColor: Colors.red,
-        );
-      } else if (value.data['status'] == "success") {
-        print("Data: ${value.data['payload']['data']}");
-      } else {
-        rxRequestStatus.value = Status.error;
-        customFlutterToast(
-          msg: value.data['message'],
-          backgroundColor: Colors.red,
-        );
+        return getContactUsDetails;
       }
-    } catch (error) {
-      print("Error message: $error");
+    } catch (e) {
+      customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
       rxRequestStatus.value = Status.error;
-    } finally {
-      // Reset status
-      rxRequestStatus.value = Status.success;
+      print("Error contact , $e");
     }
   }
 }

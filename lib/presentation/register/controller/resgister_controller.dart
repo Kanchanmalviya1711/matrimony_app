@@ -57,7 +57,7 @@ class RegisterController extends GetxController {
       "phone": phoneController.value.text,
       "address": addressController.value.text,
       "imagePath": imageUrl,
-      "gender": gender,
+      "gender": gender.toString(),
       "role": {"id": "1"},
       "subscriptionType": subscriptionType.toString(),
       "dateOfBirth": dateOfBirth.value.text,

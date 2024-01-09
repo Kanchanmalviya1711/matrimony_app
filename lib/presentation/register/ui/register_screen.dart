@@ -29,8 +29,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 // Gender list
   var gender = [
-    {"id": "1", "title": "female"},
-    {"id": "2", "title": "male"},
+    {"id": "1", "title": "male"},
+    {"id": "2", "title": "female"},
   ];
   // status list
   var status = [
@@ -275,7 +275,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10),
                     const SizedBox(height: 10),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 23.h),

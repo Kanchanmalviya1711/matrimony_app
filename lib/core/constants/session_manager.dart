@@ -6,7 +6,8 @@ class SessionManager {
   static const _token = "token";
   static const _userId = "userId";
   static const _role = "role";
-
+  static const _gender = "gender";
+  static const _profileCreated = "profileCreated";
 
   static Future init() async =>
       preferences = await SharedPreferences.getInstance();
@@ -15,9 +16,10 @@ class SessionManager {
     return preferences!.setString(_user, user);
   }
 
-  static String? getUser() {
+  static dynamic getUser() {
     return preferences!.getString(_user);
   }
+
   static dynamic setUserId(String userId) {
     return preferences!.setString(_userId, userId);
   }
@@ -33,6 +35,7 @@ class SessionManager {
   static dynamic getToken() {
     return preferences!.getString(_token);
   }
+
   static dynamic setRole(String role) {
     return preferences!.setString(_role, role);
   }
@@ -43,5 +46,47 @@ class SessionManager {
 
   static dynamic removeToken() {
     return preferences!.remove(_token);
+  }
+
+  static String? getGender() {
+    return preferences!.getString(_gender);
+  }
+
+  static dynamic setGender(String gender) {
+    return preferences!.setString(_gender, gender);
+  }
+
+  static bool isProfileCreated() {
+    return preferences!.getBool(_profileCreated) ?? false;
+  }
+
+  static void setProfileCreated(bool created) {
+    preferences!.setBool(_profileCreated, created);
+  }
+}
+
+class AuthService {
+  static Future<bool> loginUser(
+      String username, String password, String userId, String token) async {
+    // Perform authentication logic here
+
+    bool authenticationSuccessful =
+        true; // Define the variable authenticationSuccessful
+
+    if (authenticationSuccessful) {
+      // Set the user's profile as created
+      SessionManager.setProfileCreated(true);
+
+      // Other user-related settings (e.g., set user information)
+      SessionManager.setUserId(userId);
+      SessionManager.setUser(username);
+      SessionManager.setToken(token);
+
+      return true;
+      // Remove the dead code block
+      // } else {
+      //   return false;
+      // }
+    }
   }
 }

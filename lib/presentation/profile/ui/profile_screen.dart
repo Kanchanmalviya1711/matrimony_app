@@ -1,6 +1,10 @@
+import 'dart:convert';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:matrimony_app/core/app_export.dart';
+import 'package:matrimony_app/core/constants/api_network.dart';
 import 'package:matrimony_app/core/constants/session_manager.dart';
+import 'package:matrimony_app/custom_widget/custom_drawer.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/custom_text_style.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
@@ -9,17 +13,27 @@ import 'package:matrimony_app/widgets/custom_app_bar.dart';
 import 'package:matrimony_app/widgets/custom_elevated_button.dart';
 import 'package:matrimony_app/widgets/custom_icon_button.dart';
 import 'package:matrimony_app/widgets/custom_image_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+  var getUserData;
+  getData() async {
+    getUserData = json.decode(SessionManager.getUser().toString());
+  }
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +52,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
         ),
-        title: "My Profile ",
+        title: "MY PROFILE",
       ),
       body: SingleChildScrollView(
         child: Column(children: [
           Stack(
             children: [
-              CustomImageView(
-                imagePath: ImageConstant.myProfile,
-                height: 430,
-                width: double.infinity,
+              Stack(
+                children: [
+                  MyImageWidget(
+                      width: double.infinity,
+                      imageUrl: ApiNetwork.imageUrl +
+                              getUserData["user"]["imagePath"] ??
+                          "No such image"),
+                ],
               ),
               Positioned(
                 bottom: 10,
@@ -57,16 +75,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        const Text(
-                          'Mansi Jain',
-                          style: TextStyle(
+                        Text(
+                          getUserData["user"]["firstName"] +
+                              " " +
+                              getUserData["user"]["lastName"],
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          "Sr. Software Engineer",
+                          getUserData["profession"],
                           style: TextStyle(
                               color: appTheme.heading,
                               fontWeight: FontWeight.w600,
@@ -164,10 +184,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    "It is a long established fact that a reader will be distracted by the readable "
-                    "content of a page when looking at its layout. The point of using Lorem Ipsum is that,"
-                    "it has a more-or-less normal distribution of letters, as opposed to using 'Content here, "
-                    "content here', making it look like readable English.",
+                    getUserData["aboutYourself"],
                     style: TextStyle(
                         color: appTheme.heading,
                         fontWeight: FontWeight.w400,
@@ -175,18 +192,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 1.4),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    "Many desktop publishing packages and web page editors"
-                    "now use Lorem Ipsum as their default model text.",
-                    style: TextStyle(
-                        color: appTheme.heading,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15,
-                        height: 1.4),
-                  ),
-                )
               ]),
           const Divider(),
           const SizedBox(height: 30),
@@ -241,28 +246,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       fontFamily: "CinzelDecorative"),
                 ),
               ),
-              const ListTile(
-                leading: Icon(Icons.phone_android),
-                title: Text('Phone Number'),
-                subtitle: Text('+977-984XXXXXX'),
+              ListTile(
+                leading: const Icon(Icons.phone_android),
+                title: const Text('Phone Number'),
+                subtitle: Text(getUserData["user"]["phone"]),
               ),
-              const ListTile(
-                leading: Icon(Icons.email),
-                title: Text('Email'),
-                subtitle: Text('mansi@gmail.com'),
+              ListTile(
+                leading: const Icon(Icons.email),
+                title: const Text('Email'),
+                subtitle: Text(getUserData["user"]["emailAddress"]),
               ),
-              const ListTile(
-                leading: Icon(Icons.map_rounded),
-                title: Text('Address'),
-                subtitle: Text(
-                    '28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.'),
+              ListTile(
+                leading: const Icon(Icons.map_rounded),
+                title: const Text('Address'),
+                subtitle: Text(getUserData["user"]["address"]),
               )
             ],
           ),
           const Divider(
             thickness: 1,
           ),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -280,16 +284,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontFamily: "CinzelDecorative"),
                     ),
                   ),
-                  buildInfoItem('Name :', 'Angelina Jolie'),
-                  buildInfoItem('Father\'s name :', 'John Smith'),
-                  buildInfoItem('Family name :', 'Joney Family'),
+                  buildInfoItem(
+                      'Name :',
+                      getUserData["user"]["firstName"] +
+                          " " +
+                          getUserData["user"]["lastName"]),
+                  buildInfoItem('Father\'s name :', getUserData["fatherName"]),
+                  buildInfoItem(
+                      'Family name :', getUserData["user"]["userType"]),
                   buildInfoItem('Age :', '24'),
-                  buildInfoItem('Date of birth :', '03 Jan 1998'),
-                  buildInfoItem('Height :', '167cm'),
-                  buildInfoItem('Weight :', '65kg'),
-                  buildInfoItem('Degree :', 'MSC Computer Science'),
-                  buildInfoItem('Religion :', 'Any'),
-                  buildInfoItem('Profession :', 'Working'),
+                  buildInfoItem('Date of birth :',
+                      _formatDateOfBirth(getUserData["user"]["dateOfBirth"])),
+                  buildInfoItem('Height :', getUserData["height"].toString()),
+                  buildInfoItem('Weight :', getUserData["weight"].toString()),
+                  buildInfoItem('Degree :', getUserData["education"]),
+                  buildInfoItem('Religion :', getUserData["religion"]),
+                  buildInfoItem('Profession :', getUserData["profession"]),
                   buildInfoItem('Company :', 'Google'),
                   buildInfoItem('Position :', 'Web Developer'),
                   buildInfoItem('Salary :', '\$1000 p/m'),
@@ -400,7 +410,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           const SizedBox(height: 20),
           const Divider(),
           const SizedBox(height: 20),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Padding(
               padding: const EdgeInsets.all(10),
@@ -427,13 +437,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             borderRadius: BorderRadius.circular(5),
                             color: appTheme.hobbies,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CustomIconButton(
-                              child: SvgPicture.asset(
-                                ImageConstant.google,
+                          child: GestureDetector(
+                            onTap: () {
+                              if (getUserData != null) {
+                                String facebookUrl =
+                                    getUserData['facebookUrl'].toString();
+                                if (facebookUrl.isNotEmpty) {
+                                  launchUrl(Uri.parse(facebookUrl));
+                                } else {
+                                  print('facebook URL is empty.');
+                                }
+                              } else {
+                                print('getUserData is null.');
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CustomIconButton(
+                                child: SvgPicture.asset(
+                                  ImageConstant.facebook,
+                                ),
                               ),
-                              onTap: () {},
                             ),
                           ),
                         ),
@@ -443,13 +467,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             borderRadius: BorderRadius.circular(5),
                             color: appTheme.hobbies,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CustomIconButton(
-                              child: SvgPicture.asset(
-                                ImageConstant.linkedin,
+                          child: GestureDetector(
+                            onTap: () {
+                              if (getUserData != null) {
+                                String linkedInUrl =
+                                    getUserData['linkedinUrl'].toString();
+
+                                if (linkedInUrl.isNotEmpty) {
+                                  launchUrl(Uri.parse(linkedInUrl));
+                                } else {
+                                  print('LinkedIn URL is empty.');
+                                }
+                              } else {
+                                print('getUserData is null.');
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CustomIconButton(
+                                child: SvgPicture.asset(
+                                  ImageConstant.linkedin,
+                                ),
                               ),
-                              onTap: () {},
                             ),
                           ),
                         ),
@@ -459,45 +498,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             borderRadius: BorderRadius.circular(5),
                             color: appTheme.hobbies,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CustomIconButton(
-                              child: SvgPicture.asset(
-                                ImageConstant.facebook,
+                          child: GestureDetector(
+                            onTap: () {
+                              if (getUserData != null) {
+                                String whatsappUrl =
+                                    getUserData['whatsappUrl'].toString();
+
+                                if (whatsappUrl.isNotEmpty) {
+                                  launchUrl(Uri.parse(whatsappUrl));
+                                } else {
+                                  print('LinkedIn URL is empty.');
+                                }
+                              } else {
+                                print('getUserData is null.');
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CustomIconButton(
+                                child: SvgPicture.asset(
+                                  ImageConstant.whatsapp,
+                                ),
                               ),
-                              onTap: () {},
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: appTheme.hobbies,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CustomIconButton(
-                              child: SvgPicture.asset(
-                                ImageConstant.whatsapp,
-                              ),
-                              onTap: () {},
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: appTheme.hobbies,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CustomIconButton(
-                              child: SvgPicture.asset(
-                                ImageConstant.twitter,
-                              ),
-                              onTap: () {},
                             ),
                           ),
                         ),
@@ -517,15 +539,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               text: "Logout",
               buttonTextStyle: CustomTextStyles.titleMediumBlackA700,
               onTap: () {
-                SessionManager.removeToken();
-                Get.offAllNamed(AppRoutes.loginScreen);
+                showAlertDialog(
+                  context,
+                  () {
+                    Get.back();
+                  },
+                  () {
+                    SessionManager.removeToken();
+                    Get.offAllNamed(AppRoutes.loginScreen);
+                  },
+                );
               },
             ),
           ),
         ]),
       ),
-
-      // Home page
     );
   }
 }
@@ -536,16 +564,15 @@ class CustomCard extends StatelessWidget {
   final String subtitle;
 
   const CustomCard({
-    super.key,
+    Key? key,
     required this.imageAsset,
     required this.title,
     required this.subtitle,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: SizedBox(
+    return SizedBox(
       width: 200,
       height: 200,
       child: Card(
@@ -553,9 +580,11 @@ class CustomCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CustomImageView(
-              imagePath: imageAsset,
-              fit: BoxFit.cover,
+            Expanded(
+              child: CustomImageView(
+                imagePath: imageAsset,
+                fit: BoxFit.cover,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -576,7 +605,7 @@ class CustomCard extends StatelessWidget {
           ],
         ),
       ),
-    ));
+    );
   }
 }
 
@@ -598,4 +627,64 @@ Widget buildInfoItem(String title, String value) {
       ],
     ),
   );
+}
+
+// Function to format the date of birth
+String _formatDateOfBirth(dynamic dateOfBirth) {
+  try {
+    if (dateOfBirth != null && dateOfBirth.toString().isNotEmpty) {
+      DateTime? parsedDate = DateTime.tryParse(dateOfBirth.toString());
+      if (parsedDate != null) {
+        // Calculate age based on the parsed date of birth
+        int age = DateTime.now().year - parsedDate.year;
+        return '${DateFormat('dd,MMM-yyyy').format(parsedDate)} (Age: $age)';
+      }
+    }
+  } catch (e) {
+    print("Error formatting date of birth: $e");
+  }
+  return 'No Date Found';
+}
+
+class MyImageWidget extends StatelessWidget {
+  final String? imageUrl;
+  final double width;
+  // Make sure imageUrl is nullable
+
+  MyImageWidget({required this.imageUrl, required this.width});
+
+  @override
+  Widget build(BuildContext context) {
+    return imageUrl != null
+        ? Image.network(
+            imageUrl!,
+            width: width,
+            loadingBuilder: (BuildContext context, Widget child,
+                ImageChunkEvent? loadingProgress) {
+              if (loadingProgress == null) {
+                return child; // Image is fully loaded
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            (loadingProgress.expectedTotalBytes ?? 1)
+                        : null,
+                  ),
+                );
+              }
+            },
+            errorBuilder:
+                (BuildContext context, Object error, StackTrace? stackTrace) {
+              return CustomImageView(
+                width: 200,
+                imagePath: ImageConstant.couple1,
+              ); // Display an error icon if the image fails to load
+            },
+          )
+        : CustomImageView(
+            width: 200,
+            imagePath: ImageConstant.couple1,
+          ); // Display a static image if imageUrl is null
+  }
 }
