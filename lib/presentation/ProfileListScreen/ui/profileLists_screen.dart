@@ -2,6 +2,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
 import 'package:matrimony_app/presentation/ProfileListScreen/controller/profileLists_controller.dart';
+import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
 import 'package:matrimony_app/widgets/custom_image_view.dart';
@@ -68,6 +69,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
     {"id": "2", "title": "Pending"},
     {"id": "3", "title": "Declined"},
   ];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -86,6 +88,9 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
         ),
         Expanded(
           child: CustomPaginationView(
+              noDataFound: () {
+                Get.offNamed(AppRoutes.homeScreen);
+              },
               onRefresh: () => Future.sync(() {
                     pagingController.refresh();
                   }),
@@ -108,8 +113,11 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
                               Stack(
                                 children: [
                                   MyImageWidget(
+                                      height: size.height * 0.4,
+                                      width: double.maxFinite,
                                       imageUrl: ApiNetwork.imageUrl +
-                                          p1["imagePath"]),
+                                              p1["user"]["imagePath"] ??
+                                          ImageConstant.couple1),
                                 ],
                               ),
                             ],
@@ -124,7 +132,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
                                   Row(
                                     children: [
                                       Text(
-                                        p1["firstName"]
+                                        p1["user"]["firstName"]
                                             .toString()
                                             .capitalizeFirst!,
                                         style: const TextStyle(
@@ -134,7 +142,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        p1["lastName"]
+                                        p1["user"]["lastName"]
                                             .toString()
                                             .capitalizeFirst!,
                                         style: const TextStyle(
@@ -145,7 +153,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
                                     ],
                                   ),
                                   Text(
-                                    p1["emailAddress"].toString(),
+                                    p1["user"]["emailAddress"].toString(),
                                     style: const TextStyle(
                                       fontSize: 14,
                                       color: Colors.grey,
@@ -193,18 +201,15 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
                                   ElevatedButton(
                                     onPressed: () {
                                       profileListController.sendFriendRequest(
-                                          p1["id"].toString(),
-                                          status[1]["id"].toString());
+                                        p1["user"]["id"].toString(),
+                                        status[1]["id"].toString(),
+                                      );
                                     },
-                                    child: const Text('Send Interest'),
-                                  ),
-                                  const SizedBox(width: 5),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      // Get.offAllNamed(
-                                      //     AppRoutes.allProfilesScreen);
-                                    },
-                                    child: const Text('More Details'),
+                                    child: p1["friendRequest"]?["sender_id"]
+                                                ["status"] ==
+                                            1
+                                        ? const Text('Pending...')
+                                        : const Text('Send Interest'),
                                   ),
                                   const SizedBox(width: 5),
                                 ],
@@ -224,15 +229,19 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
 }
 
 class MyImageWidget extends StatelessWidget {
-  final String? imageUrl; // Make sure imageUrl is nullable
-
-  MyImageWidget({required this.imageUrl});
+  final String? imageUrl;
+  final double? height;
+  final double? width;
+  MyImageWidget({required this.imageUrl, this.height, this.width});
 
   @override
   Widget build(BuildContext context) {
     return imageUrl != null
         ? Image.network(
             imageUrl!,
+            height: height,
+            width: width ?? double.maxFinite,
+            fit: BoxFit.cover,
             loadingBuilder: (BuildContext context, Widget child,
                 ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) {
@@ -251,6 +260,9 @@ class MyImageWidget extends StatelessWidget {
             errorBuilder:
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return CustomImageView(
+                height: height,
+                width: width ?? double.maxFinite,
+                fit: BoxFit.cover,
                 imagePath: ImageConstant.couple1,
               ); // Display an error icon if the image fails to load
             },

@@ -13,7 +13,6 @@ class ImagePickerController extends GetxController {
   NetworkHttpServices api = NetworkHttpServices();
 
   final rxRequestStatus = Status.success.obs;
-
   File? result;
   String imageUrl = '';
 
@@ -41,10 +40,8 @@ class ImagePickerController extends GetxController {
       );
       request.files
           .add(await http.MultipartFile.fromPath('uploadFile', file.path));
-
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
-
       print("Response status code: ${response.statusCode}");
       print("Response body: ${response.body}");
 

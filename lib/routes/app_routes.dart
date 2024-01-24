@@ -15,7 +15,9 @@ import 'package:matrimony_app/presentation/friendRequestScreen/ui/friendRequest_
 import 'package:matrimony_app/presentation/home/binding/home_binding.dart';
 import 'package:matrimony_app/presentation/home/ui/home_screen.dart';
 import 'package:matrimony_app/presentation/login/binding/login_binding.dart';
+import 'package:matrimony_app/presentation/login/forgotPassword_screen.dart';
 import 'package:matrimony_app/presentation/login/login_screen.dart';
+import 'package:matrimony_app/presentation/login/update_otpverify_screen.dart';
 import 'package:matrimony_app/presentation/ourServices/binding/ourServices_binding.dart';
 import 'package:matrimony_app/presentation/ourServices/ui/ourServices_screen.dart';
 import 'package:matrimony_app/presentation/profile/binding/profile.binding.dart';
@@ -45,6 +47,8 @@ class AppRoutes {
   static const String viewBlogScreen = "/viewBlogScreen";
   static const String createProfileScreen = "/createProfileScreen";
   static const String friendRequestScreen = "/friendRequestScreen";
+  static const String forgotPasswordScreen = "/forgotPasswordScreen";
+  static const String verifyOtpScreen = "/verifyOtpScreen";
 
   static List<GetPage> pages = [
     //splash screen
@@ -136,6 +140,16 @@ class AppRoutes {
       binding: FriendRequestBinding(),
       name: friendRequestScreen,
       page: () => const FriendRequestScreen(),
+    ),
+    GetPage(
+      binding: LoginBinding(),
+      name: forgotPasswordScreen,
+      page: () => const ForgotPasswordScreen(),
+    ),
+    GetPage(
+      binding: LoginBinding(),
+      name: verifyOtpScreen,
+      page: () => const UpdateOtpVerifyScreen(),
     ),
   ];
 }

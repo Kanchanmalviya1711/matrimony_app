@@ -73,7 +73,8 @@ class NetworkHttpServices extends BaseHttpServices {
   }
 
   @override
-  Future<dynamic> put(String endPoint, dynamic body, bool isEncoded) async {
+  Future<dynamic> put(String endPoint, dynamic body, bool isEncoded,
+      {bool? isCookie = false}) async {
     if (isEncoded) {
       headers.addAll({
         'Content-Type': 'application/json',
@@ -82,6 +83,9 @@ class NetworkHttpServices extends BaseHttpServices {
       headers.addAll({
         'Content-Type': 'application/x-www-form-urlencoded',
       });
+      if (isCookie!) {
+        headers.addAll({"Cookie": 'jwtToken=${SessionManager.getToken()}'});
+      }
     }
 
     try {

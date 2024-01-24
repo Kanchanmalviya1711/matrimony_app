@@ -34,7 +34,7 @@ class _NotificationsState extends State<Notifications> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: 5,
+              itemCount: 4,
               itemBuilder: (context, index) {
                 return Card(
                   elevation: 5,
@@ -92,7 +92,9 @@ class _NotificationsState extends State<Notifications> {
               },
             ),
           ),
-          const Divider(),
+          const Divider(
+            color: Colors.black,
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
@@ -158,31 +160,23 @@ class _NotificationsState extends State<Notifications> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.offNamed(AppRoutes.friendRequestScreen);
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: appTheme.green600,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Text(
-                          "View All",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color: appTheme.whiteA700,
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red,
+                            onPrimary: Colors.white,
                           ),
-                          textAlign: TextAlign.center,
+                          onPressed: () {
+                            Get.offNamed(AppRoutes.friendRequestScreen);
+                          },
+                          child: const Text('View All'),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ],

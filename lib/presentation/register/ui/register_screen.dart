@@ -76,14 +76,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     SizedBox(height: 25.v),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.h),
+                      padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
                         prefix: const Icon(
-                          Icons.person_2_rounded,
+                          Icons.person,
                           color: Colors.black,
                         ),
                         controller: registerController.firstNameController,
-                        labelText: "Enter firstname",
+                        labelText: "Firstname",
                         hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -99,14 +99,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SizedBox(height: 10),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.h),
+                      padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
                         prefix: const Icon(
-                          Icons.email,
+                          Icons.person,
                           color: Colors.black,
                         ),
                         controller: registerController.lastNameController,
-                        labelText: "Enter lastname",
+                        labelText: "Lastname",
                         hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -122,14 +122,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SizedBox(height: 10),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.h),
+                      padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
                         prefix: const Icon(
                           Icons.person_2_rounded,
                           color: Colors.black,
                         ),
                         controller: registerController.userNameController,
-                        labelText: "Enter Username",
+                        labelText: "Username",
                         hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -145,14 +145,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SizedBox(height: 10),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.h),
+                      padding: EdgeInsets.symmetric(horizontal: 10.h),
+                      child: CustomTextFormField(
+                        readOnly: true,
+                        prefix: const Icon(
+                          Icons.calendar_today,
+                          color: Colors.black,
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please enter date of birth";
+                          }
+                          // Parse the entered date of birth string into a DateTime object
+                          DateTime? enteredDate = DateTime.tryParse(value);
+
+                          if (enteredDate == null) {
+                            return "Invalid date format";
+                          }
+                          // Calculate the age by subtracting the entered date of birth from the current date
+                          int age = DateTime.now().year - enteredDate.year;
+
+                          // Check if the age is less than 18
+                          if (age < 18) {
+                            return "You must be 18 years or older";
+                          }
+
+                          return null;
+                        },
+                        controller: registerController.dateOfBirth.value,
+                        labelText: "Date Of Birth",
+                        onTap: () {
+                          DateTimePickerController()
+                              .selectDob(registerController.dateOfBirth.value);
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
                         prefix: const Icon(
                           Icons.person_2_rounded,
                           color: Colors.black,
                         ),
                         controller: registerController.userTypeController,
-                        labelText: "Enter Usertype",
+                        labelText: "Usertype",
                         hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -168,42 +205,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SizedBox(height: 10),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.h),
-                      child: CustomTextFormField(
-                        prefix: const Icon(
-                          Icons.person_2_rounded,
-                          color: Colors.black,
-                        ),
-                        controller: registerController.addressController,
-                        labelText: "Enter address",
-                        hintStyle: CustomTextStyles.titleSmallSemiBold_1,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Please enter valid address";
-                          }
-                          return null;
-                        },
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 18,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.h),
+                      padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
                         prefix: const Icon(
                           Icons.email,
                           color: Colors.black,
                         ),
                         controller: registerController.emailController,
-                        labelText: "Enter email",
+                        labelText: "Email",
                         hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please enter valid email";
+                            return "Please enter a valid email";
                           }
+                          // Check if the email contains the "@" character
+                          if (!value.contains('@')) {
+                            return "Please enter a valid email address";
+                          }
+
                           return null;
                         },
                         contentPadding: const EdgeInsets.symmetric(
@@ -213,10 +232,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.h),
-                      child: Obx(
-                        () => CustomTextFormField(
+                    Obx(
+                      () => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: CustomTextFormField(
                           obscureText:
                               registerController.isPasswordVisible.value,
                           suffix: CustomIconButton(
@@ -229,7 +248,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   : Icons.visibility,
                               color: registerController.isPasswordVisible.value
                                   ? Colors.black
-                                  : Colors.black54,
+                                  : const Color.fromARGB(255, 103, 199, 106),
                             ),
                           ),
                           prefix: const Icon(
@@ -241,8 +260,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return "Please enter valid password";
+                              return "Please enter a valid password";
                             }
+
+                            // Check if the password meets the required conditions
+                            if (!RegExp(
+                                    r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{5,}$')
+                                .hasMatch(value)) {
+                              return "Plase enter a correct password";
+                            }
+
                             return null;
                           },
                           contentPadding: const EdgeInsets.symmetric(
@@ -254,7 +281,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SizedBox(height: 10),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.h),
+                      padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
                         prefix: const Icon(
                           Icons.keyboard,
@@ -265,7 +292,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please enter valid phone number";
+                            return "Please enter a valid phone number";
+                          }
+                          // Check if the entered value is numeric and has exactly 10 digits
+                          if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+                            return "Please enter a 10-digit numeric phone number";
+                          }
+
+                          return null;
+                        },
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 30,
+                          vertical: 18,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.h),
+                      child: CustomTextFormField(
+                        prefix: const Icon(
+                          Icons.place,
+                          color: Colors.black,
+                        ),
+                        controller: registerController.addressController,
+                        labelText: "Complete Address",
+                        hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please enter your address";
                           }
                           return null;
                         },
@@ -277,27 +332,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SizedBox(height: 10),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.h),
-                      child: CustomTextFormField(
-                        readOnly: true,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Please enter date of birth";
-                          }
-                          return null;
-                        },
-                        controller: registerController.dateOfBirth.value,
-                        labelText: "Date Of Birth",
-                        onTap: () {
-                          DateTimePickerController()
-                              .selectDob(registerController.dateOfBirth.value);
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.h),
+                      padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomDropdown(
                         labelText: 'Suscription Type',
+                        prefixIcon: const Icon(
+                          Icons.person_2_rounded,
+                          color: Colors.black,
+                        ),
                         listName: subscriptionType
                             .map((e) => e['title'].toString())
                             .toList(),
@@ -312,11 +353,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.h),
+                      padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomDropdown(
                         labelText: 'Status',
+                        prefixIcon: const Icon(
+                          Icons.person_2_rounded,
+                          color: Colors.black,
+                        ),
                         listName:
                             status.map((e) => e['title'].toString()).toList(),
                         selectedItem: registerController.statusValue,
@@ -330,11 +375,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.h),
+                      padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomDropdown(
                         labelText: 'Gender',
+                        prefixIcon: const Icon(
+                          Icons.person_2_rounded,
+                          color: Colors.red,
+                        ),
                         listName:
                             gender.map((e) => e['title'].toString()).toList(),
                         selectedItem: registerController.genderType,
@@ -348,26 +397,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.h),
+                      padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: GetBuilder<ImagePickerController>(
                           init: ImagePickerController(),
                           builder: (value) {
                             return Container(
                               width: size.width,
-                              padding: const EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: Colors.grey.withOpacity(0.5),
+                                  color: Colors.orange.withOpacity(0.5),
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   SizedBox(
-                                      width: 130.h,
-                                      height: 130.v,
+                                      width: 70.h,
+                                      height: 70.v,
                                       child: imagePickerController.result !=
                                               null
                                           ? CircleAvatar(
@@ -390,18 +441,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                     : ImageConstant.fakeProfile,
                                               ),
                                             )),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 10.h),
-                                      child: CustomElevatedButton(
-                                        // isDisabled:
-                                        //     registerController.isEdit.value,
-                                        text: 'Upload',
-                                        onTap: () {
-                                          imagePickerController.pickImage();
-                                        },
-                                      ),
-                                    ),
+                                  CustomElevatedButton(
+                                    // isDisabled:
+                                    //     registerController.isEdit.value,
+                                    text: 'Upload',
+                                    onTap: () {
+                                      imagePickerController.pickImage();
+                                    },
                                   ),
                                 ],
                               ),
@@ -411,9 +457,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(height: 10),
                     _buildLoginButtonSection(),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 10,
+                        bottom: 10,
+                      ),
                       child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               "Already have a member ?",
@@ -490,13 +540,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
               backgroundColor: MaterialStateProperty.all(appTheme.green600),
             ),
             onTap: () {
-              registerController.register(imagePickerController.imageUrl);
+              if (_formKey.currentState!.validate()) {
+                registerController.register(imagePickerController.imageUrl);
+              }
             },
             text: "Submit".tr,
             margin: EdgeInsets.only(
-              left: 23.h,
-              right: 23.h,
-              bottom: 20.v,
+              left: 10.h,
+              right: 10.h,
+              bottom: 10.v,
             ),
           );
         });

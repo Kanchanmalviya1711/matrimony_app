@@ -105,6 +105,9 @@ class _AllProfilesScreenState extends State<AllProfilesScreen> {
           ),
           Expanded(
             child: CustomPaginationView(
+                noDataFound: () {
+                  Get.offNamed(AppRoutes.homeScreen);
+                },
                 onRefresh: () => Future.sync(() {
                       pagingController.refresh();
                     }),
@@ -127,8 +130,12 @@ class _AllProfilesScreenState extends State<AllProfilesScreen> {
                                 Stack(
                                   children: [
                                     MyImageWidget(
-                                        imageUrl: ApiNetwork.imageUrl +
-                                            p1["user"]["imagePath"]),
+                                        width: double.infinity,
+                                        height: size.height * 0.4,
+                                        imageUrl: p1["user"] == null
+                                            ? ImageConstant.couple1
+                                            : ApiNetwork.imageUrl +
+                                                p1["user"]["imagePath"]),
                                   ],
                                 ),
                               ],
@@ -149,7 +156,9 @@ class _AllProfilesScreenState extends State<AllProfilesScreen> {
                                                 width: 3.0)),
                                       ),
                                       child: Text(
-                                        "${p1["user"]["firstName"].toString()} ${p1["user"]["lastName"].toString()}",
+                                        p1["user"] == null
+                                            ? "No Name Found"
+                                            : "${p1["user"]["firstName"].toString()} ${p1["user"]["lastName"].toString()}",
                                         style: TextStyle(
                                           color: appTheme.black900,
                                           fontSize: 18,
@@ -221,8 +230,11 @@ class _AllProfilesScreenState extends State<AllProfilesScreen> {
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: Text(
-                                                _formatDateOfBirth(
-                                                    p1["user"]["dateOfBirth"]),
+                                                p1["user"] == null
+                                                    ? "No Date of Birth Found"
+                                                    : _formatDateOfBirth(
+                                                        p1["user"]
+                                                            ["dateOfBirth"]),
                                                 style: TextStyle(
                                                   fontSize: 15,
                                                   color: appTheme.whiteA700,
@@ -341,16 +353,22 @@ class CustomCard extends StatelessWidget {
 
 class MyImageWidget extends StatelessWidget {
   final String? imageUrl;
+  final double width;
+  final double height;
 
   // Make sure imageUrl is nullable
 
-  MyImageWidget({required this.imageUrl});
+  MyImageWidget(
+      {required this.imageUrl, required this.width, required this.height});
 
   @override
   Widget build(BuildContext context) {
     return imageUrl != null
         ? Image.network(
             imageUrl!,
+            width: width,
+            height: height,
+            fit: BoxFit.cover,
             loadingBuilder: (BuildContext context, Widget child,
                 ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) {
@@ -369,7 +387,9 @@ class MyImageWidget extends StatelessWidget {
             errorBuilder:
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return CustomImageView(
+                height: height,
                 imagePath: ImageConstant.couple1,
+                width: width,
               );
             },
           )

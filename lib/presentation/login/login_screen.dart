@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 39),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 25),
                         const Text(
-                          "Welcom to India's Best Matrimony App",
+                          "Welcome to India's Best Matrimony App",
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -78,8 +78,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return "Please enter valid email";
+                              return "Please enter a valid email";
                             }
+
+                            // Check if the email contains the "@" character
+                            if (!value.contains('@')) {
+                              return "Please enter a valid email address";
+                            }
+
                             return null;
                           },
                           contentPadding: const EdgeInsets.symmetric(
@@ -113,8 +119,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return "Please enter valid password";
+                                return "Please enter a valid password";
                               }
+
+                              // Check if the password meets the required conditions
+                              if (!RegExp(
+                                      r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{5,}$')
+                                  .hasMatch(value)) {
+                                return "Plase enter a correct password";
+                              }
+
                               return null;
                             },
                             contentPadding: const EdgeInsets.symmetric(
@@ -124,16 +138,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const Column(
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              "Forgot Password",
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal,
+                            GestureDetector(
+                              onTap: () {
+                                Get.toNamed(
+                                  AppRoutes.forgotPasswordScreen,
+                                );
+                              },
+                              child: const Text(
+                                "Forgot Password",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                ),
                               ),
                             )
                           ],

@@ -1,3 +1,71 @@
-import 'package:get/get.dart';
+import 'dart:convert';
+import 'package:matrimony_app/core/app_export.dart';
+import 'package:matrimony_app/core/constants/api_network.dart';
+import 'package:matrimony_app/core/constants/session_manager.dart';
+import 'package:matrimony_app/custom_widget/custom_snackbar.dart';
+import 'package:matrimony_app/data/apiClient/api_client.dart';
+import 'package:matrimony_app/data/apiClient/http_response.dart';
+import 'package:matrimony_app/routes/app_routes.dart';
 
-class FriendRequestController extends GetxController {}
+class FriendRequestController extends GetxController {
+  NetworkHttpServices api = NetworkHttpServices();
+
+  final rxRequestStatus = Rx<Status>(Status.success);
+  var allRequestList;
+  var pageKey = 1;
+  var perPage = 10;
+
+  getRequestList({page, perPageRecord}) async {
+    print("object Friend Request");
+    try {
+      var payload = {
+        "page": pageKey.toString(),
+        "per_page_record": perPage.toString(),
+        "userId": json.decode(SessionManager.getUserId().toString())
+      };
+      var value = await api.post(
+          ApiNetwork.getFriendRequest, jsonEncode(payload), true,
+          isCookie: true);
+      if (value['status'] == "success") {
+        print("fsdfdsf pradhufjsdf ${value['payload']['data']}");
+        allRequestList = value['payload']['data'];
+        print("object");
+        return allRequestList;
+      }
+    } catch (e) {
+      customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
+      rxRequestStatus.value = Status.error;
+      print("Error message, $e ");
+    }
+  }
+
+  acceptRequest(String id, String userId) async {
+    print("object Friend Request, $id, $userId");
+    var receiverId = await jsonDecode(SessionManager.getUserId().toString());
+    try {
+      var payload = {
+        "sender_id": {"id": id},
+        "receiver_id": {"id": receiverId},
+        "status": 1
+      };
+      print("object $payload");
+      var value = await api.put(
+          ApiNetwork.acceptFriendRequest + userId, jsonEncode(payload), true,
+          isCookie: true);
+      if (value['status'] == "success") {
+        rxRequestStatus.value = Status.success;
+        customFlutterToast(
+            backgroundColor: Colors.green, msg: value["message"]);
+        print("fsdfdsf pradhufjsdf ${value['payload']['data']}");
+        Get.offNamed(AppRoutes.homeScreen);
+        allRequestList = value['payload']['data'];
+        print("object");
+        return allRequestList;
+      }
+    } catch (e) {
+      customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
+      rxRequestStatus.value = Status.error;
+      print("Error message, $e ");
+    }
+  }
+}

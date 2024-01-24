@@ -1,54 +1,57 @@
 import 'dart:convert';
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
+import 'package:matrimony_app/core/constants/session_manager.dart';
 import 'package:matrimony_app/custom_widget/custom_snackbar.dart';
+import 'package:matrimony_app/custom_widget/time_formate_method.dart';
 import 'package:matrimony_app/data/apiClient/api_client.dart';
 import 'package:matrimony_app/data/apiClient/http_response.dart';
 import 'package:matrimony_app/presentation/register/model/register_model.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
+import 'package:http/http.dart' as http;
 
 class AllProfilesListController extends GetxController {
   NetworkHttpServices api = NetworkHttpServices();
-  TextEditingController numberOfChildrenController = TextEditingController();
-  TextEditingController weightController = TextEditingController();
-  TextEditingController heightController = TextEditingController();
-  TextEditingController bodyTypeController = TextEditingController();
-  TextEditingController complexionController = TextEditingController();
-  TextEditingController religionController = TextEditingController();
-  TextEditingController specialCasesController = TextEditingController();
-  TextEditingController motherTongueController = TextEditingController();
-  TextEditingController casteController = TextEditingController();
-  TextEditingController subCasteController = TextEditingController();
-  TextEditingController manglikController = TextEditingController();
-  TextEditingController familyValuesController = TextEditingController();
-  TextEditingController educationController = TextEditingController();
-  TextEditingController professionController = TextEditingController();
-  TextEditingController dieatryHabitsController = TextEditingController();
-  TextEditingController aboutYourselfController = TextEditingController();
-  TextEditingController bloodGroupController = TextEditingController();
-  TextEditingController annualIncomeController = TextEditingController();
-  TextEditingController numberOfBrothersController = TextEditingController();
-  TextEditingController numberOfSistersController = TextEditingController();
-  TextEditingController contactPersonNameController = TextEditingController();
-  TextEditingController relationshipController = TextEditingController();
-  TextEditingController timeToCallController = TextEditingController();
-  TextEditingController placeOfBirthController = TextEditingController();
-  TextEditingController timeOFBirthController = TextEditingController();
-  TextEditingController hobbiesController = TextEditingController();
-  TextEditingController interestsController = TextEditingController();
-  TextEditingController favoriteReadsController = TextEditingController();
-  TextEditingController preferredMoviesController = TextEditingController();
-  TextEditingController sportsController = TextEditingController();
-  TextEditingController favoriteCuisineController = TextEditingController();
-  TextEditingController spokenLanguagesController = TextEditingController();
-  TextEditingController moonSignController = TextEditingController();
-  TextEditingController nakshatraController = TextEditingController();
-  TextEditingController astroprofileController = TextEditingController();
-  TextEditingController motherNameController = TextEditingController();
-  TextEditingController facebookLinkController = TextEditingController();
-  TextEditingController fatherNameController = TextEditingController();
-  TextEditingController linkedinUrlController = TextEditingController();
-  TextEditingController watsappNumberController = TextEditingController();
+  final numberOfChildrenController = TextEditingController().obs;
+  final weightController = TextEditingController().obs;
+  final heightController = TextEditingController().obs;
+  final bodyTypeController = TextEditingController().obs;
+  final complexionController = TextEditingController().obs;
+  final religionController = TextEditingController().obs;
+  final specialCasesController = TextEditingController().obs;
+  final motherTongueController = TextEditingController().obs;
+  final casteController = TextEditingController().obs;
+  final subCasteController = TextEditingController().obs;
+  final manglikController = TextEditingController().obs;
+  final familyValuesController = TextEditingController().obs;
+  final educationController = TextEditingController().obs;
+  final professionController = TextEditingController().obs;
+  final dieatryHabitsController = TextEditingController().obs;
+  final aboutYourselfController = TextEditingController().obs;
+  final bloodGroupController = TextEditingController().obs;
+  final annualIncomeController = TextEditingController().obs;
+  final companyName = TextEditingController().obs;
+  final numberOfBrothersController = TextEditingController().obs;
+  final numberOfSistersController = TextEditingController().obs;
+  final contactPersonNameController = TextEditingController().obs;
+  final relationshipController = TextEditingController().obs;
+  final timeToCallController = TextEditingController().obs;
+  final placeOfBirthController = TextEditingController().obs;
+  final hobbiesController = TextEditingController().obs;
+  final interestsController = TextEditingController().obs;
+  final favoriteReadsController = TextEditingController().obs;
+  final preferredMoviesController = TextEditingController().obs;
+  final sportsController = TextEditingController().obs;
+  final favoriteCuisineController = TextEditingController().obs;
+  final spokenLanguagesController = TextEditingController().obs;
+  final moonSignController = TextEditingController().obs;
+  final nakshatraController = TextEditingController().obs;
+  final astroprofileController = TextEditingController().obs;
+  final motherNameController = TextEditingController().obs;
+  final facebookLinkController = TextEditingController().obs;
+  final fatherNameController = TextEditingController().obs;
+  final linkedinUrlController = TextEditingController().obs;
+  final watsappNumberController = TextEditingController().obs;
   final dateOfMarriage = TextEditingController().obs;
   String? haveChildren;
   String? haveChildrenValue;
@@ -62,22 +65,22 @@ class AllProfilesListController extends GetxController {
   final usersList = RegisterModel().obs;
   final usersList2 = RegisterModel().obs;
   final usersList3 = RegisterModel().obs;
+  final timeOfBirth = TextEditingController().obs;
+
+  clearInputField() {
+    dateOfMarriage.value.clear();
+  }
 
   getAllProfiles({page, perPageRecord}) async {
     print("hjhhhhhhhhhhhhhhhhh");
-
     try {
       var payload = {"page": "", "per_page_record": "20"};
       var value = await api.post(
           ApiNetwork.allProfilesList, jsonEncode(payload), true,
           isCookie: true);
       if (value['status'] == "success") {
-        print("fsdfdsf pradhufjsdf ${value['payload']['data']}");
         allProfiles = value['payload']['data'];
-
-        print("object");
-        print("fgdfgfdgdfg fdg $allProfiles");
-
+        print("object $allProfiles");
         return allProfiles;
       }
     } catch (e) {
@@ -87,13 +90,26 @@ class AllProfilesListController extends GetxController {
     }
   }
 
-  createProfile(String imageUrl) async {
+  createProfile(String imageUrl1, String imageUrl2, String imageUrl3) async {
+    var userId = await jsonDecode(SessionManager.getUserId().toString());
+
+    var dateOfMarriageFormatted;
+
+    if (dateOfMarriage.value.text != "") {
+      dateOfMarriageFormatted = TimeFormateMethod().getTimeFormate(
+          formate: "yyyy-MM-ddTHH:mm:ss.SSSSSSZ+0000",
+          time: dateOfMarriage.value.text);
+    }
+    var timeOfBirthFormatted;
+
+    if (timeOfBirth.value.text != "") {
+      timeOfBirthFormatted = TimeFormateMethod()
+          .getTimeFormate(formate: "HH:mm", time: timeOfBirth.value.text);
+    }
     var payload = {
       "createdBy": "1",
-      "maritalStatus":
-          meritalStatus.toString() == null ? "1" : "2", //problem //corrcetion
-      "haveChildren":
-          haveChildren.toString() == null ? "1" : "2", //problem  //corrcetion
+      "maritalStatus": meritalStatus.toString(),
+      "haveChildren": haveChildren.toString(),
       "numberOfChildren": numberOfChildrenController.value.text,
       "weight": weightController.value.text,
       "height": heightController.value.text,
@@ -102,7 +118,6 @@ class AllProfilesListController extends GetxController {
       "religion": religionController.value.text,
       "specialCases": specialCasesController.value.text,
       "motherTongue": motherTongueController.value.text,
-      "dateOfMarriage": "2020-10-19T18:30:00.000000+0000", //corrcetion
       "caste": casteController.value.text,
       "subCaste": subCasteController.value.text,
       "manglik": manglikController.value.text,
@@ -111,15 +126,17 @@ class AllProfilesListController extends GetxController {
       "profession": professionController.value.text,
       "diet": dieatryHabitsController.value.text,
       "aboutYourself": aboutYourselfController.value.text,
+      "dateOfMarriage": dateOfMarriageFormatted,
       "bloodGroup": bloodGroupController.value.text,
       "annualIncome": annualIncomeController.value.text,
+      "companyName": companyName.value.text,
       "numberOfBrother": numberOfBrothersController.value.text,
       "numberOfSister": numberOfSistersController.value.text,
       "contactPersonName": contactPersonNameController.value.text,
       "contactPersonRelationShip": relationshipController.value.text,
       "convenientCallTime": timeToCallController.value.text,
       "placeOfBirth": placeOfBirthController.value.text,
-      "timeOFBirth": "2020-10-19T18:30:00.000000+0000", //corrcetion
+      "timeOFBirth": timeOfBirthFormatted,
       "hobbies": hobbiesController.value.text,
       "interests": interestsController.value.text,
       "favoriteReads": favoriteReadsController.value.text,
@@ -130,18 +147,17 @@ class AllProfilesListController extends GetxController {
       "rasi": moonSignController.value.text,
       "nakshatra": nakshatraController.value.text,
       "astroprofile": astroprofileController.value.text,
-      "photo1": "jkhkjh.png", //corrcetion
-      "photo2": "kkjlksafdj.pgds", //corrcetion
-      "photo3": "jhnkh.png", //corrcetion
+      "photo1": imageUrl1,
+      "photo2": imageUrl2,
+      "photo3": imageUrl3,
       "motherName": motherNameController.value.text,
       "fatherName": fatherNameController.value.text,
       "facebookUrl": facebookLinkController.value.text,
       "linkedinUrl": linkedinUrlController.value.text,
       "whatsappUrl": watsappNumberController.value.text,
-      "user": {"id": "3"} //corrcetion
+      "user": {"id": userId}
     };
     print("payload $payload");
-
     rxRequestStatus.value = Status.loading;
     try {
       var value = await api.post(
@@ -158,8 +174,110 @@ class AllProfilesListController extends GetxController {
         customFlutterToast(
             backgroundColor: Colors.green, msg: value['message']);
       }
-
       Get.offNamed(AppRoutes.homeScreen);
+    } catch (e) {
+      rxRequestStatus.value = Status.error;
+      print("Error , $e ");
+      customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
+    }
+  }
+
+  updateProfile(
+      String imageUrl1, String imageUrl2, String imageUrl3, String id) async {
+    print("hjhhhhhhhhhhhhhhhhh");
+    var userId = await jsonDecode(SessionManager.getUserId().toString());
+
+    var dateOfMarriageFormatted;
+
+    if (dateOfMarriage.value.text != "") {
+      dateOfMarriageFormatted = TimeFormateMethod().getTimeFormate(
+          formate: "yyyy-MM-ddTHH:mm:ss.SSSSSSZ+0000",
+          time: dateOfMarriage.value.text);
+    }
+    var timeOfBirthFormatted;
+
+    if (timeOfBirth.value.text != "") {
+      timeOfBirthFormatted = TimeFormateMethod()
+          .getTimeFormate(formate: "HH:mm", time: timeOfBirth.value.text);
+    }
+    print("zhdxjfghdsjfgfjx $id");
+    print("zhdxjfghdsjfgfjx $userId");
+    var url = Uri.parse(ApiNetwork.updateProfile + id);
+    var value = await http.put(
+      url,
+      body: jsonEncode({
+        "createdBy": "1",
+        "maritalStatus": meritalStatus.toString(),
+        "haveChildren": haveChildren.toString(),
+        "numberOfChildren": numberOfChildrenController.value.text,
+        "weight": weightController.value.text,
+        "height": heightController.value.text,
+        "bodyType": bodyTypeController.value.text,
+        "complexion": complexionController.value.text,
+        "religion": religionController.value.text,
+        "specialCases": specialCasesController.value.text,
+        "motherTongue": motherTongueController.value.text,
+        "caste": casteController.value.text,
+        "subCaste": subCasteController.value.text,
+        "manglik": manglikController.value.text,
+        "familyValues": familyValuesController.value.text,
+        "education": educationController.value.text,
+        "profession": professionController.value.text,
+        "diet": dieatryHabitsController.value.text,
+        "aboutYourself": aboutYourselfController.value.text,
+        "dateOfMarriage": dateOfMarriageFormatted,
+        "bloodGroup": bloodGroupController.value.text,
+        "annualIncome": annualIncomeController.value.text,
+        "companyName": companyName.value.text,
+        "numberOfBrother": numberOfBrothersController.value.text,
+        "numberOfSister": numberOfSistersController.value.text,
+        "contactPersonName": contactPersonNameController.value.text,
+        "contactPersonRelationShip": relationshipController.value.text,
+        "convenientCallTime": timeToCallController.value.text,
+        "placeOfBirth": placeOfBirthController.value.text,
+        "timeOFBirth": timeOfBirthFormatted,
+        "hobbies": hobbiesController.value.text,
+        "interests": interestsController.value.text,
+        "favoriteReads": favoriteReadsController.value.text,
+        "preferredMovies": preferredMoviesController.value.text,
+        "sports": sportsController.value.text,
+        "favoriteCuisine": favoriteCuisineController.value.text,
+        "spokenLanguages": spokenLanguagesController.value.text,
+        "rasi": moonSignController.value.text,
+        "nakshatra": nakshatraController.value.text,
+        "astroprofile": astroprofileController.value.text,
+        "photo1": imageUrl1,
+        "photo2": imageUrl2,
+        "photo3": imageUrl3,
+        "motherName": motherNameController.value.text,
+        "fatherName": fatherNameController.value.text,
+        "facebookUrl": facebookLinkController.value.text,
+        "linkedinUrl": linkedinUrlController.value.text,
+        "whatsappUrl": watsappNumberController.value.text,
+        "user": {"id": userId}
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        'Authorization': 'Bearer ${SessionManager.getToken()}',
+        "Cookie": "jwtToken=${SessionManager.getToken()}",
+      },
+    );
+    var response = jsonDecode(value.body.toString());
+    print("payload ${response}");
+    rxRequestStatus.value = Status.loading;
+    try {
+      if (value.statusCode == 200) {
+        rxRequestStatus.value = Status.success;
+        Get.offNamed(AppRoutes.homeScreen);
+        print("object $response");
+        customFlutterToast(msg: response['message']);
+      } else {
+        rxRequestStatus.value = Status.error;
+        print("Error , ${response['message']} ");
+        customFlutterToast(
+            backgroundColor: Colors.red, msg: "${response['message']}");
+      }
     } catch (e) {
       rxRequestStatus.value = Status.error;
       print("Error , $e ");

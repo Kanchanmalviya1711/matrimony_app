@@ -7,6 +7,7 @@ class SessionManager {
   static const _userId = "userId";
   static const _role = "role";
   static const _gender = "gender";
+  static const _userProfile = "userProfile";
   static const _profileCreated = "profileCreated";
 
   static Future init() async =>
@@ -18,6 +19,14 @@ class SessionManager {
 
   static dynamic getUser() {
     return preferences!.getString(_user);
+  }
+
+  static dynamic setUserProfileData(String userProfile) {
+    return preferences!.setString(_userProfile, userProfile);
+  }
+
+  static dynamic getUserProfileData() {
+    return preferences!.getString(_userProfile);
   }
 
   static dynamic setUserId(String userId) {

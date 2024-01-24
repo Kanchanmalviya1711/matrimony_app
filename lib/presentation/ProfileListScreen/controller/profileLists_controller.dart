@@ -6,7 +6,6 @@ import 'package:matrimony_app/core/constants/session_manager.dart';
 import 'package:matrimony_app/custom_widget/custom_snackbar.dart';
 import 'package:matrimony_app/data/apiClient/api_client.dart';
 import 'package:matrimony_app/data/apiClient/http_response.dart';
-import 'package:matrimony_app/routes/app_routes.dart';
 
 class ProfileListController extends GetxController {
   NetworkHttpServices api = NetworkHttpServices();
@@ -41,7 +40,8 @@ class ProfileListController extends GetxController {
     var payload = {
       "page": pageKey,
       "per_page_record": perPage,
-      "gender": SessionManager.getGender() == "1" ? "2" : "1"
+      "gender": SessionManager.getGender() == "1" ? "2" : "1",
+      "userId": json.decode(SessionManager.getUserId().toString())
     };
 
     try {
@@ -62,34 +62,40 @@ class ProfileListController extends GetxController {
 
 // Friend Request Api Call
 
-  sendFriendRequest(String userId, String statusValue) async {
+  sendFriendRequest(String userId, String status) async {
     var payload = {
       "sender_id": {"id": json.decode(SessionManager.getUserId().toString())},
       "receiver_id": {"id": userId},
-      "status": statusValue
+      "status": status,
     };
     print("payload $payload");
     rxRequestStatus.value = Status.loading;
     try {
       var value = await api.post(
-          ApiNetwork.friendRequest, jsonEncode(payload), true,
-          isCookie: true);
+        ApiNetwork.friendRequest,
+        jsonEncode(payload),
+        true,
+        isCookie: true,
+      );
       if (value['success'] == true) {
         rxRequestStatus.value = Status.success;
         print('Friend request sent successfully');
-        customFlutterToast(msg: value['message']);
+        customFlutterToast(
+            backgroundColor: Colors.green, msg: value['message']);
       } else {
         rxRequestStatus.value = Status.error;
         print("Error , $value ");
         customFlutterToast(
-            backgroundColor: Colors.green, msg: value['message']);
+          backgroundColor: Colors.black,
+          msg: value['message'],
+        );
       }
-      Get.offNamed(AppRoutes.homeScreen);
+      // Don't navigate to home screen immediately after sending request
     } catch (e) {
       rxRequestStatus.value = Status.error;
       print("Error , $e ");
-      customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
-      throw Exception('Failed to send friend request.');
+      customFlutterToast(
+          backgroundColor: Colors.red, msg: "Interest request already sent");
     }
   }
 }

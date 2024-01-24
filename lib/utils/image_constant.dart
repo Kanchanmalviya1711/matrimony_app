@@ -110,4 +110,6 @@ class ImageConstant {
   static String profile5 = '$imagePath/profilePic5.png';
   static String profile6 = '$imagePath/profilePic6.png';
   static String ourServices = '$imagePath/ourServices.png';
+  static String noData = '$imagePath/noData.png';
+  static String noDatabell = '$imagePath/noDataBell.png';
 }

@@ -86,6 +86,9 @@ class _BlogScreenState extends State<BlogScreen> {
         title: "BLOGS",
       ),
       body: CustomPaginationView(
+          noDataFound: () {
+            Get.offNamed(AppRoutes.homeScreen);
+          },
           onRefresh: () => Future.sync(() {
                 pagingController.refresh();
               }),

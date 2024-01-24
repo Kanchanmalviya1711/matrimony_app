@@ -72,9 +72,8 @@ class CustomTextStyles {
       );
   static get labelLargeMulishBlack900 =>
       theme.textTheme.labelLarge!.mulish.copyWith(
-        color: appTheme.black900,
-        fontSize: 13.fSize,
-        fontWeight: FontWeight.w700,
+        color: Colors.black,
+        fontSize: 16,
       );
   static get labelLargeMulishBlack900SemiBold =>
       theme.textTheme.labelLarge!.mulish.copyWith(

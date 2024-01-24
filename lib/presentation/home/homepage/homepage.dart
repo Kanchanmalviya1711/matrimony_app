@@ -332,10 +332,8 @@ class _HomePageState extends State<HomePage> {
                             ListTile(
                                 leading: const Icon(Icons.phone),
                                 title: const Text('Support Contact Number'),
-                                subtitle: Text(homepageController
-                                    .getAppSettingsDetails[index]
-                                        ['support_contact_number']
-                                    .toString())),
+                                subtitle: Text(
+                                    "+91 - ${homepageController.getAppSettingsDetails[index]['support_contact_number']}")),
                             ListTile(
                                 leading: const Icon(Icons.email),
                                 title: const Text('Support Email'),
@@ -580,6 +578,7 @@ class MyImageWidget extends StatelessWidget {
     return imageUrl != null
         ? Image.network(
             imageUrl!,
+            fit: BoxFit.cover,
             loadingBuilder: (BuildContext context, Widget child,
                 ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) {
@@ -603,6 +602,7 @@ class MyImageWidget extends StatelessWidget {
             },
           )
         : CustomImageView(
+            fit: BoxFit.cover,
             imagePath: ImageConstant.couple1,
           ); // Display a static image if imageUrl is null
   }

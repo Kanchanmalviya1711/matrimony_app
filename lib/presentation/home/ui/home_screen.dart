@@ -104,9 +104,14 @@ class _HomeScreenState extends State<HomeScreen> {
       }),
       // Home page
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: homeController.count.value,
         onTap: (value) => setState(() {
           homeController.count.value = value;
         }),
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: appTheme.red600D8,
+        unselectedItemColor: appTheme.black900,
+        showUnselectedLabels: true,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

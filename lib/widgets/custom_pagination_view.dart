@@ -1,4 +1,5 @@
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/empty_container.dart';
 import 'package:matrimony_app/widgets/custom_circuler_loader.dart';
@@ -55,9 +56,24 @@ class CustomPaginationView extends StatelessWidget {
             firstPageErrorIndicatorBuilder: (_) {
               print(
                   "PPPPPPjhs zxcgzhdv hxgvz hxzgcvgc yxcgfzjPPP ${_pagingController.error.toString()}");
-              return ElevatedButton(
-                  onPressed: () => _pagingController.refresh(),
-                  child: Text(_pagingController.error.toString()));
+              return EmptyContainer(
+                  onTap: () => Get.offNamed(AppRoutes.homeScreen),
+                  msg: _pagingController.error.toString());
+
+              // Center(
+              //   child: GestureDetector(
+              //     onTap: () => _pagingController.refresh(),
+              //     child: Container(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: Text(
+              //         _pagingController.error.toString(),
+              //         style: const TextStyle(
+              //           color: Colors.black, // Optional: Change text color
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // );
             },
             newPageErrorIndicatorBuilder: (_) {
               print("Kkkkkkkkkkkkk ${_pagingController.error.toString()}");

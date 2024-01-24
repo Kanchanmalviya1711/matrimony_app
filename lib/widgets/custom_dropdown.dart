@@ -20,6 +20,8 @@ class CustomDropdown extends StatefulWidget {
   void Function(List<dynamic>, dynamic)? popupOnItemRemoved;
 
   List<String> listName;
+
+  var prefixIcon;
   CustomDropdown({
     this.onChng,
     this.multiSelected,
@@ -35,6 +37,7 @@ class CustomDropdown extends StatefulWidget {
     this.onChanged,
     this.showSearchBox = false,
     Key? key,
+    this.prefixIcon = true,
   }) : super(key: key);
 
   @override
@@ -48,7 +51,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _textLabel(),
+        //  _textLabel(),
         Stack(
           children: [
             Container(
@@ -57,7 +60,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
               decoration: BoxDecoration(boxShadow: [
                 BoxShadow(
                     blurRadius: 5,
-                    color: Colors.black.withOpacity(0.01),
+                    color: Colors.orange.withOpacity(0.01),
                     offset: const Offset(0, 0),
                     spreadRadius: 8)
               ], borderRadius: BorderRadius.circular(15)),
@@ -69,16 +72,11 @@ class _CustomDropdownState extends State<CustomDropdown> {
               ),
               items: widget.listName,
               dropdownDecoratorProps: DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(
-                  labelText: widget.labelText,
-                  hintText: widget.labelText,
-                ),
+                dropdownSearchDecoration: customInputDecoration(
+                    appTheme.whiteA700, widget.labelText, false,
+                    offStage: false),
               ),
-              onChanged: (value) {
-                setState(() {
-                  this.value = value;
-                });
-              },
+              onChanged: widget.onChng,
               selectedItem: widget.selectedItem,
             )
           ],
@@ -99,21 +97,24 @@ class _CustomDropdownState extends State<CustomDropdown> {
       String? errorText}) {
     double radius = 10;
     return InputDecoration(
-      contentPadding: EdgeInsets.symmetric(vertical: 10.v, horizontal: 20.v),
+      contentPadding: EdgeInsets.symmetric(horizontal: 15.v, vertical: 20.v),
       labelText: labelText,
       counterStyle: counterStyle,
       counterText: counterText,
       isDense: isDense ?? false,
       errorText: errorText,
       hintText: hintText.toCapitalized(),
-      hintStyle: CustomTextStyles.titleSmall_1,
+      hintStyle: CustomTextStyles.labelLargeMulishBlack900,
       errorStyle: CustomTextStyles.titleMediumRed600d8,
-      prefixIcon: isPrefixIcon == false
-          ? null
-          : Padding(
-              padding: EdgeInsets.only(top: 20.v, bottom: 20.v),
+      prefixIcon: isPrefixIcon == true
+          ? Padding(
+              padding: EdgeInsets.only(
+                top: 20.v,
+                bottom: 20.v,
+              ),
               child: prefixIcon,
-            ),
+            )
+          : null,
       suffixIcon: Padding(
         padding: EdgeInsets.only(
           top: 20.v,
@@ -154,15 +155,16 @@ class _CustomDropdownState extends State<CustomDropdown> {
   _textLabel() {
     return Row(
       children: [
-        SizedBox(
-          width: 10,
-        ),
         Container(
-            padding: EdgeInsets.only(bottom: 5.h, right: 15.h),
-            child: Text(
-              widget.labelText,
-              style: CustomTextStyles.titleSmall_1,
-            )),
+          padding: const EdgeInsets.only(bottom: 10, left: 10),
+          child: Text(
+            widget.labelText,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.black,
+            ),
+          ),
+        ),
       ],
     );
   }

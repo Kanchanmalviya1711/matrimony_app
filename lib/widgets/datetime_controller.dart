@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 class DateTimePickerController extends GetxController {
   DateTimePickerController();
 
+  // Date Of Birth
   void selectDob(TextEditingController dataTimeController) async {
     DateTime? pickedDate = await showDatePicker(
       context: Get.context!,
@@ -18,6 +19,24 @@ class DateTimePickerController extends GetxController {
     );
     if (pickedDate != null) {
       String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+      dataTimeController.text = formattedDate;
+    }
+  }
+
+  // date Of Marriage
+
+  void selectDob1(TextEditingController dataTimeController) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: Get.context!,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1990),
+      lastDate: DateTime(2030),
+      builder: (context, child) {
+        return calenderTheme(child, context);
+      },
+    );
+    if (pickedDate != null) {
+      String formattedDate = DateFormat("yyyy-MM-dd").format(pickedDate);
       dataTimeController.text = formattedDate;
     }
   }
@@ -38,5 +57,13 @@ class DateTimePickerController extends GetxController {
           DateFormat('yyyy-MM-dd HH:mm:ss').format(parsedTime);
       timeController.text = formattedTime.toString();
     }
+
+    //    if (pickedTime != null) {
+    //   DateTime parsedTime = DateTime(DateTime.now().year, DateTime.now().month,
+    //       DateTime.now().day, pickedTime.hour, pickedTime.minute);
+    //   String formattedTime =
+    //       DateFormat('yyyy-MM-dd HH:mm:ss').format(parsedTime);
+    //   timeController.text = formattedTime.toString();
+    // }
   }
 }

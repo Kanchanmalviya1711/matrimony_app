@@ -47,6 +47,7 @@ class RegisterController extends GetxController {
   }
 
   register(String imageUrl) async {
+    rxRequestStatus.value = Status.loading;
     var payload = {
       "firstName": firstNameController.value.text,
       "lastName": lastNameController.value.text,
@@ -63,20 +64,23 @@ class RegisterController extends GetxController {
       "dateOfBirth": dateOfBirth.value.text,
       "status": status.toString()
     };
-    // ignore: avoid_print
+
     print("$payload, checking payload data");
+
     try {
       var response =
           await api.post(ApiNetwork.addUser, jsonEncode(payload), true);
       if (response['status'] == "success") {
+        rxRequestStatus.value = Status.success;
         Get.offAllNamed(AppRoutes.loginScreen);
-
-        customFlutterToast(backgroundColor: Colors.green, msg: "login success");
+        customFlutterToast(
+            backgroundColor: Colors.green, msg: "User Registered Successfully");
       } else {
         print("Response Null");
       }
     } catch (e) {
-      customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
+      customFlutterToast(
+          backgroundColor: Colors.red, msg: "Please Fill The Form");
       rxRequestStatus.value = Status.error;
     }
   }
