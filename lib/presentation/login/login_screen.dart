@@ -21,6 +21,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   late LoginController controller;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -78,19 +79,26 @@ class _LoginScreenState extends State<LoginScreen> {
                           hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return "Please enter a valid email";
+                              return "Please enter email";
                             }
 
+                            // Convert the email to lowercase
+                            String lowercaseValue = value.toLowerCase();
+
                             // Check if the email contains the "@" character
-                            if (!value.contains('@')) {
+                            if (!lowercaseValue.contains('@')) {
                               return "Please enter a valid email address";
+                            }
+
+                            // Check if the email contains any uppercase letters
+                            if (value != lowercaseValue) {
+                              return "Email should be correct";
                             }
 
                             return null;
                           },
                           contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 30,
-                            vertical: 18,
+                            vertical: 10,
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -119,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return "Please enter a valid password";
+                                return "Please enter password";
                               }
 
                               // Check if the password meets the required conditions
@@ -132,8 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               return null;
                             },
                             contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 30,
-                              vertical: 18,
+                              vertical: 10,
                             ),
                           ),
                         ),
@@ -159,9 +166,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             )
                           ],
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
                         controller.rxRequestStatus.value == Status.loading
-                            ? const CustomLoading()
+                            ? CustomLoading(
+                                color: appTheme.orange,
+                                size: 30,
+                              )
                             : CustomElevatedButton(
                                 buttonStyle: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
@@ -172,7 +182,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     CustomTextStyles.titleMediumBlackA700,
                                 onTap: () {
                                   if (_formKey.currentState!.validate()) {
-                                    controller.login();
+                                    setState(() {
+                                      controller.login();
+                                    });
                                   }
                                 },
                               ),
@@ -181,19 +193,42 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             const Text("Don't have an account ?"),
                             const SizedBox(
-                              height: 20,
+                              height: 10,
                             ),
                             SizedBox(
-                              child: CustomElevatedButton(
-                                buttonStyle: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      appTheme.green600),
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: appTheme.green600,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 15,
+                                  ),
                                 ),
-                                text: "Join Now",
-                                onTap: () {
+                                child: isLoading
+                                    ? CustomLoading(
+                                        color: appTheme.whiteA700,
+                                        size: 22,
+                                      )
+                                    : Text(
+                                        "Become a Member",
+                                        style: TextStyle(
+                                            color: appTheme.whiteA700,
+                                            fontSize: 15),
+                                      ),
+                                onPressed: () {
+                                  setState(() {
+                                    isLoading = true;
+                                  });
                                   Get.toNamed(
                                     AppRoutes.registerScreen,
                                   );
+                                  Future.delayed(const Duration(seconds: 2),
+                                      () {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  });
                                 },
                               ),
                             ),

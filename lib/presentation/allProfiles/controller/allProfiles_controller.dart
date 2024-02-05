@@ -34,6 +34,7 @@ class AllProfilesListController extends GetxController {
   final numberOfBrothersController = TextEditingController().obs;
   final numberOfSistersController = TextEditingController().obs;
   final contactPersonNameController = TextEditingController().obs;
+  final contactPersonPhoneNumber = TextEditingController().obs;
   final relationshipController = TextEditingController().obs;
   final timeToCallController = TextEditingController().obs;
   final placeOfBirthController = TextEditingController().obs;
@@ -52,13 +53,14 @@ class AllProfilesListController extends GetxController {
   final fatherNameController = TextEditingController().obs;
   final linkedinUrlController = TextEditingController().obs;
   final watsappNumberController = TextEditingController().obs;
+  final nickNameController = TextEditingController().obs;
   final dateOfMarriage = TextEditingController().obs;
+  var allProfiles;
   String? haveChildren;
   String? haveChildrenValue;
   String? meritalStatus;
   String? meritalStatusValue;
   final rxRequestStatus = Rx<Status>(Status.success);
-  var allProfiles;
   var firstName = TextEditingController();
   var pageKey = 1;
   var perPage = 10;
@@ -68,13 +70,63 @@ class AllProfilesListController extends GetxController {
   final timeOfBirth = TextEditingController().obs;
 
   clearInputField() {
+    numberOfChildrenController.value.clear();
+    weightController.value.clear();
+    heightController.value.clear();
+    bodyTypeController.value.clear();
+    complexionController.value.clear();
+    religionController.value.clear();
+    specialCasesController.value.clear();
+    motherTongueController.value.clear();
+    casteController.value.clear();
+    subCasteController.value.clear();
+    manglikController.value.clear();
+    familyValuesController.value.clear();
+    educationController.value.clear();
+    professionController.value.clear();
+    dieatryHabitsController.value.clear();
+    aboutYourselfController.value.clear();
+    bloodGroupController.value.clear();
+    annualIncomeController.value.clear();
+    companyName.value.clear();
+    numberOfBrothersController.value.clear();
+    numberOfSistersController.value.clear();
+    contactPersonNameController.value.clear();
+    contactPersonPhoneNumber.value.clear();
+    relationshipController.value.clear();
+    timeToCallController.value.clear();
+    placeOfBirthController.value.clear();
+    hobbiesController.value.clear();
+    interestsController.value.clear();
+    favoriteReadsController.value.clear();
+    preferredMoviesController.value.clear();
+    sportsController.value.clear();
+    favoriteCuisineController.value.clear();
+    spokenLanguagesController.value.clear();
+    moonSignController.value.clear();
+    nakshatraController.value.clear();
+    astroprofileController.value.clear();
+    motherNameController.value.clear();
+    facebookLinkController.value.clear();
+    fatherNameController.value.clear();
+    linkedinUrlController.value.clear();
+    watsappNumberController.value.clear();
     dateOfMarriage.value.clear();
+    nickNameController.value.clear();
+    timeOfBirth.value.clear();
+    haveChildrenValue = null;
+    haveChildren = null;
+    meritalStatus = null;
+    meritalStatusValue = null;
   }
 
-  getAllProfiles({page, perPageRecord}) async {
-    print("hjhhhhhhhhhhhhhhhhh");
+  getAllProfiles({page, perPageRecord, searchTerm}) async {
     try {
-      var payload = {"page": "", "per_page_record": "20"};
+      var payload = {
+        "page": "",
+        "per_page_record": "20",
+        "caste": casteController.value.text
+      };
       var value = await api.post(
           ApiNetwork.allProfilesList, jsonEncode(payload), true,
           isCookie: true);
@@ -101,7 +153,6 @@ class AllProfilesListController extends GetxController {
           time: dateOfMarriage.value.text);
     }
     var timeOfBirthFormatted;
-
     if (timeOfBirth.value.text != "") {
       timeOfBirthFormatted = TimeFormateMethod()
           .getTimeFormate(formate: "HH:mm", time: timeOfBirth.value.text);
@@ -132,11 +183,13 @@ class AllProfilesListController extends GetxController {
       "companyName": companyName.value.text,
       "numberOfBrother": numberOfBrothersController.value.text,
       "numberOfSister": numberOfSistersController.value.text,
+      "contactPersonNumber": contactPersonPhoneNumber.value.text,
       "contactPersonName": contactPersonNameController.value.text,
       "contactPersonRelationShip": relationshipController.value.text,
       "convenientCallTime": timeToCallController.value.text,
       "placeOfBirth": placeOfBirthController.value.text,
       "timeOFBirth": timeOfBirthFormatted,
+      "nickName": nickNameController.value.text,
       "hobbies": hobbiesController.value.text,
       "interests": interestsController.value.text,
       "favoriteReads": favoriteReadsController.value.text,
@@ -166,7 +219,6 @@ class AllProfilesListController extends GetxController {
       if (value['success'] == true) {
         rxRequestStatus.value = Status.success;
         Get.offNamed(AppRoutes.homeScreen);
-
         customFlutterToast(msg: value['message']);
       } else {
         rxRequestStatus.value = Status.error;
@@ -229,8 +281,10 @@ class AllProfilesListController extends GetxController {
         "bloodGroup": bloodGroupController.value.text,
         "annualIncome": annualIncomeController.value.text,
         "companyName": companyName.value.text,
+        "nickName": nickNameController.value.text,
         "numberOfBrother": numberOfBrothersController.value.text,
         "numberOfSister": numberOfSistersController.value.text,
+        "contactPersonNumber": contactPersonPhoneNumber.value.text,
         "contactPersonName": contactPersonNameController.value.text,
         "contactPersonRelationShip": relationshipController.value.text,
         "convenientCallTime": timeToCallController.value.text,
@@ -263,6 +317,7 @@ class AllProfilesListController extends GetxController {
         "Cookie": "jwtToken=${SessionManager.getToken()}",
       },
     );
+    print("payload ${value.body.toString()}");
     var response = jsonDecode(value.body.toString());
     print("payload ${response}");
     rxRequestStatus.value = Status.loading;

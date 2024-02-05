@@ -166,7 +166,10 @@ class _UpdateOtpVerifyScreenState extends State<UpdateOtpVerifyScreen> {
                         ),
                         const SizedBox(height: 20),
                         controller.rxRequestStatus.value == Status.loading
-                            ? const CustomLoading()
+                            ? const CustomLoading(
+                                color: Colors.green,
+                                size: 50,
+                              )
                             : CustomElevatedButton(
                                 buttonStyle: ButtonStyle(
                                   backgroundColor:

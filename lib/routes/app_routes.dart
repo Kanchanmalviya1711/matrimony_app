@@ -8,6 +8,8 @@ import 'package:matrimony_app/presentation/allProfiles/ui/viewAllProfiles.dart';
 import 'package:matrimony_app/presentation/blog/binding/blog_binding.dart';
 import 'package:matrimony_app/presentation/blog/ui/blog_screen.dart';
 import 'package:matrimony_app/presentation/blog/ui/view_blog_screen.dart';
+import 'package:matrimony_app/presentation/chats/binding/chat_binding.dart';
+import 'package:matrimony_app/presentation/chats/ui/chat_screen.dart';
 import 'package:matrimony_app/presentation/contact/binding/contact_binding.dart';
 import 'package:matrimony_app/presentation/contact/contactusScreen.dart';
 import 'package:matrimony_app/presentation/friendRequestScreen/binding/friendRequest_binding.dart';
@@ -18,6 +20,8 @@ import 'package:matrimony_app/presentation/login/binding/login_binding.dart';
 import 'package:matrimony_app/presentation/login/forgotPassword_screen.dart';
 import 'package:matrimony_app/presentation/login/login_screen.dart';
 import 'package:matrimony_app/presentation/login/update_otpverify_screen.dart';
+import 'package:matrimony_app/presentation/notifications/binding/notifications_binding.dart';
+import 'package:matrimony_app/presentation/notifications/ui/notifications_screen.dart';
 import 'package:matrimony_app/presentation/ourServices/binding/ourServices_binding.dart';
 import 'package:matrimony_app/presentation/ourServices/ui/ourServices_screen.dart';
 import 'package:matrimony_app/presentation/profile/binding/profile.binding.dart';
@@ -49,6 +53,8 @@ class AppRoutes {
   static const String friendRequestScreen = "/friendRequestScreen";
   static const String forgotPasswordScreen = "/forgotPasswordScreen";
   static const String verifyOtpScreen = "/verifyOtpScreen";
+  static const String notificationScreen = "/notificationScreen";
+  static const String chatScreen = "/chatScreen";
 
   static List<GetPage> pages = [
     //splash screen
@@ -141,15 +147,27 @@ class AppRoutes {
       name: friendRequestScreen,
       page: () => const FriendRequestScreen(),
     ),
+    //forgot password screen
     GetPage(
       binding: LoginBinding(),
       name: forgotPasswordScreen,
       page: () => const ForgotPasswordScreen(),
     ),
+    //verify otp screen
     GetPage(
       binding: LoginBinding(),
       name: verifyOtpScreen,
       page: () => const UpdateOtpVerifyScreen(),
     ),
+    //notification screen
+    GetPage(
+        binding: NotificationsBinding(),
+        name: notificationScreen,
+        page: () => const Notifications()),
+    //chat screen
+    GetPage(
+        binding: ChatBinding(),
+        name: chatScreen,
+        page: () => const ChatScreen()),
   ];
 }

@@ -699,7 +699,8 @@ Widget buildCarouselItem({
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 5),
                       child: GestureDetector(
                         onTap: () {
                           Get.toNamed(AppRoutes.blogScreen);

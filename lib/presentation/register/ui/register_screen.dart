@@ -1,11 +1,14 @@
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
+import 'package:matrimony_app/custom_widget/time_formate_method.dart';
+import 'package:matrimony_app/data/apiClient/http_response.dart';
 import 'package:matrimony_app/presentation/register/controller/resgister_controller.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/custom_text_style.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
 import 'package:matrimony_app/utils/size_utils.dart';
+import 'package:matrimony_app/widgets/custom_circuler_loader.dart';
 import 'package:matrimony_app/widgets/custom_dropdown.dart';
 import 'package:matrimony_app/widgets/custom_elevated_button.dart';
 import 'package:matrimony_app/widgets/custom_icon_button.dart';
@@ -27,6 +30,52 @@ class _RegisterScreenState extends State<RegisterScreen> {
   ImagePickerController imagePickerController =
       Get.put(ImagePickerController());
 
+  final data = Get.arguments;
+
+  assignFieldData() {
+    print("payload ${data}");
+    registerController.firstNameController.value.text =
+        data[0]["firstName"].toString();
+    registerController.lastNameController.value.text =
+        data[0]["lastName"].toString();
+    registerController.emailController.value.text =
+        data[0]["emailAddress"].toString();
+    registerController.userTypeController.value.text =
+        data[0]["userType"].toString();
+    registerController.userNameController.value.text =
+        data[0]["username"] == null
+            ? "Username not found"
+            : data[0]["username"].toString();
+    registerController.addressController.value.text =
+        data[0]["address"].toString();
+    String passwordText = data[0]["password"].toString() != null
+        ? "Enter password"
+        : "Password not found";
+    registerController.passwordController.value.text = passwordText;
+    registerController.genderType = data[0]["gender"] == 1 ? "Male" : "Female";
+    registerController.dateOfBirth.value.text = data[0]["dateOfBirth"] == null
+        ? ""
+        : TimeFormateMethod().getTimeFormate(
+            time: data[0]["dateOfBirth"].toString(), formate: 'yyyy-MM-dd');
+    registerController.phoneController.value.text = data[0]["phone"].toString();
+    registerController.subscriptionTypeValue = data[0]["subscriptionType"] == 1
+        ? "free"
+        : data[0]["subscriptionType"] == 2
+            ? "gold"
+            : "platinum";
+    registerController.statusValue =
+        data[0]["status"] == 1 ? "active" : "inactive";
+    registerController.gender = data[0]?["gender"].toString() ?? '';
+    registerController.subscriptionType =
+        data[0]?["subscriptionType"].toString() ?? '';
+    registerController.status = data[0]?["status"].toString() ?? '';
+    registerController.usersList.value.downloadURL =
+        data[0]["imagePath"].toString();
+    imageUrl = data[0]["imagePath"].toString();
+  }
+
+  String imageUrl = '';
+
 // Gender list
   var gender = [
     {"id": "1", "title": "male"},
@@ -45,6 +94,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   ];
   @override
   void initState() {
+    print("data initstate ${data}");
+    if (data != null) assignFieldData();
     super.initState();
   }
 
@@ -63,15 +114,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildLogoSection(),
+                    data == null ? _buildLogoSection() : Container(),
                     SizedBox(height: 10.h),
                     Padding(
-                      padding: const EdgeInsets.only(left: 30),
-                      child: Text(
-                        "Register New Member".tr,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: CustomTextStyles.labelLargeBlack900,
+                      padding: const EdgeInsets.only(left: 10, top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: data != null
+                                ? Icon(
+                                    Icons.arrow_back_ios,
+                                    color: appTheme.headerColor,
+                                  )
+                                : Container(),
+                          ),
+                          Text(
+                            data == null
+                                ? "Register New Member".tr
+                                : "Update User Details".tr,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: CustomTextStyles.labelLargeBlack900,
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(height: 25.v),
@@ -82,7 +151,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Icons.person,
                           color: Colors.black,
                         ),
-                        controller: registerController.firstNameController,
+                        controller:
+                            registerController.firstNameController.value,
                         labelText: "Firstname",
                         hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                         validator: (value) {
@@ -92,8 +162,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return null;
                         },
                         contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 18,
+                          horizontal: 10,
+                          vertical: 10,
                         ),
                       ),
                     ),
@@ -105,7 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Icons.person,
                           color: Colors.black,
                         ),
-                        controller: registerController.lastNameController,
+                        controller: registerController.lastNameController.value,
                         labelText: "Lastname",
                         hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                         validator: (value) {
@@ -115,8 +185,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return null;
                         },
                         contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 18,
+                          horizontal: 10,
+                          vertical: 10,
                         ),
                       ),
                     ),
@@ -128,7 +198,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Icons.person_2_rounded,
                           color: Colors.black,
                         ),
-                        controller: registerController.userNameController,
+                        controller: registerController.userNameController.value,
                         labelText: "Username",
                         hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                         validator: (value) {
@@ -138,8 +208,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return null;
                         },
                         contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 18,
+                          horizontal: 10,
+                          vertical: 10,
                         ),
                       ),
                     ),
@@ -188,7 +258,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Icons.person_2_rounded,
                           color: Colors.black,
                         ),
-                        controller: registerController.userTypeController,
+                        controller: registerController.userTypeController.value,
                         labelText: "Usertype",
                         hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                         validator: (value) {
@@ -198,8 +268,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return null;
                         },
                         contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 18,
+                          horizontal: 10,
+                          vertical: 10,
                         ),
                       ),
                     ),
@@ -211,23 +281,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Icons.email,
                           color: Colors.black,
                         ),
-                        controller: registerController.emailController,
+                        controller: registerController.emailController.value,
                         labelText: "Email",
                         hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please enter a valid email";
+                            return "Please enter email";
                           }
+
+                          // Convert the email to lowercase
+                          String lowercaseValue = value.toLowerCase();
+
                           // Check if the email contains the "@" character
-                          if (!value.contains('@')) {
+                          if (!lowercaseValue.contains('@')) {
                             return "Please enter a valid email address";
+                          }
+
+                          // Check if the email contains any uppercase letters
+                          if (value != lowercaseValue) {
+                            return "Email should be correct";
                           }
 
                           return null;
                         },
                         contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 18,
+                          vertical: 10,
                         ),
                       ),
                     ),
@@ -246,16 +324,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               registerController.isPasswordVisible.value
                                   ? Icons.visibility_off
                                   : Icons.visibility,
-                              color: registerController.isPasswordVisible.value
-                                  ? Colors.black
-                                  : const Color.fromARGB(255, 103, 199, 106),
+                              color: Colors.black,
                             ),
                           ),
                           prefix: const Icon(
                             Icons.lock,
                             color: Colors.black,
                           ),
-                          controller: registerController.passwordController,
+                          controller:
+                              registerController.passwordController.value,
                           labelText: "Password",
                           hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                           validator: (value) {
@@ -273,7 +350,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             return null;
                           },
                           contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 30,
+                            horizontal: 10,
                             vertical: 18,
                           ),
                         ),
@@ -287,7 +364,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Icons.keyboard,
                           color: Colors.black,
                         ),
-                        controller: registerController.phoneController,
+                        controller: registerController.phoneController.value,
                         labelText: "Phone Number",
                         hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                         validator: (value) {
@@ -302,8 +379,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return null;
                         },
                         contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 18,
+                          horizontal: 10,
+                          vertical: 10,
                         ),
                       ),
                     ),
@@ -315,7 +392,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Icons.place,
                           color: Colors.black,
                         ),
-                        controller: registerController.addressController,
+                        controller: registerController.addressController.value,
                         labelText: "Complete Address",
                         hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                         validator: (value) {
@@ -325,8 +402,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return null;
                         },
                         contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 18,
+                          horizontal: 10,
+                          vertical: 10,
                         ),
                       ),
                     ),
@@ -339,6 +416,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Icons.person_2_rounded,
                           color: Colors.black,
                         ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please select suscription type";
+                          }
+                          return null;
+                        },
                         listName: subscriptionType
                             .map((e) => e['title'].toString())
                             .toList(),
@@ -362,6 +445,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Icons.person_2_rounded,
                           color: Colors.black,
                         ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please select status";
+                          }
+                          return null;
+                        },
                         listName:
                             status.map((e) => e['title'].toString()).toList(),
                         selectedItem: registerController.statusValue,
@@ -384,6 +473,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Icons.person_2_rounded,
                           color: Colors.red,
                         ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please select gender";
+                          }
+                          return null;
+                        },
                         listName:
                             gender.map((e) => e['title'].toString()).toList(),
                         selectedItem: registerController.genderType,
@@ -456,40 +551,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SizedBox(height: 10),
                     _buildLoginButtonSection(),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 20,
-                        right: 10,
-                        bottom: 10,
-                      ),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Already have a member ?",
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: appTheme.black900,
-                              ),
+                    data != null
+                        ? Container()
+                        : Padding(
+                            padding: const EdgeInsets.only(
+                              left: 20,
+                              right: 10,
+                              bottom: 10,
                             ),
-                            Column(children: [
-                              CustomElevatedButton(
-                                buttonStyle: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      appTheme.headerColor),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Already have a member ?",
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: appTheme.black900,
+                                  ),
                                 ),
-                                text: "Login",
-                                buttonTextStyle:
-                                    CustomTextStyles.titleMediumBlackA700,
-                                onTap: () {
-                                  Get.toNamed(
-                                    AppRoutes.loginScreen,
-                                  );
-                                },
-                              ),
-                            ])
-                          ]),
-                    )
+                                Column(
+                                  children: [
+                                    CustomElevatedButton(
+                                      buttonStyle: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                appTheme.headerColor),
+                                      ),
+                                      text: "Login",
+                                      buttonTextStyle:
+                                          CustomTextStyles.titleMediumBlackA700,
+                                      onTap: () {
+                                        Get.toNamed(
+                                          AppRoutes.loginScreen,
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
                   ],
                 ),
               ),
@@ -535,22 +636,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return GetBuilder(
         init: ImagePickerController(),
         builder: (context) {
-          return CustomElevatedButton(
-            buttonStyle: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(appTheme.green600),
-            ),
-            onTap: () {
-              if (_formKey.currentState!.validate()) {
-                registerController.register(imagePickerController.imageUrl);
-              }
-            },
-            text: "Submit".tr,
-            margin: EdgeInsets.only(
-              left: 10.h,
-              right: 10.h,
-              bottom: 10.v,
-            ),
-          );
+          return registerController.rxRequestStatus.value == Status.loading
+              ? CustomLoading(
+                  color: appTheme.orange,
+                  size: 20,
+                )
+              : CustomElevatedButton(
+                  buttonStyle: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(appTheme.green600),
+                  ),
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      setState(() {
+                        data == null
+                            ? registerController
+                                .register(imagePickerController.imageUrl)
+                            : registerController.updateUserDetails(
+                                imagePickerController.imageUrl,
+                                data[0]["id"].toString());
+                      });
+                    }
+                  },
+                  text: "Submit".tr,
+                  margin: EdgeInsets.only(
+                    left: 10.h,
+                    right: 10.h,
+                    bottom: 10.v,
+                  ),
+                );
         });
   }
 }

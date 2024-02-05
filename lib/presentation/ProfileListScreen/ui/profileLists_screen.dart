@@ -1,7 +1,9 @@
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
+import 'package:matrimony_app/custom_widget/custom_filter.dart';
 import 'package:matrimony_app/presentation/ProfileListScreen/controller/profileLists_controller.dart';
+import 'package:matrimony_app/presentation/ProfileListScreen/ui/profileList_filter.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
@@ -22,7 +24,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
   );
   ProfileListController profileListController =
       Get.put(ProfileListController());
-
+  TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     pagingController.addPageRequestListener((pageKey) {
@@ -75,16 +77,34 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
     Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: Text(
-            "Showing All Profiles For You",
-            style: TextStyle(
-                color: appTheme.heading,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                fontFamily: "CinzelDecorative"),
-          ),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(
+                10,
+              ),
+              child: Text(
+                "Showing All Profiles For You",
+                style: TextStyle(
+                    color: appTheme.heading,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "CinzelDecorative"),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            GestureDetector(
+              onTap: () {
+                filterDialog(context, size, const ProfileListFilter());
+              },
+              child: const Icon(
+                Icons.search,
+                color: Colors.black,
+              ),
+            ),
+          ],
         ),
         Expanded(
           child: CustomPaginationView(
@@ -97,7 +117,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
               pagingController: pagingController,
               itemBuilder: (p0, p1, p2) {
                 return Padding(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.only(left: 5, right: 5),
                   child: Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
@@ -116,8 +136,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
                                       height: size.height * 0.4,
                                       width: double.maxFinite,
                                       imageUrl: ApiNetwork.imageUrl +
-                                              p1["user"]["imagePath"] ??
-                                          ImageConstant.couple1),
+                                          p1["user"]["imagePath"]),
                                 ],
                               ),
                             ],
@@ -188,7 +207,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
                                         // This is what you need!
                                         ),
                                     child: const Text(
-                                      'Chat now',
+                                      'Chat Now',
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
@@ -272,3 +291,34 @@ class MyImageWidget extends StatelessWidget {
           ); // Display a static image if imageUrl is null
   }
 }
+
+
+
+    //  Container(
+    //       margin: const EdgeInsets.only(left: 10, right: 10),
+    //       width: double.infinity,
+    //       child: ElevatedButton(
+    //         style: ElevatedButton.styleFrom(
+    //             primary: appTheme.gray400,
+    //             shape: RoundedRectangleBorder(
+    //                 borderRadius: BorderRadius.circular(10))),
+    //         onPressed: () {
+    //           filterDialog(context, size, const ProfileListFilter());
+    //         },
+    //         child: Row(
+    //           children: [
+    //             Icon(
+    //               Icons.search,
+    //               color: appTheme.gray500,
+    //             ),
+    //             const SizedBox(
+    //               width: 5,
+    //             ),
+    //             Text(
+    //               "Search By Name",
+    //               style: TextStyle(color: appTheme.gray500),
+    //             )
+    //           ],
+    //         ),
+    //       ),
+    //     ),

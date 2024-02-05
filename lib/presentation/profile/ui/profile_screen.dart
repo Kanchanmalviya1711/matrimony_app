@@ -32,14 +32,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   getData() async {
     getUserData = json.decode(SessionManager.getUser().toString());
-    print("getUserData ${getUserData}");
+    print("getProfileDataDisplay ${getUserData}");
   }
 
   getProfileData() async {
     getUserProfileData =
         json.decode(SessionManager.getUserProfileData().toString());
     print("getUserprofile ${getUserProfileData}");
-    // print("getUserprofileData ${getUserProfileData["imagePath"]}");
   }
 
   @override
@@ -67,66 +66,148 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         title: "MY PROFILE",
+        actions: [
+          PopupMenuButton(
+            surfaceTintColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide(color: appTheme.whiteA700),
+            ),
+            icon: Icon(
+              Icons.more_vert,
+              color: appTheme.whiteA700,
+            ),
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
+                child: Row(
+                  children: [
+                    Icon(Icons.edit_attributes,
+                        color: appTheme.black900, size: 20),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "Edit User",
+                      style: CustomTextStyles.titleSmall_1,
+                    ),
+                  ],
+                ),
+                onTap: () {
+                  Get.toNamed(AppRoutes.registerScreen,
+                      arguments: [getUserProfileData]);
+                },
+              ),
+              PopupMenuItem(
+                child: Row(
+                  children: [
+                    Icon(Icons.edit, color: appTheme.black900, size: 20),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      getUserData == null ? "Complete Profile" : "Edit Profile",
+                      style: CustomTextStyles.titleSmall_1,
+                    ),
+                  ],
+                ),
+                onTap: () {
+                  Get.toNamed(AppRoutes.createProfileScreen,
+                      arguments: [getUserData]);
+                },
+              ),
+              PopupMenuItem(
+                child: Row(
+                  children: [
+                    Icon(Icons.logout, color: appTheme.black900, size: 20),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "Logout",
+                      style: CustomTextStyles.titleSmall_1,
+                    ),
+                  ],
+                ),
+                onTap: () {
+                  showAlertDialog(
+                    context,
+                    () {
+                      Get.back();
+                    },
+                    () {
+                      SessionManager.removeToken();
+                      Get.offAllNamed(AppRoutes.loginScreen);
+                    },
+                  );
+                },
+              ),
+            ],
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(children: [
-          Stack(
-            children: [
-              MyImageWidget(
-                height: 400,
-                imageUrl: ApiNetwork.imageUrl + getUserProfileData["imagePath"],
-                width: double.infinity,
-              ),
-              Positioned(
-                top: 10,
-                right: 10,
-                child: GestureDetector(
-                  onTap: () {
-                    Get.toNamed(AppRoutes.createProfileScreen,
-                        arguments: [getUserData]);
-                  },
-                  child: const Icon(
-                    Icons.edit,
-                    color: Colors.red,
-                    size: 30,
-                  ),
+          RefreshIndicator(
+            onRefresh: () async {
+              await Future.delayed(const Duration(seconds: 1));
+              setState(() {
+                getData();
+                getProfileData();
+              });
+            },
+            child: Stack(
+              children: [
+                MyImageWidget(
+                  height: 400,
+                  imageUrl:
+                      ApiNetwork.imageUrl + getUserProfileData["imagePath"],
+                  width: double.infinity,
                 ),
-              ),
-              Positioned(
-                bottom: 10,
-                child: Container(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Text(
-                          getUserProfileData["firstName"] +
-                                  " " +
-                                  getUserProfileData["lastName"] ??
-                              "No Name Found",
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
+                Positioned(
+                  bottom: 10,
+                  child: Container(
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            "${getUserProfileData["firstName"]} ${getUserProfileData["lastName"]}",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        Text(
-                          getUserData == null
-                              ? "No Profession Found"
-                              : getUserData["profession"],
-                          style: TextStyle(
-                            color: appTheme.heading,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20,
+                          Text(
+                            getUserData == null
+                                ? "No data found"
+                                : getUserData["nickName"] == null
+                                    ? "No nickname found"
+                                    : getUserData["nickName"].toString(),
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                            ),
                           ),
-                        )
-                      ],
+                          SizedBox(height: 5.v),
+                          Text(
+                            getUserData == null
+                                ? "No Profession Found"
+                                : getUserData["profession"].toString(),
+                            style: TextStyle(
+                              color: appTheme.heading,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 10),
           Padding(
@@ -184,7 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Text(
                     getUserData == null
                         ? "No Data Found"
-                        : getUserData["aboutYourself"],
+                        : getUserData["aboutYourself"].toString(),
                     style: TextStyle(
                         color: appTheme.heading,
                         fontWeight: FontWeight.w400,
@@ -218,30 +299,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             MyImageWidget(
                               height: mediaQueryData.size.height * 0.3,
-                              imageUrl: getUserData?["photo1"] == null
-                                  ? ImageConstant.fakeProfile
-                                  : ApiNetwork.imageUrl + getUserData["photo1"],
-                              width: 200,
+                              imageUrl: getUserData?["photo1"],
+                              width: double.infinity,
                             ),
                             const SizedBox(
                               width: 10,
                             ),
                             MyImageWidget(
                               height: mediaQueryData.size.height * 0.3,
-                              imageUrl: getUserData?["photo2"] == null
-                                  ? ImageConstant.fakeProfile
-                                  : ApiNetwork.imageUrl + getUserData["photo2"],
-                              width: 200,
+                              imageUrl: getUserData?["photo2"],
+                              width: double.infinity,
                             ),
                             const SizedBox(
                               width: 10,
                             ),
                             MyImageWidget(
                               height: mediaQueryData.size.height * 0.3,
-                              imageUrl: getUserData?["photo3"] == null
-                                  ? ImageConstant.fakeProfile
-                                  : ApiNetwork.imageUrl + getUserData["photo3"],
-                              width: 200,
+                              imageUrl: getUserData?["photo3"],
+                              width: double.infinity,
                             ),
                           ],
                         ),
@@ -266,9 +341,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ListTile(
                 leading: const Icon(Icons.phone_android),
                 title: const Text('Phone Number'),
-                subtitle: Text(getUserData != null
-                    ? "+91 - " + getUserData["user"]["phone"]
-                    : "+91 - " + getUserProfileData["phone"]),
+                subtitle: Text(
+                    getUserData != null && getUserData["user"]["phone"] != null
+                        ? "+91 - " + getUserData["user"]["phone"]
+                        : "+91 - " + getUserProfileData["phone"]),
               ),
               ListTile(
                 leading: const Icon(Icons.email),
@@ -306,9 +382,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 buildInfoItem(
                     'Name :',
                     getUserProfileData["firstName"] +
+                            " " +
                             getUserProfileData["lastName"] ??
                         "No Name Found"),
-                buildInfoItem('Family name :', getUserProfileData["userType"]),
+                buildInfoItem(
+                  'Nick Name :',
+                  getUserData == null
+                      ? "No data found"
+                      : getUserData["nickName"] == null
+                          ? "No nickname found"
+                          : getUserData["nickName"].toString(),
+                ),
                 buildInfoItem(
                     'Date of birth :',
                     getUserData != null
@@ -382,7 +466,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   'Time Of Birth :',
                   getUserData == null
                       ? "Time not found"
-                      : getUserData["timrOfBirth"].toString(),
+                      : getUserData["timeOFBirth"].toString(),
                 ),
                 buildInfoItem(
                   'diet :',
@@ -430,11 +514,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     fontFamily: "CinzelDecorative"),
               ),
               const SizedBox(height: 20),
-              buildInfoItem(
-                  'Family Name :',
-                  getUserData == null
-                      ? "No Data Found"
-                      : getUserData["familyName"].toString().toCapitalized()),
+              // buildInfoItem(
+              //     'Family Name :',
+              //     getUserData == null
+              //         ? "No Data Found"
+              //         : getUserData["familyName"].toString().toCapitalized()),
               buildInfoItem(
                 'Family Status :',
                 getUserData == null
@@ -464,6 +548,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 getUserData != null
                     ? getUserData["numberOfSister"].toString()
                     : "No Data Found",
+              ),
+              buildInfoItem(
+                'Contact Person Number :',
+                getUserData != null &&
+                        getUserData["contactPersonPhoneNumber"] != null
+                    ? getUserData["contactPersonPhoneNumber"].toString()
+                    : "No number found",
               ),
               buildInfoItem(
                 'contact Person Name :',
@@ -823,13 +914,13 @@ class MyImageWidget extends StatelessWidget {
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return CustomImageView(
                 width: 200,
-                imagePath: ImageConstant.couple1,
+                imagePath: ImageConstant.userProfile,
               ); // Display an error icon if the image fails to load
             },
           )
         : CustomImageView(
             width: 200,
-            imagePath: ImageConstant.couple1,
+            imagePath: ImageConstant.userProfile,
           ); // Display a static image if imageUrl is null
   }
 }

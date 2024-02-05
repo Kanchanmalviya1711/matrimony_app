@@ -5,6 +5,7 @@ import 'package:matrimony_app/custom_widget/custom_snackbar.dart';
 import 'package:matrimony_app/data/apiClient/api_client.dart';
 import 'package:matrimony_app/data/apiClient/http_response.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
+import 'package:matrimony_app/utils/fcmHandler.dart';
 import '../../../core/app_export.dart';
 
 class LoginController extends GetxController {
@@ -28,6 +29,7 @@ class LoginController extends GetxController {
 
   login() async {
     var payload = {
+      "fcmToken": fcmToken,
       "email": emailController.value.text,
       "password": passwordController.value.text,
     };
@@ -55,11 +57,15 @@ class LoginController extends GetxController {
             backgroundColor: Colors.green, msg: "Login Successfully");
       } else {
         print("Response Null");
-        rxRequestStatus.value = Status.success;
+        customFlutterToast(
+            backgroundColor: Colors.red,
+            msg: "Login Failed Invalid Credential");
+        rxRequestStatus.value = Status.error;
       }
     } catch (e) {
       print("checking error, $e");
-      customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
+      customFlutterToast(
+          backgroundColor: Colors.red, msg: "Login Failed Invalid Credential");
       rxRequestStatus.value = Status.error;
     }
   }

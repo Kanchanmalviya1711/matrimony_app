@@ -34,9 +34,14 @@ class CustomPaginationView extends StatelessWidget {
           builderDelegate: PagedChildBuilderDelegate<dynamic>(
             animateTransitions: true,
             transitionDuration: const Duration(milliseconds: 500),
-            firstPageProgressIndicatorBuilder: (context) =>
-                const CustomLoading(),
-            newPageProgressIndicatorBuilder: (context) => const CustomLoading(),
+            firstPageProgressIndicatorBuilder: (context) => CustomLoading(
+              color: appTheme.orange,
+              size: 50,
+            ),
+            newPageProgressIndicatorBuilder: (context) => CustomLoading(
+              color: appTheme.orange,
+              size: 20,
+            ),
             noItemsFoundIndicatorBuilder: (context) => EmptyContainer(
               msg: 'No Data Found',
               onTap: noDataFound!,

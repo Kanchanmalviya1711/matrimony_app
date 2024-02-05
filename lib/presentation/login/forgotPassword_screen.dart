@@ -90,7 +90,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         ),
                         const SizedBox(height: 20),
                         controller.rxRequestStatus.value == Status.loading
-                            ? const CustomLoading()
+                            ? const CustomLoading(
+                                color: Colors.green,
+                                size: 50,
+                              )
                             : CustomElevatedButton(
                                 buttonStyle: ButtonStyle(
                                   backgroundColor:

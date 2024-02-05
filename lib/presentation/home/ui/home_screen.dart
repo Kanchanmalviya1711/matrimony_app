@@ -5,7 +5,6 @@ import 'package:matrimony_app/presentation/ProfileListScreen/ui/profileLists_scr
 import 'package:matrimony_app/presentation/home/controller/home_controller.dart';
 import 'package:matrimony_app/presentation/home/homepage/controller/homepage_controller.dart';
 import 'package:matrimony_app/presentation/home/homepage/homepage.dart';
-import 'package:matrimony_app/presentation/notifications/ui/notifications_screen.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
@@ -28,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final pages = [
     const HomePage(),
     const ProfileListsScreen(),
-    const Notifications(),
   ];
 
   @override
@@ -58,6 +56,35 @@ class _HomeScreenState extends State<HomeScreen> {
               Icons.account_circle,
               color: appTheme.whiteA700,
             ),
+          ),
+          Stack(
+            // Use Stack to overlay the red dot
+            children: [
+              IconButton(
+                onPressed: () {
+                  Get.offNamed(AppRoutes.notificationScreen);
+                },
+                icon: Icon(
+                  Icons.notifications,
+                  color: appTheme.whiteA700,
+                ),
+              ),
+              // Conditionally show the red dot
+              Positioned(
+                right: 13,
+                top: 10,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.red,
+                  ),
+                  constraints: const BoxConstraints(
+                    minWidth: 9,
+                    minHeight: 9,
+                  ),
+                ),
+              ),
+            ],
           ),
           PopupMenuButton<String>(
             surfaceTintColor: Colors.white,
@@ -120,10 +147,6 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.segment),
             label: 'Profile List',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
           ),
         ],
       ),

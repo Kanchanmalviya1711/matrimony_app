@@ -113,6 +113,13 @@ class _SideMenuState extends State<SideMenu> {
                 Get.offAllNamed(AppRoutes.ourServiceScreen);
               },
             ),
+            DrawerListTile(
+              title: "Chat",
+              svgSrc: ImageConstant.contact,
+              press: () {
+                Get.offAllNamed(AppRoutes.chatScreen);
+              },
+            ),
             // DrawerListTile(
             //   title: "Create Profile",
             //   svgSrc: ImageConstant.contact,

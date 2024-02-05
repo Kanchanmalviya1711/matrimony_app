@@ -8,6 +8,7 @@ class ImageConstant {
   static String hrPicture = '$imagePath/splash.png';
   static String home1Picture = '$imagePath/banner.png';
   static String homePicture = '$imagePath/photo.png';
+  static String userProfile = '$imagePath/userProfile.png';
   static String aboutPicture = '$imagePath/about.png';
   static String logoImg = '$imagePath/logoImg.png';
   static String logowhite = '$imagePath/logowhite.png';

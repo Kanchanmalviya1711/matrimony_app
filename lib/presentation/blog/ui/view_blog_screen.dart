@@ -25,6 +25,7 @@ class _ViewBlogScreenState extends State<ViewBlogScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: CustomAppBar(
         leading: IconButton(
@@ -53,6 +54,7 @@ class _ViewBlogScreenState extends State<ViewBlogScreen> {
                 Stack(
                   children: [
                     MyImageWidget(
+                        height: size.height * 0.4,
                         width: double.infinity,
                         imageUrl: ApiNetwork.imageUrl + data[0]["image_path"]),
                   ],
@@ -93,8 +95,7 @@ class _ViewBlogScreenState extends State<ViewBlogScreen> {
                               child: Text(
                                 DateFormat('dd,MMM yyyy').format(
                                   DateTime.parse(
-                                      data[0]["dateOfMarriage"].toString() ??
-                                          ""),
+                                      data[0]["dateOfMarriage"].toString()),
                                 ),
                                 style: TextStyle(
                                     color: appTheme.whiteA700,
@@ -210,16 +211,21 @@ class _ViewBlogScreenState extends State<ViewBlogScreen> {
 class MyImageWidget extends StatelessWidget {
   final String? imageUrl;
   final double width;
+  final double height;
   // Make sure imageUrl is nullable
 
-  MyImageWidget({required this.imageUrl, required this.width});
+  MyImageWidget(
+      {required this.imageUrl, required this.width, required this.height});
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return imageUrl != null
         ? Image.network(
             imageUrl!,
+            fit: BoxFit.cover,
             width: width,
+            height: height,
             loadingBuilder: (BuildContext context, Widget child,
                 ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) {
@@ -238,13 +244,17 @@ class MyImageWidget extends StatelessWidget {
             errorBuilder:
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return CustomImageView(
-                width: 200,
+                width: double.infinity,
+                height: size.height * 0.4,
+                fit: BoxFit.cover,
                 imagePath: ImageConstant.couple1,
               ); // Display an error icon if the image fails to load
             },
           )
         : CustomImageView(
-            width: 200,
+            width: double.infinity,
+            height: size.height * 0.4,
+            fit: BoxFit.cover,
             imagePath: ImageConstant.couple1,
           ); // Display a static image if imageUrl is null
   }

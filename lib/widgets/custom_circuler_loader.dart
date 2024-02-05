@@ -4,14 +4,16 @@ import 'package:matrimony_app/utils/size_utils.dart';
 import '../core/app_export.dart';
 
 class CustomLoading extends StatelessWidget {
-  const CustomLoading({super.key});
+  const CustomLoading({super.key, required this.color, required this.size});
+  final Color color;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
     return Center(
         child: SpinKitFadingCircle(
-      color: appTheme.orange,
-      size: 40.v,
+      color: color,
+      size: size,
     ));
   }
 }

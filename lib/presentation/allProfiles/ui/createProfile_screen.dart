@@ -78,6 +78,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
             : TimeFormateMethod().getTimeFormate(
                 time: data[0]["dateOfMarriage"].toString(),
                 formate: 'yyyy-MM-dd');
+
     allProfilesListController.bloodGroupController.value.text =
         data[0]["bloodGroup"].toString();
     allProfilesListController.annualIncomeController.value.text =
@@ -102,6 +103,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
         data[0]["interests"].toString();
     allProfilesListController.favoriteReadsController.value.text =
         data[0]["favoriteReads"].toString();
+    allProfilesListController.nickNameController.value.text =
+        data[0]["nickName"] == null
+            ? "No family name found"
+            : data[0]["nickName"].toString();
     allProfilesListController.preferredMoviesController.value.text =
         data[0]["preferredMovies"].toString();
     allProfilesListController.sportsController.value.text =
@@ -120,8 +125,11 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     : data[0]["maritalStatus"] == "4"
                         ? "Widowed"
                         : "Marriage Date Not Found";
+    allProfilesListController.meritalStatus =
+        data[0]["maritalStatus"].toString();
     allProfilesListController.haveChildrenValue =
         data[0]["haveChildren"] == 1 ? "Yes" : "No";
+    allProfilesListController.haveChildren = data[0]["haveChildren"].toString();
     allProfilesListController.moonSignController.value.text =
         data[0]["rasi"].toString();
     allProfilesListController.nakshatraController.value.text =
@@ -138,6 +146,19 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
         data[0]["linkedinUrl"].toString();
     allProfilesListController.watsappNumberController.value.text =
         data[0]["whatsappUrl"].toString();
+    allProfilesListController.contactPersonPhoneNumber.value.text =
+        data[0]["contactPersonPhoneNumber"] == null
+            ? "no contact number"
+            : data[0]["contactPersonPhoneNumber"].toString();
+    allProfilesListController.usersList.value.downloadURL =
+        data[0]["photo1"].toString();
+    allProfilesListController.usersList2.value.downloadURL =
+        data[0]["photo2"].toString();
+    allProfilesListController.usersList3.value.downloadURL =
+        data[0]["photo3"].toString();
+    imageUrl1 = data[0]["photo1"].toString();
+    imageUrl2 = data[0]["photo2"].toString();
+    imageUrl3 = data[0]["photo3"].toString();
   }
 
 // haveChildren list
@@ -230,7 +251,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
           centerTitle: true,
           leading: IconButton(
             onPressed: () {
-              Get.offAndToNamed(AppRoutes.homeScreen);
+              Get.offAndToNamed(AppRoutes.profileScreen);
             },
             icon: Icon(
               Icons.arrow_back,
@@ -282,8 +303,6 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     ),
                   ),
                   SizedBox(height: 25.v),
-
-                  // Profile Image
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomDropdown(
@@ -305,18 +324,17 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 10),
+
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
                       readOnly: true,
-                      // validator: (value) {
-                      //   if (value == null) {
-                      //     return null;
-                      //   } else {
-                      //     return null;
-                      //   }
-                      // },
+                      validator: (value) {
+                        // if (value!.isEmpty) {
+                        //   return "Please enter date of marriage";
+                        // }
+                        return null;
+                      },
                       controller:
                           allProfilesListController.dateOfMarriage.value,
                       labelText: "Date Of Marriage",
@@ -327,7 +345,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomDropdown(
@@ -365,11 +383,12 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Divider(),
                   ),
                   const SizedBox(height: 10),
                   Padding(
@@ -389,13 +408,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -413,13 +429,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -437,13 +450,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -453,7 +463,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                       controller:
                           allProfilesListController.complexionController.value,
-                      labelText: "Body Complexion",
+                      labelText: "Face Complexion",
                       hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -461,11 +471,77 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    child: CustomTextFormField(
+                      prefix: const Icon(
+                        Icons.person,
+                        color: Colors.black,
+                      ),
+                      controller: allProfilesListController
+                          .specialCasesController.value,
+                      labelText: "Special Cases",
+                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter special cases (None / Physically Challenged / Mentally Challenged / Physically and Mentally Challenged / Others)";
+                        }
+                        return null;
+                      },
+                      contentPadding: const EdgeInsets.symmetric(),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    child: CustomTextFormField(
+                      prefix: const Icon(
+                        Icons.bloodtype,
+                        color: Colors.black,
+                      ),
+                      controller:
+                          allProfilesListController.bloodGroupController.value,
+                      labelText: "Blood Group",
+                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter blood group (A+ / B+ / AB+ / O+ / A- / B- / AB- / O- ) ";
+                        }
+                        return null;
+                      },
+                      contentPadding: const EdgeInsets.symmetric(),
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    child: CustomTextFormField(
+                      prefix: const Icon(
+                        Icons.food_bank,
+                        color: Colors.black,
+                      ),
+                      controller: allProfilesListController
+                          .dieatryHabitsController.value,
+                      labelText: "Dieatry Habits",
+                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter dieatry habits (Veg / Non Veg / Eggetarian) ";
+                        }
+                        return null;
+                      },
+                      contentPadding: const EdgeInsets.symmetric(),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Divider(),
                   ),
                   const SizedBox(height: 10),
                   Padding(
@@ -491,56 +567,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.h),
-                    child: CustomTextFormField(
-                      prefix: const Icon(
-                        Icons.business_center,
-                        color: Colors.black,
-                      ),
-                      controller: allProfilesListController.companyName.value,
-                      labelText: "Company Name",
-                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter company name";
-                        }
-                        return null;
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.h),
-                    child: CustomTextFormField(
-                      prefix: const Icon(
-                        Icons.person,
-                        color: Colors.black,
-                      ),
-                      controller: allProfilesListController
-                          .specialCasesController.value,
-                      labelText: "Special Cases",
-                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter special cases value";
-                        }
-                        return null;
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -558,13 +585,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -582,13 +606,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -606,13 +627,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -630,10 +648,73 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
+                      contentPadding: const EdgeInsets.symmetric(),
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    child: CustomTextFormField(
+                      prefix: const Icon(
+                        Icons.language,
+                        color: Colors.black,
                       ),
+                      controller: allProfilesListController
+                          .spokenLanguagesController.value,
+                      labelText: "Spoken Languages",
+                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter spoken languages (English / Hindi / Marathi / Other)";
+                        }
+                        return null;
+                      },
+                      contentPadding: const EdgeInsets.symmetric(),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    child: CustomTextFormField(
+                      prefix: const Icon(
+                        Icons.radar_sharp,
+                        color: Colors.black,
+                      ),
+                      controller:
+                          allProfilesListController.moonSignController.value,
+                      labelText: "Moonsign (Rashi)",
+                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter moonsign (rashi)";
+                        }
+                        return null;
+                      },
+                      contentPadding: const EdgeInsets.symmetric(),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    child: CustomTextFormField(
+                      prefix: const Icon(
+                        Icons.star_sharp,
+                        color: Colors.black,
+                      ),
+                      controller:
+                          allProfilesListController.nakshatraController.value,
+                      labelText: "Nakshatra",
+                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter nakshatra (star)";
+                        }
+                        return null;
+                      },
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -641,24 +722,26 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
                       prefix: const Icon(
-                        Icons.family_restroom,
+                        Icons.stars,
                         color: Colors.black,
                       ),
                       controller: allProfilesListController
-                          .familyValuesController.value,
-                      labelText: "Family Values",
+                          .astroprofileController.value,
+                      labelText: "Astroprofile (Kundli)",
                       hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter text";
+                          return "Please enter astroprofile (kundli) (Yes / No / Don't Know)";
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Divider(),
                   ),
                   const SizedBox(height: 10),
                   Padding(
@@ -678,13 +761,32 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    child: CustomTextFormField(
+                      prefix: const Icon(
+                        Icons.business_center,
+                        color: Colors.black,
+                      ),
+                      controller: allProfilesListController.companyName.value,
+                      labelText: "Company Name",
+                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter company name";
+                        }
+                        return null;
+                      },
+                      contentPadding: const EdgeInsets.symmetric(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -702,86 +804,11 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.h),
-                    child: CustomTextFormField(
-                      prefix: const Icon(
-                        Icons.food_bank,
-                        color: Colors.black,
-                      ),
-                      controller: allProfilesListController
-                          .dieatryHabitsController.value,
-                      labelText: "Dieatry Habits",
-                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter dieatry habits (Veg / Non Veg / Eggetarian) ";
-                        }
-                        return null;
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.h),
-                    child: CustomTextFormField(
-                      prefix: const Icon(
-                        Icons.info,
-                        color: Colors.black,
-                      ),
-                      controller: allProfilesListController
-                          .aboutYourselfController.value,
-                      labelText: "About Yourself",
-                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter about yourself (min 50 words) ";
-                        }
-                        return null;
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
 
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.h),
-                    child: CustomTextFormField(
-                      prefix: const Icon(
-                        Icons.bloodtype,
-                        color: Colors.black,
-                      ),
-                      controller:
-                          allProfilesListController.bloodGroupController.value,
-                      labelText: "Blood Group",
-                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter blood group (A+ / B+ / AB+ / O+ / A- / B- / AB- / O- ) ";
-                        }
-                        return null;
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -795,17 +822,106 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter annual income ";
+                          return "Please enter annual income";
+                        }
+                        if (!RegExp(r'^[0-9]{6,}$').hasMatch(value)) {
+                          return "Please enter a valid numeric with at least 6 digits";
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
                   const SizedBox(height: 10),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Divider(),
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    child: CustomTextFormField(
+                      prefix: const Icon(
+                        Icons.face_6_sharp,
+                        color: Colors.black,
+                      ),
+                      controller:
+                          allProfilesListController.nickNameController.value,
+                      labelText: "Family Name (nickname)",
+                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter family name";
+                        }
+                        return null;
+                      },
+                      contentPadding: const EdgeInsets.symmetric(),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    child: CustomTextFormField(
+                      prefix: const Icon(
+                        Icons.family_restroom,
+                        color: Colors.black,
+                      ),
+                      controller: allProfilesListController
+                          .familyValuesController.value,
+                      labelText: "Family Values",
+                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter family value Good/Bad ";
+                        }
+                        return null;
+                      },
+                      contentPadding: const EdgeInsets.symmetric(),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    child: CustomTextFormField(
+                      prefix: const Icon(
+                        Icons.face_4,
+                        color: Colors.black,
+                      ),
+                      controller:
+                          allProfilesListController.motherNameController.value,
+                      labelText: "Mother's Name ",
+                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter mother's name";
+                        }
+                        return null;
+                      },
+                      contentPadding: const EdgeInsets.symmetric(),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    child: CustomTextFormField(
+                      prefix: const Icon(
+                        Icons.tag_faces_sharp,
+                        color: Colors.black,
+                      ),
+                      controller:
+                          allProfilesListController.fatherNameController.value,
+                      labelText: "Father's Name ",
+                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter father's name";
+                        }
+                        return null;
+                      },
+                      contentPadding: const EdgeInsets.symmetric(),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -821,15 +937,15 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         if (value!.isEmpty) {
                           return "Please enter no. of siblings (brothers)";
                         }
+                        if (!RegExp(r'^[0-9]{1}$').hasMatch(value)) {
+                          return "Please enter a valid number";
+                        }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -845,15 +961,42 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         if (value!.isEmpty) {
                           return "Please enter no. of siblings (sisters)";
                         }
+                        if (!RegExp(r'^[0-9]{1}$').hasMatch(value)) {
+                          return "Please enter a valid number";
+                        }
+
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    child: CustomTextFormField(
+                      prefix: const Icon(
+                        Icons.keyboard,
+                        color: Colors.black,
+                      ),
+                      controller: allProfilesListController
+                          .contactPersonPhoneNumber.value,
+                      labelText: "Contact Person Phone Number",
+                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter a contact person phone number";
+                        }
+                        // Check if the entered value is numeric and has exactly 10 digits
+                        if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+                          return "Please enter a 10-digit numeric phone number";
+                        }
+                        return null;
+                      },
+                      contentPadding: const EdgeInsets.symmetric(),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -871,13 +1014,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -901,7 +1041,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -919,13 +1059,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -943,14 +1080,11 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
 
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -974,6 +1108,11 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Divider(),
+                  ),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -991,13 +1130,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1015,13 +1151,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1039,13 +1172,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1063,13 +1193,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1093,7 +1220,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1117,151 +1244,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.h),
-                    child: CustomTextFormField(
-                      prefix: const Icon(
-                        Icons.language,
-                        color: Colors.black,
-                      ),
-                      controller: allProfilesListController
-                          .spokenLanguagesController.value,
-                      labelText: "Spoken Languages",
-                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter spoken languages (English / Hindi / Marathi / Other)";
-                        }
-                        return null;
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.h),
-                    child: CustomTextFormField(
-                      prefix: const Icon(
-                        Icons.radar_sharp,
-                        color: Colors.black,
-                      ),
-                      controller:
-                          allProfilesListController.moonSignController.value,
-                      labelText: "Moonsign (Rashi)",
-                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter moonsign (rashi)";
-                        }
-                        return null;
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.h),
-                    child: CustomTextFormField(
-                      prefix: const Icon(
-                        Icons.star_sharp,
-                        color: Colors.black,
-                      ),
-                      controller:
-                          allProfilesListController.nakshatraController.value,
-                      labelText: "Nakshatra",
-                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter nakshatra (star)";
-                        }
-                        return null;
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.h),
-                    child: CustomTextFormField(
-                      prefix: const Icon(
-                        Icons.stars,
-                        color: Colors.black,
-                      ),
-                      controller: allProfilesListController
-                          .astroprofileController.value,
-                      labelText: "Astroprofile (Kundli)",
-                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter astroprofile (kundli) (Yes / No / Don't Know)";
-                        }
-                        return null;
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.h),
-                    child: CustomTextFormField(
-                      prefix: const Icon(
-                        Icons.face_4,
-                        color: Colors.black,
-                      ),
-                      controller:
-                          allProfilesListController.motherNameController.value,
-                      labelText: "Mother's Name ",
-                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter mother's name";
-                        }
-                        return null;
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.h),
-                    child: CustomTextFormField(
-                      prefix: const Icon(
-                        Icons.tag_faces_sharp,
-                        color: Colors.black,
-                      ),
-                      controller:
-                          allProfilesListController.fatherNameController.value,
-                      labelText: "Father's Name ",
-                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter father's name";
-                        }
-                        return null;
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1279,13 +1263,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1303,13 +1284,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1327,66 +1305,97 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         }
                         return null;
                       },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 18,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(),
                     ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Divider(),
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    child: CustomTextFormField(
+                      prefix: const Icon(
+                        Icons.info,
+                        color: Colors.black,
+                      ),
+                      controller: allProfilesListController
+                          .aboutYourselfController.value,
+                      labelText: "About Yourself",
+                      hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter about yourself (min 50 words)";
+                        } else if (value.trim().split(' ').length > 120) {
+                          return "Please limit your about yourself to 120 words";
+                        }
+                        return null;
+                      },
+                      contentPadding: const EdgeInsets.symmetric(),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Divider(),
                   ),
                   const SizedBox(height: 10),
                   // 1 image picker
                   Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.h),
-                      child: Container(
-                        width: size.width,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.orange.withOpacity(0.5),
-                          ),
-                          borderRadius: BorderRadius.circular(10),
+                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    child: Container(
+                      width: size.width,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.orange.withOpacity(0.5),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                                width: 60.h,
-                                height: 60.v,
-                                child: result1 != null
-                                    ? CircleAvatar(
-                                        backgroundImage: FileImage(
-                                          result1!,
-                                        ),
-                                      )
-                                    : CircleAvatar(
-                                        backgroundImage: NetworkImage(
-                                          allProfilesListController.usersList
-                                                      .value.downloadURL !=
-                                                  null
-                                              ? ApiNetwork.imageUrl +
-                                                  allProfilesListController
-                                                      .usersList
-                                                      .value
-                                                      .downloadURL!
-                                              : ImageConstant.fakeProfile,
-                                        ),
-                                      )),
-                            Padding(
-                              padding: EdgeInsets.only(left: 10.h),
-                              child: CustomElevatedButton(
-                                // isDisabled:
-                                //     allProfilesListController.isEdit.value,
-                                text: 'Upload',
-                                onTap: () {
-                                  pickImage(
-                                    1,
-                                  );
-                                },
-                              ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                              width: 60.h,
+                              height: 60.v,
+                              child: result1 != null
+                                  ? CircleAvatar(
+                                      backgroundImage: FileImage(
+                                        result1!,
+                                      ),
+                                    )
+                                  : CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                        allProfilesListController.usersList
+                                                    .value.downloadURL !=
+                                                null
+                                            ? ApiNetwork.imageUrl +
+                                                allProfilesListController
+                                                    .usersList
+                                                    .value
+                                                    .downloadURL!
+                                            : ImageConstant.fakeProfile,
+                                      ),
+                                    )),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10.h),
+                            child: CustomElevatedButton(
+                              // isDisabled:
+                              //     allProfilesListController.isEdit.value,
+                              text: 'Upload',
+                              onTap: () {
+                                pickImage(
+                                  1,
+                                );
+                              },
                             ),
-                          ],
-                        ),
-                      )),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 10),
                   // 2 image picker
                   Padding(
@@ -1404,27 +1413,28 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                                width: 60.h,
-                                height: 60.v,
-                                child: result2 != null
-                                    ? CircleAvatar(
-                                        backgroundImage: FileImage(
-                                          result2!,
-                                        ),
-                                      )
-                                    : CircleAvatar(
-                                        backgroundImage: NetworkImage(
-                                          allProfilesListController.usersList2
-                                                      .value.downloadURL !=
-                                                  null
-                                              ? ApiNetwork.imageUrl +
-                                                  allProfilesListController
-                                                      .usersList2
-                                                      .value
-                                                      .downloadURL!
-                                              : ImageConstant.fakeProfile,
-                                        ),
-                                      )),
+                              width: 60.h,
+                              height: 60.v,
+                              child: result2 != null
+                                  ? CircleAvatar(
+                                      backgroundImage: FileImage(
+                                        result2!,
+                                      ),
+                                    )
+                                  : CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                        allProfilesListController.usersList2
+                                                    .value.downloadURL !=
+                                                null
+                                            ? ApiNetwork.imageUrl +
+                                                allProfilesListController
+                                                    .usersList2
+                                                    .value
+                                                    .downloadURL!
+                                            : ImageConstant.fakeProfile,
+                                      ),
+                                    ),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(left: 10.h),
                               child: CustomElevatedButton(

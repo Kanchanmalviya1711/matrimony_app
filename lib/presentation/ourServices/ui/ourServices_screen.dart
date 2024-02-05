@@ -90,12 +90,12 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.only(top: 20),
             child: Text(
               "Showing Our Services For You",
               style: TextStyle(
                   color: appTheme.heading,
-                  fontSize: 19,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   fontFamily: "CinzelDecorative"),
             ),
@@ -108,9 +108,9 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
                 pagingController: pagingController,
                 itemBuilder: (p0, p1, p2) {
                   return Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.only(),
                     child: Container(
-                      margin: const EdgeInsets.only(top: 20),
+                      margin: const EdgeInsets.only(top: 20, left: 5, right: 5),
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(

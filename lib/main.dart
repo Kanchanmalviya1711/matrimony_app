@@ -21,6 +21,7 @@ void main() async {
   ));
   await SessionManager.init();
   await FirebaseApi().initNotification();
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) {
     runApp(const MyApp());
@@ -48,3 +49,24 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// final router = GoRouter(
+//   routes: [
+//     GoRoute(
+//       path: '/',
+//       builder: (_, __) => Scaffold(
+//         appBar: AppBar(title: const Text('Home Screen')),
+//       ),
+//       routes: [
+//         GoRoute(
+//           path: 'details',
+//           builder: (_, __) => Scaffold(
+//             appBar: AppBar(title: const Text('Details Screen')),
+//           ),
+//         ),
+//       ],
+//     ),
+//   ],
+// );
+
+

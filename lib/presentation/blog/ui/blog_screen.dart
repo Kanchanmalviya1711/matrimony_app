@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
@@ -70,6 +72,7 @@ class _BlogScreenState extends State<BlogScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       key: scaffoldKey,
       appBar: CustomAppBar(
@@ -85,216 +88,233 @@ class _BlogScreenState extends State<BlogScreen> {
         ),
         title: "BLOGS",
       ),
-      body: CustomPaginationView(
-          noDataFound: () {
-            Get.offNamed(AppRoutes.homeScreen);
-          },
-          onRefresh: () => Future.sync(() {
-                pagingController.refresh();
-              }),
-          pagingController: pagingController,
-          itemBuilder: (p0, p1, p2) {
-            return Container(
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          children: [
+            Container(
               decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Color(0xFFfdfcfb), Color(0xFFFFFBEE)],
+                image: DecorationImage(
+                  image: AssetImage("assets/images/banner.png"),
+                  fit: BoxFit.cover,
                 ),
               ),
-              child: Column(
-                children: [
-                  Container(
-                    height: 300,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/banner.png"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          stops: [0.05, 0.8],
-                          colors: [
-                            Color.fromRGBO(255, 154, 154, 0.89),
-                            Color.fromRGBO(218, 223, 255, 1.0),
-                          ],
-                        ),
-                      ),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Blogs and Articles",
-                              style: TextStyle(
-                                  color: appTheme.black900,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "CinzelDecorative"),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
-                              child: Text(
-                                "Saying , 'I Do', to the Perfect Wedding App ${"A Match Made in Digital Heaven"}",
-                                style: TextStyle(
-                                  color: appTheme.black900,
-                                  fontSize: 18, // Adjust font size as needed
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    stops: [0.05, 0.8],
+                    colors: [
+                      Color.fromRGBO(255, 154, 154, 0.89),
+                      Color.fromRGBO(218, 223, 255, 1.0),
+                    ],
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      border: Border(
-                          bottom:
-                              BorderSide(color: appTheme.heading, width: 2.0)),
-                    ),
-                    child: Text(
-                      "LATEST & POPULAR",
-                      style: TextStyle(
-                        color: appTheme.heading,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "CinzelDecorative",
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Card(
-                    elevation: 5,
-                    surfaceTintColor:
-                        Colors.white, // Add a subtle shadow for elevation
-                    color: Colors.white, // Set a white background color
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(4), // Add rounded corners
-                    ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Align(
+                    alignment: Alignment.center,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Stack(
-                          children: [
-                            MyImageWidget(
-                                imageUrl:
-                                    ApiNetwork.imageUrl + p1["image_path"]),
-                            Positioned(
-                              bottom: 10,
-                              child: Container(
-                                color: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "${p1["title"]}",
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        DateFormat('dd,MMM yyyy').format(
-                                          DateTime.parse(
-                                              p1["dateOfMarriage"].toString()),
-                                        ),
-                                        style: TextStyle(
-                                            color: appTheme.heading,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 20),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                        Text(
+                          "Blogs and Articles",
+                          style: TextStyle(
+                              color: appTheme.black900,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "CinzelDecorative"),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    p1["slug"], // Added null check
-                                    style: TextStyle(
-                                      color: appTheme.heading,
-                                      fontSize: 17,
-                                    ),
-                                  ),
-                                  Container(
-                                    color: p1["status"] == 1
-                                        ? Colors.green.withOpacity(0.2)
-                                        : Colors.red.withOpacity(0.2),
-                                    padding: const EdgeInsets.all(7),
-                                    child: Text(
-                                      p1["status"] == 1 ? "Active" : "Inactive",
-                                      style: TextStyle(
-                                        color: p1["status"] == 1
-                                            ? Colors.green
-                                            : Colors.red,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                p1["content"] +
-                                    "...", // Replace 'content' with the correct variable name
-                                style: TextStyle(
-                                  color: appTheme.amber800,
-                                  fontSize: 15,
-                                ),
-                                softWrap: true,
-                                maxLines: isExpanded ? null : 1,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isExpanded = !isExpanded;
-                                  });
-
-                                  Get.offNamed(AppRoutes.viewBlogScreen,
-                                      arguments: [p1]);
-                                },
-                                child: const Text(
-                                  'Read More...',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
-                            ],
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          child: Text(
+                            "Saying , 'I Do', to the Perfect Wedding App ${"A Match Made in Digital Heaven"}",
+                            style: TextStyle(
+                              color: appTheme.black900,
+                              fontSize: 18, // Adjust font size as needed
+                            ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       ],
                     ),
                   ),
-                ],
+                ),
               ),
-            );
-          }),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: appTheme.heading, width: 2.0)),
+              ),
+              child: Text(
+                "LATEST & POPULAR",
+                style: TextStyle(
+                  color: appTheme.heading,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "CinzelDecorative",
+                ),
+              ),
+            ),
+            Expanded(
+              child: CustomPaginationView(
+                  noDataFound: () {
+                    Get.offNamed(AppRoutes.homeScreen);
+                  },
+                  onRefresh: () => Future.sync(() {
+                        pagingController.refresh();
+                      }),
+                  pagingController: pagingController,
+                  itemBuilder: (p0, p1, p2) {
+                    return Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Color(0xFFfdfcfb), Color(0xFFFFFBEE)],
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Card(
+                            elevation: 5,
+                            surfaceTintColor: Colors
+                                .white, // Add a subtle shadow for elevation
+                            color: Colors.white, // Set a white background color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  4), // Add rounded corners
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Stack(
+                                  children: [
+                                    MyImageWidget(
+                                        width: double.infinity,
+                                        height: size.height * 0.3,
+                                        imageUrl: ApiNetwork.imageUrl +
+                                            p1["image_path"]),
+                                    Positioned(
+                                      bottom: 10,
+                                      child: Container(
+                                        color: Colors.white,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                "${p1["title"]}",
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                DateFormat('dd,MMM yyyy')
+                                                    .format(
+                                                  DateTime.parse(
+                                                      p1["dateOfMarriage"]
+                                                          .toString()),
+                                                ),
+                                                style: TextStyle(
+                                                    color: appTheme.heading,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 20),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            p1["slug"], // Added null check
+                                            style: TextStyle(
+                                              color: appTheme.heading,
+                                              fontSize: 17,
+                                            ),
+                                          ),
+                                          Container(
+                                            color: p1["status"] == 1
+                                                ? Colors.green.withOpacity(0.2)
+                                                : Colors.red.withOpacity(0.2),
+                                            padding: const EdgeInsets.all(7),
+                                            child: Text(
+                                              p1["status"] == 1
+                                                  ? "Active"
+                                                  : "Inactive",
+                                              style: TextStyle(
+                                                color: p1["status"] == 1
+                                                    ? Colors.green
+                                                    : Colors.red,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        p1["content"] +
+                                            "...", // Replace 'content' with the correct variable name
+                                        style: TextStyle(
+                                          color: appTheme.amber800,
+                                          fontSize: 15,
+                                        ),
+                                        softWrap: true,
+                                        maxLines: isExpanded ? null : 1,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            isExpanded = !isExpanded;
+                                          });
+
+                                          Get.offNamed(AppRoutes.viewBlogScreen,
+                                              arguments: [p1]);
+                                        },
+                                        child: const Text(
+                                          'Read More...',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+            ),
+          ],
+        ),
+      ),
       drawer: const SideMenu(),
     );
   }
@@ -302,14 +322,20 @@ class _BlogScreenState extends State<BlogScreen> {
 
 class MyImageWidget extends StatelessWidget {
   final String? imageUrl; // Make sure imageUrl is nullable
+  final double? width;
+  final double? height;
 
-  MyImageWidget({required this.imageUrl});
+  MyImageWidget({required this.imageUrl, this.width, this.height});
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return imageUrl != null
         ? Image.network(
             imageUrl!,
+            width: width,
+            fit: BoxFit.cover,
+            height: height,
             loadingBuilder: (BuildContext context, Widget child,
                 ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) {
@@ -328,11 +354,17 @@ class MyImageWidget extends StatelessWidget {
             errorBuilder:
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return CustomImageView(
+                width: double.infinity,
+                height: size.height * 0.4,
+                fit: BoxFit.cover,
                 imagePath: ImageConstant.couple1,
               ); // Display an error icon if the image fails to load
             },
           )
         : CustomImageView(
+            width: double.infinity,
+            height: size.height * 0.4,
+            fit: BoxFit.cover,
             imagePath: ImageConstant.couple1,
           ); // Display a static image if imageUrl is null
   }

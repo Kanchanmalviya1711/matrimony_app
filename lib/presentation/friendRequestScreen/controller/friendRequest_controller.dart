@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
 import 'package:matrimony_app/core/constants/session_manager.dart';
@@ -46,7 +47,43 @@ class FriendRequestController extends GetxController {
       var payload = {
         "sender_id": {"id": id},
         "receiver_id": {"id": receiverId},
-        "status": 1
+        "status": 1 //accepted
+      };
+      if (kDebugMode) {
+        print("object $payload");
+      }
+      var value = await api.put(
+          ApiNetwork.acceptFriendRequest + userId, jsonEncode(payload), true,
+          isCookie: true);
+      if (value['status'] == "success") {
+        rxRequestStatus.value = Status.success;
+        Get.offAndToNamed(AppRoutes.homeScreen);
+        customFlutterToast(
+          backgroundColor: Colors.green,
+          msg: (payload['firstName'] != null && payload['lastName'] != null)
+              ? '${payload['firstName']} ${payload['lastName']} added to your friend list'
+              : 'Request Accepted',
+        );
+        print("fsdfdsf pradhufjsdf ${value['payload']['data']}");
+        allRequestList = value['payload']['data'];
+        print("object");
+        return allRequestList;
+      }
+    } catch (e) {
+      customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
+      rxRequestStatus.value = Status.error;
+      print("Error message, $e ");
+    }
+  }
+
+  rejectRequest(String id, String userId) async {
+    print("object Friend Request, $id, $userId");
+    var receiverId = await jsonDecode(SessionManager.getUserId().toString());
+    try {
+      var payload = {
+        "sender_id": {"id": id},
+        "receiver_id": {"id": receiverId},
+        "status": 3 //rejected
       };
       print("object $payload");
       var value = await api.put(
@@ -55,9 +92,9 @@ class FriendRequestController extends GetxController {
       if (value['status'] == "success") {
         rxRequestStatus.value = Status.success;
         customFlutterToast(
-            backgroundColor: Colors.green, msg: value["message"]);
+            backgroundColor: Colors.red, msg: "Request Rejected");
         print("fsdfdsf pradhufjsdf ${value['payload']['data']}");
-        Get.offNamed(AppRoutes.homeScreen);
+        Get.offAndToNamed(AppRoutes.homeScreen);
         allRequestList = value['payload']['data'];
         print("object");
         return allRequestList;

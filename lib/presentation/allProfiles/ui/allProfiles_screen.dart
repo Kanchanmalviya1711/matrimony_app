@@ -4,7 +4,9 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
 import 'package:matrimony_app/custom_widget/custom_drawer.dart';
+import 'package:matrimony_app/custom_widget/custom_filter.dart';
 import 'package:matrimony_app/presentation/allProfiles/controller/allProfiles_controller.dart';
+import 'package:matrimony_app/presentation/allProfiles/ui/allProfiles_fliter.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
@@ -58,6 +60,7 @@ class _AllProfilesScreenState extends State<AllProfilesScreen> {
       final newItems = await allProfilesListController.getAllProfiles(
         page: pageKey,
         perPageRecord: allProfilesListController.perPage,
+        searchTerm: allProfilesListController.casteController.value.text,
       );
       final isLastPage = newItems.length < allProfilesListController.perPage;
       if (isLastPage) {
@@ -88,6 +91,18 @@ class _AllProfilesScreenState extends State<AllProfilesScreen> {
           },
         ),
         title: "ALL PROFILES",
+        actions: [
+          CustomIconButton(
+            child: Icon(
+              Icons.search,
+              size: 27,
+              color: appTheme.whiteA700,
+            ),
+            onTap: () {
+              filterDialog(context, size, const AllProfilesFilter());
+            },
+          ),
+        ],
       ),
       body: Container(
         color: appTheme.gray200,
@@ -95,7 +110,7 @@ class _AllProfilesScreenState extends State<AllProfilesScreen> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: Text(
-              "Showing All Profiles For You ",
+              "Showing All Profiles For You",
               style: TextStyle(
                   color: appTheme.heading,
                   fontSize: 20,
@@ -114,7 +129,7 @@ class _AllProfilesScreenState extends State<AllProfilesScreen> {
                 pagingController: pagingController,
                 itemBuilder: (p0, p1, p2) {
                   return Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
                     child: Card(
                       elevation: 4,
                       shape: RoundedRectangleBorder(
@@ -130,12 +145,13 @@ class _AllProfilesScreenState extends State<AllProfilesScreen> {
                                 Stack(
                                   children: [
                                     MyImageWidget(
-                                        width: double.infinity,
-                                        height: size.height * 0.4,
-                                        imageUrl: p1["user"] == null
-                                            ? ImageConstant.couple1
-                                            : ApiNetwork.imageUrl +
-                                                p1["user"]["imagePath"]),
+                                      width: double.infinity,
+                                      height: size.height * 0.4,
+                                      imageUrl: p1["user"] == null
+                                          ? ImageConstant.couple1
+                                          : ApiNetwork.imageUrl +
+                                              p1["user"]["imagePath"],
+                                    ),
                                   ],
                                 ),
                               ],

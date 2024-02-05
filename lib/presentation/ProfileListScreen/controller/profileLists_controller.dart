@@ -10,26 +10,19 @@ import 'package:matrimony_app/data/apiClient/http_response.dart';
 class ProfileListController extends GetxController {
   NetworkHttpServices api = NetworkHttpServices();
   final name = TextEditingController().obs;
-  final remarks = TextEditingController().obs;
-  final date = TextEditingController().obs;
-  final timeIn = TextEditingController().obs;
-  final timeOut = TextEditingController().obs;
+
   String? status;
   String? statusValue;
 
   clearInputField() {
-    remarks.value.clear();
+    name.value.clear();
     statusValue = null;
     status = null;
-    date.value.clear();
-    timeIn.value.clear();
-    timeOut.value.clear();
   }
 
   final PagingController<int, dynamic> pagingController = PagingController(
     firstPageKey: 1,
   );
-
   final rxRequestStatus = Status.success.obs;
   var usersList = [];
   var firstName = TextEditingController().obs;
@@ -81,14 +74,14 @@ class ProfileListController extends GetxController {
         rxRequestStatus.value = Status.success;
         print('Friend request sent successfully');
         customFlutterToast(
-            backgroundColor: Colors.green, msg: value['message']);
+            backgroundColor: Colors.green,
+            msg: "Friend request sent successfully");
       } else {
         rxRequestStatus.value = Status.error;
         print("Error , $value ");
         customFlutterToast(
-          backgroundColor: Colors.black,
-          msg: value['message'],
-        );
+            backgroundColor: Colors.green,
+            msg: "Friend request sent successfully");
       }
       // Don't navigate to home screen immediately after sending request
     } catch (e) {

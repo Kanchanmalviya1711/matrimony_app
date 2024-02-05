@@ -1,8 +1,8 @@
 class ApiNetwork {
   // BASE URL
-  static const String baseUrl = "http://192.168.1.22:9090/";
-  static const String imageUrl = "http://192.168.1.22:9090";
-  static const String fileDownloadUrl = "http://192.168.1.22:9090/";
+  static const String baseUrl = "http://192.168.1.10:9090/";
+  static const String imageUrl = "http://192.168.1.10:9090";
+  static const String fileDownloadUrl = "http://192.168.1.10:9090/";
 
   // LOGIN
   static const String login = "${baseUrl}login/jwt";
@@ -31,4 +31,5 @@ class ApiNetwork {
   static const String verifyOtp = "${baseUrl}update-password";
   static const String acceptFriendRequest = "${baseUrl}friend-request/";
   static const String updateProfile = "${baseUrl}profile/";
+  static const String updateUserDetails = "${baseUrl}user/register/";
 }
