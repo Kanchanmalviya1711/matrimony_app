@@ -112,51 +112,24 @@ class _BlogScreenState extends State<BlogScreen> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.only(
+                      top: 20, left: 10, right: 10, bottom: 20),
                   child: Align(
                     alignment: Alignment.center,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Blogs and Articles",
+                          "LATEST & POPULAR",
                           style: TextStyle(
                               color: appTheme.black900,
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                               fontFamily: "CinzelDecorative"),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          child: Text(
-                            "Saying , 'I Do', to the Perfect Wedding App ${"A Match Made in Digital Heaven"}",
-                            style: TextStyle(
-                              color: appTheme.black900,
-                              fontSize: 18, // Adjust font size as needed
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
                       ],
                     ),
                   ),
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: appTheme.heading, width: 2.0)),
-              ),
-              child: Text(
-                "LATEST & POPULAR",
-                style: TextStyle(
-                  color: appTheme.heading,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "CinzelDecorative",
                 ),
               ),
             ),
@@ -180,9 +153,6 @@ class _BlogScreenState extends State<BlogScreen> {
                       ),
                       child: Column(
                         children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
                           Card(
                             elevation: 5,
                             surfaceTintColor: Colors
@@ -199,7 +169,7 @@ class _BlogScreenState extends State<BlogScreen> {
                                   children: [
                                     MyImageWidget(
                                         width: double.infinity,
-                                        height: size.height * 0.3,
+                                        height: size.height * 0.6,
                                         imageUrl: ApiNetwork.imageUrl +
                                             p1["image_path"]),
                                     Positioned(

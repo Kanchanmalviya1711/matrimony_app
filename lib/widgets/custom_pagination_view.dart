@@ -47,16 +47,30 @@ class CustomPaginationView extends StatelessWidget {
               onTap: noDataFound!,
             ),
             noMoreItemsIndicatorBuilder: (context) {
-              return SizedBox(
-                  height: 30,
-                  child: Center(
-                    child: Text(
-                      "No More Data",
-                      style: TextStyle(
-                        color: appTheme.black900,
-                      ),
-                    ),
-                  ));
+              return Container(
+                padding: const EdgeInsets.all(8.0),
+                child: FutureBuilder(
+                  future: Future.delayed(const Duration(seconds: 2)),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CustomLoading(
+                        color: appTheme.orange,
+                        size: 20,
+                      );
+                    } else {
+                      return const Text(
+                        'No more items to load',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          // Optional: Change text color
+                        ),
+                      );
+                      // Hide the message
+                    }
+                  },
+                ),
+              );
             },
             firstPageErrorIndicatorBuilder: (_) {
               print(
@@ -90,7 +104,7 @@ class CustomPaginationView extends StatelessWidget {
           ),
           separatorBuilder: (context, index) {
             return const SizedBox(
-              height: 10,
+              height: 0,
             );
           },
         ));

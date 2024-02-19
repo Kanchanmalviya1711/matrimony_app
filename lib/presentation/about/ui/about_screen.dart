@@ -160,7 +160,7 @@ class _AboutScreenState extends State<AboutScreen> {
                                     height:
                                         8), // Added space between the title and description
                                 Text(
-                                  "The most trusted wedding matrimony brand",
+                                  "We have 100% genuine profiles of brides and grooms.",
                                   textAlign: TextAlign
                                       .center, // Center the description text
                                   style: TextStyle(
@@ -211,7 +211,7 @@ class _AboutScreenState extends State<AboutScreen> {
                                     height:
                                         8), // Added space between the title and description
                                 Text(
-                                  "The most trusted wedding matrimony brand",
+                                  "2000+ weddings successfully done by us.",
                                   textAlign: TextAlign
                                       .center, // Center the description text
                                   style: TextStyle(
@@ -262,7 +262,7 @@ class _AboutScreenState extends State<AboutScreen> {
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  "The most trusted wedding matrimony brand",
+                                  "The most trusted matrimony service in India.",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: appTheme.headerColor,

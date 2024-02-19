@@ -7,7 +7,7 @@ calenderTheme(child, context) {
   return Theme(
       data: Theme.of(context).copyWith(
           colorScheme: ColorScheme.light(
-              primary: appTheme.black900,
+              primary: appTheme.orange,
               onPrimary: Colors.white,
               onSurface: Colors.grey),
           dialogTheme: DialogTheme(

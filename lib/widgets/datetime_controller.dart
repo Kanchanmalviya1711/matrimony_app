@@ -46,7 +46,6 @@ class DateTimePickerController extends GetxController {
       initialTime: TimeOfDay.now(),
       context: Get.context!,
     );
-
     if (pickedTime != null) {
       // Create a DateTime object with the selected time and today's date.
       DateTime selectedDateTime = DateTime.now().subtract(Duration(
@@ -59,8 +58,7 @@ class DateTimePickerController extends GetxController {
           .add(Duration(hours: pickedTime.hour, minutes: pickedTime.minute));
 
       // Format the selected time as per the "hh:mm" format.
-      String formattedTime =
-          DateFormat('yyyy-MM-dd HH:mm').format(selectedDateTime);
+      String formattedTime = DateFormat('HH:mm').format(selectedDateTime);
 
       // Update the text in the TextEditingController.
       timeController.text = formattedTime;

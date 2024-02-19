@@ -3,6 +3,7 @@ import 'package:matrimony_app/data/apiClient/http_response.dart';
 import 'package:matrimony_app/presentation/ProfileListScreen/ui/profileLists_screen.dart';
 import 'package:matrimony_app/presentation/home/homepage/homepage.dart';
 import 'package:matrimony_app/core/app_export.dart';
+import 'package:matrimony_app/presentation/myConnections/ui/myConnections_screen.dart';
 
 class HomeController extends GetxController {
   NetworkHttpServices api = NetworkHttpServices();
@@ -13,6 +14,7 @@ class HomeController extends GetxController {
   final pagesList = [
     const HomePage(),
     const ProfileListsScreen(),
+    const MyConnectionsScreen(),
   ];
 
   getProfileDetails(profileId) async {

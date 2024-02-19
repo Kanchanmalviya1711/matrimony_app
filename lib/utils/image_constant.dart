@@ -2,6 +2,7 @@ class ImageConstant {
   // Image folder path
   static String imagePath = 'assets/images';
   static String svgPath = 'assets/svg';
+  static String lottiePath = 'assets/lottie';
   static String board = '$svgPath/board.svg';
   // iPhone 14 Pro - 102 images
   static String hrPicture1 = '$imagePath/splash.png';
@@ -18,13 +19,31 @@ class ImageConstant {
   static String ourTeam = '$imagePath/ourTeam.png';
   static String rings = '$imagePath/rings.png';
   static String myProfile = '$imagePath/myProfile.jpg';
+  static String myProfile1 = '$imagePath/profilePic1.png';
+  static String myProfile2 = '$imagePath/profilePic2.png';
+  static String myProfile3 = '$imagePath/profilePic3.png';
+  static String myProfile4 = '$imagePath/profilePic4.png';
+  static String myProfile5 = '$imagePath/profilePic5.png';
+  static String sendOff = '$imagePath/sendOff.png';
+  static String wedding = '$imagePath/wedding.png';
+  static String party = '$imagePath/party.png';
+  static String dinning = '$imagePath/dinning.png';
+  static String musicEvents = '$imagePath/musicEvents.png';
+  static String photoShoot = '$imagePath/photoshoot.png';
+  static String planImg = '$imagePath/currentPlan.png';
+  static String invoiceImg = '$imagePath/invoiceImg.png';
+
   // iPhone 14 Pro - 104 images
   static String imgArrowdown = '$imagePath/img_arrowdown.svg';
   static String google = '$svgPath/google.svg';
   static String facebook = '$svgPath/facebook.svg';
   static String whatsapp = '$svgPath/whatsapp.svg';
   static String linkedin = '$svgPath/linkedin.svg';
+  static String youtube = '$svgPath/youtube.svg';
   static String twitter = '$svgPath/twitter.svg';
+  static String suscription = '$svgPath/suscription.svg';
+  static String services = '$svgPath/services.svg';
+
   // iPhone 14 Pro - 107 images
   static String imgLocation = '$imagePath/img_location.svg';
   // iPhone 14 Pro - 108 images
@@ -77,6 +96,7 @@ class ImageConstant {
   static String departments = '$svgPath/user.svg';
   static String manpower = '$svgPath/manpower.svg';
   static String contact = '$svgPath/phone.svg';
+  static String gallery = '$svgPath/gallery.svg';
   static String blog = '$svgPath/blogWebsite.svg';
   static String allProfiles = '$svgPath/allProfiles.svg';
   static String testimonials = '$svgPath/testimonial.svg';
@@ -113,4 +133,7 @@ class ImageConstant {
   static String ourServices = '$imagePath/ourServices.png';
   static String noData = '$imagePath/noData.png';
   static String noDatabell = '$imagePath/noDataBell.png';
+
+  //Lottie Images
+  static String lottieLoading = '$lottiePath/leaf.json';
 }

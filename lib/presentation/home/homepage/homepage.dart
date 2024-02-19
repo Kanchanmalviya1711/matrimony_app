@@ -12,6 +12,7 @@ import 'package:matrimony_app/utils/image_constant.dart';
 import 'package:matrimony_app/widgets/custom_icon_button.dart';
 import 'package:matrimony_app/widgets/custom_image_view.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:lottie/lottie.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -106,9 +107,15 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             // MENU BAR DATA DISPLAY END
-            const SizedBox(height: 30),
+
             Column(
               children: [
+                Lottie.asset(
+                  "assets/lottie/heart.json",
+                  repeat: true,
+                  animate: true,
+                  fit: BoxFit.cover,
+                ),
                 const Text(
                   "Quick Access",
                   style: TextStyle(
@@ -128,8 +135,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                // ---------Slider module start--------------
+                const SizedBox(
+                  height: 10,
+                ),
 
+                // ---------Slider module start--------------
                 // Slider module
                 CarouselSlider(
                     options: CarouselOptions(
@@ -168,6 +178,13 @@ class _HomePageState extends State<HomePage> {
                                 description: homepageController
                                     .slidersList[index]['description']
                                     .toString(),
+                                onExploreTap: () {
+                                  Get.toNamed(
+                                    AppRoutes.viewSliderScreen,
+                                    arguments:
+                                        homepageController.slidersList[index],
+                                  );
+                                },
                               );
                             },
                           )
@@ -609,11 +626,13 @@ class MyImageWidget extends StatelessWidget {
 }
 
 Widget buildCarouselItem({
+  bool isExpanded = false,
   required String imagePath,
   required String title,
   required String subtitle,
   required String status,
   required String description,
+  required VoidCallback onExploreTap,
 }) {
   return Padding(
     padding: const EdgeInsets.all(10),
@@ -681,6 +700,8 @@ Widget buildCarouselItem({
                       style: const TextStyle(
                         fontSize: 16,
                       ),
+                      softWrap: true,
+                      maxLines: isExpanded ? null : 1,
                     ),
                   ],
                 ),
@@ -702,13 +723,11 @@ Widget buildCarouselItem({
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 5),
                       child: GestureDetector(
-                        onTap: () {
-                          Get.toNamed(AppRoutes.blogScreen);
-                        },
-                        child: Text(
+                        onTap: onExploreTap,
+                        child: const Text(
                           "Explore",
                           style: TextStyle(
-                            color: appTheme.whiteA700,
+                            color: Colors.white,
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),

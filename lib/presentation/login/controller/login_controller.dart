@@ -27,6 +27,11 @@ class LoginController extends GetxController {
     isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
   }
 
+  clearFields() {
+    emailController.value.clear();
+    passwordController.value.clear();
+  }
+
   login() async {
     var payload = {
       "fcmToken": fcmToken,
@@ -59,14 +64,18 @@ class LoginController extends GetxController {
         print("Response Null");
         customFlutterToast(
             backgroundColor: Colors.red,
-            msg: "Login Failed Invalid Credential");
+            msg: "Login Failed Invalid Credential or User Not Found");
+
         rxRequestStatus.value = Status.error;
       }
+      clearFields();
+      rxRequestStatus.value = Status.error;
     } catch (e) {
       print("checking error, $e");
       customFlutterToast(
           backgroundColor: Colors.red, msg: "Login Failed Invalid Credential");
       rxRequestStatus.value = Status.error;
+      clearFields();
     }
   }
 
@@ -115,10 +124,12 @@ class LoginController extends GetxController {
       } else {
         print("Response Null");
       }
+      clearFields();
     } catch (e) {
       print("checking error, $e");
       customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
       rxRequestStatus.value = Status.error;
+      clearFields();
     }
   }
 }

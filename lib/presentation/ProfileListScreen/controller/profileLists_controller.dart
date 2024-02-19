@@ -17,6 +17,7 @@ class ProfileListController extends GetxController {
   clearInputField() {
     name.value.clear();
     statusValue = null;
+    firstName.value.clear();
     status = null;
   }
 
@@ -29,30 +30,31 @@ class ProfileListController extends GetxController {
   var pageKey = 1;
   var perPage = 20;
 
-  getUsers({page, perPageRecord}) async {
+  getUsers({int? page, int? perPageRecord, String? searchTerm}) async {
     var payload = {
-      "page": pageKey,
-      "per_page_record": perPage,
+      "page": page ?? pageKey,
+      "per_page_record": perPageRecord ?? perPage,
       "gender": SessionManager.getGender() == "1" ? "2" : "1",
-      "userId": json.decode(SessionManager.getUserId().toString())
+      "userId": json.decode(SessionManager.getUserId().toString()),
     };
 
     try {
       var value =
           await api.post(ApiNetwork.usersList, jsonEncode(payload), true);
       if (value['status'] == "success") {
-        print("fsdfdsf pradhufjsdf ${value['payload']['data']}");
+        print("Users data: ${value['payload']['data']}");
         usersList = value['payload']['data'];
-        print("object");
-        print("fgdfgfdgdfg fdg $usersList");
         return usersList;
+      } else {
+        customFlutterToast(
+            backgroundColor: Colors.red, msg: "Failed to fetch users");
+        rxRequestStatus.value = Status.error;
       }
     } catch (e) {
       customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
       rxRequestStatus.value = Status.error;
     }
   }
-
 // Friend Request Api Call
 
   sendFriendRequest(String userId, String status) async {

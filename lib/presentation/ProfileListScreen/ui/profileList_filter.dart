@@ -1,6 +1,7 @@
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/presentation/ProfileListScreen/controller/profileLists_controller.dart';
 import 'package:matrimony_app/presentation/ProfileListScreen/ui/profileListForm.dart';
+import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/size_utils.dart';
 
@@ -63,7 +64,7 @@ class _ProfileListFilterState extends State<ProfileListFilter> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10))),
                         onPressed: () {
-                          Get.back();
+                          Get.offAndToNamed(AppRoutes.profileListScreen);
                         },
                         child: const Text(
                           "Apply Filter",

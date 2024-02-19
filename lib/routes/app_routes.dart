@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:matrimony_app/presentation/about/binding/about_binding.dart';
 import 'package:matrimony_app/presentation/about/ui/about_screen.dart';
+import 'package:matrimony_app/presentation/about/ui/viewOurTeam_screen.dart';
 import 'package:matrimony_app/presentation/allProfiles/binding/allProfiles_binding.dart';
 import 'package:matrimony_app/presentation/allProfiles/ui/allProfiles_screen.dart';
 import 'package:matrimony_app/presentation/allProfiles/ui/createProfile_screen.dart';
@@ -14,6 +15,8 @@ import 'package:matrimony_app/presentation/contact/binding/contact_binding.dart'
 import 'package:matrimony_app/presentation/contact/contactusScreen.dart';
 import 'package:matrimony_app/presentation/friendRequestScreen/binding/friendRequest_binding.dart';
 import 'package:matrimony_app/presentation/friendRequestScreen/ui/friendRequest_screen.dart';
+import 'package:matrimony_app/presentation/gallery/binding/gallery_binding.dart';
+import 'package:matrimony_app/presentation/gallery/ui/gallery_screen.dart';
 import 'package:matrimony_app/presentation/home/binding/home_binding.dart';
 import 'package:matrimony_app/presentation/home/ui/home_screen.dart';
 import 'package:matrimony_app/presentation/login/binding/login_binding.dart';
@@ -23,13 +26,22 @@ import 'package:matrimony_app/presentation/login/update_otpverify_screen.dart';
 import 'package:matrimony_app/presentation/notifications/binding/notifications_binding.dart';
 import 'package:matrimony_app/presentation/notifications/ui/notifications_screen.dart';
 import 'package:matrimony_app/presentation/ourServices/binding/ourServices_binding.dart';
+import 'package:matrimony_app/presentation/ourServices/ui/ourServicesDetailsScreen.dart';
 import 'package:matrimony_app/presentation/ourServices/ui/ourServices_screen.dart';
+import 'package:matrimony_app/presentation/pageNotFound/binding/pageNotFound_binding.dart';
+import 'package:matrimony_app/presentation/pageNotFound/ui/pageNotFound.dart';
+import 'package:matrimony_app/presentation/plansAndPricing/binding/plans_binding.dart';
+import 'package:matrimony_app/presentation/plansAndPricing/ui/plans_screen.dart';
 import 'package:matrimony_app/presentation/profile/binding/profile.binding.dart';
 import 'package:matrimony_app/presentation/profile/ui/profile_screen.dart';
 import 'package:matrimony_app/presentation/register/binding/register_binding.dart';
 import 'package:matrimony_app/presentation/register/ui/register_screen.dart';
+import 'package:matrimony_app/presentation/sliders/binding/sliders_binding.dart';
+import 'package:matrimony_app/presentation/sliders/ui/view_sliders_screen.dart';
 import 'package:matrimony_app/presentation/splash/binding/splash_binding.dart';
 import 'package:matrimony_app/presentation/splash/ui/splash_screen.dart';
+import 'package:matrimony_app/presentation/suscriptions/binding/suscriptions_binding.dart';
+import 'package:matrimony_app/presentation/suscriptions/ui/suscriptions_screen.dart';
 import 'package:matrimony_app/presentation/testimonials/binding/testimonials_binding.dart';
 import 'package:matrimony_app/presentation/testimonials/ui/testimonials_screen.dart';
 
@@ -55,6 +67,13 @@ class AppRoutes {
   static const String verifyOtpScreen = "/verifyOtpScreen";
   static const String notificationScreen = "/notificationScreen";
   static const String chatScreen = "/chatScreen";
+  static const String galleryScreen = "/galleryScreen";
+  static const String ourServicesDetailsScreen = "/ourServicesDetailsScreen";
+  static const String suscriptionScreen = "/suscriptionScreen";
+  static const String pageNotFound = "/pageNotFound";
+  static const String viewSliderScreen = "/viewSliderScreen";
+  static const String viewOurTeamDetailsScreen = "/viewOurTeamDetailsScreen";
+  static const String plansAndPricing = "/plansAndPricing";
 
   static List<GetPage> pages = [
     //splash screen
@@ -86,6 +105,12 @@ class AppRoutes {
       binding: AboutBinding(),
       name: aboutScreen,
       page: () => const AboutScreen(),
+    ),
+    //view our team screen
+    GetPage(
+      binding: AboutBinding(),
+      name: viewOurTeamDetailsScreen,
+      page: () => const ViewOurTeamScreen(),
     ),
     //profile screen
     GetPage(
@@ -123,17 +148,17 @@ class AppRoutes {
       name: blogScreen,
       page: () => const BlogScreen(),
     ),
-    //our service screen
-    GetPage(
-      binding: OurServicesBinding(),
-      name: ourServiceScreen,
-      page: () => const OurServicesScreen(),
-    ),
     //view blog screen
     GetPage(
       binding: BlogBinding(),
       name: viewBlogScreen,
       page: () => const ViewBlogScreen(),
+    ),
+    //our service screen
+    GetPage(
+      binding: OurServicesBinding(),
+      name: ourServiceScreen,
+      page: () => const OurServicesScreen(),
     ),
     //create profile screen
     GetPage(
@@ -169,5 +194,41 @@ class AppRoutes {
         binding: ChatBinding(),
         name: chatScreen,
         page: () => const ChatScreen()),
+    //our service details screen
+    GetPage(
+      binding: OurServicesBinding(),
+      name: ourServicesDetailsScreen,
+      page: () => const OurServicesDetailsScreen(),
+    ),
+    //gallery screen
+    GetPage(
+      binding: GalleryBinding(),
+      name: galleryScreen,
+      page: () => const GalleryScreen(),
+    ),
+    //suscription screen
+    GetPage(
+      binding: SuscriptionBinding(),
+      name: suscriptionScreen,
+      page: () => const SuscriptionScreen(),
+    ),
+    //page not found screen
+    GetPage(
+      binding: PageNotFoundBinding(),
+      name: pageNotFound,
+      page: () => const PageNotFound(),
+    ),
+    //slider screen
+    GetPage(
+      binding: SlidersBinding(),
+      name: viewSliderScreen,
+      page: () => const ViewSliderScreen(),
+    ),
+    // plans and pricing screen
+    GetPage(
+      binding: PlansAndPricingBinding(),
+      name: plansAndPricing,
+      page: () => const PlansScreen(),
+    ),
   ];
 }

@@ -1,6 +1,8 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
+import 'package:matrimony_app/custom_widget/custom_drawer.dart';
 import 'package:matrimony_app/presentation/ourServices/controller/ourServices_controller.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
@@ -69,24 +71,20 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       key: scaffoldKey,
       appBar: CustomAppBar(
-        centerTitle: true,
-        leading: CustomIconButton(
-          child: IconButton(
-            onPressed: () {
-              Get.offAllNamed(AppRoutes.homeScreen);
-            },
-            icon: Icon(
-              Icons.arrow_back,
+          centerTitle: true,
+          leading: CustomIconButton(
+            child: SvgPicture.asset(
+              ImageConstant.menuIcon,
               color: appTheme.whiteA700,
             ),
+            onTap: () {
+              scaffoldKey.currentState!.openDrawer();
+            },
           ),
-        ),
-        title: "OUR SERVICES",
-      ),
+          title: "OUR SERVICES"),
       body: Column(
         children: [
           Padding(
@@ -109,100 +107,108 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
                 itemBuilder: (p0, p1, p2) {
                   return Padding(
                     padding: const EdgeInsets.only(),
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 20, left: 5, right: 5),
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        children: [
-                          Column(
-                            children: [
-                              Stack(
-                                children: [
-                                  MyImageWidget(
-                                    height: 400,
-                                    imageUrl: ApiNetwork.imageUrl + p1["image"],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(0),
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: appTheme.black900,
-                                              width: 3.0)),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.ourServicesDetailsScreen,
+                            arguments: [p1]);
+                      },
+                      child: Container(
+                        margin:
+                            const EdgeInsets.only(top: 20, left: 5, right: 5),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          children: [
+                            Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    MyImageWidget(
+                                      height: 400,
+                                      imageUrl:
+                                          ApiNetwork.imageUrl + p1["image"],
                                     ),
-                                    child: Text(
-                                      p1["title"].toString(),
-                                      style: TextStyle(
-                                        color: appTheme.black900,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(0),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: appTheme.black900,
+                                                width: 3.0)),
+                                      ),
+                                      child: Text(
+                                        p1["title"].toString(),
+                                        style: TextStyle(
+                                          color: appTheme.black900,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10, right: 10, bottom: 10),
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    p1["sub_title"].toString(),
-                                    style: TextStyle(
-                                        color: appTheme.black900,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10, right: 10, bottom: 10),
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    p1["description"].toString(),
-                                    style: TextStyle(
-                                      color: appTheme.black900,
-                                      fontSize: 16,
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 10, bottom: 10),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      p1["sub_title"].toString(),
+                                      style: TextStyle(
+                                          color: appTheme.black900,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 10, bottom: 10),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      p1["description"].toString(),
+                                      style: TextStyle(
+                                        color: appTheme.black900,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -210,8 +216,7 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
           ),
         ],
       ),
-
-      // Home page
+      drawer: const SideMenu(),
     );
   }
 }

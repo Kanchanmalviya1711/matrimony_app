@@ -41,169 +41,208 @@ class _ViewBlogScreenState extends State<ViewBlogScreen> {
         centerTitle: true,
       ),
       body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [Color(0xFFfdfcfb), Color(0xFFFFFBEE)],
-            ),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xFFfdfcfb), Color(0xFFFFFBEE)],
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Stack(
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  MyImageWidget(
+                      height: size.height * 0.6,
+                      width: double.infinity,
+                      imageUrl: ApiNetwork.imageUrl + data[0]["image_path"]),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    MyImageWidget(
-                        height: size.height * 0.4,
-                        width: double.infinity,
-                        imageUrl: ApiNetwork.imageUrl + data[0]["image_path"]),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          data[0]["title"],
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Color(0xFF000000),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          data[0]["slug".toString()],
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: appTheme.heading,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              DateFormat('dd,MMM yyyy').format(
+                                DateTime.parse(
+                                    data[0]["dateOfMarriage"].toString()),
+                              ),
+                              style: TextStyle(
+                                  color: appTheme.whiteA700,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            data[0]["title"],
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: Color(0xFF000000),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            data[0]["slug".toString()],
-                          ),
-                        ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(children: [
+                  Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: appTheme.blogBoxColor,
                       ),
-                      Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: appTheme.heading,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                DateFormat('dd,MMM yyyy').format(
-                                  DateTime.parse(
-                                      data[0]["dateOfMarriage"].toString()),
-                                ),
-                                style: TextStyle(
-                                    color: appTheme.whiteA700,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "EVENTS",
+                          style: TextStyle(
+                              color: appTheme.whiteA700,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      )),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: appTheme.blogBoxColor,
                       ),
-                    ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "DECORAION",
+                          style: TextStyle(
+                              color: appTheme.whiteA700,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      )),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: appTheme.blogBoxColor,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "WEDDING",
+                          style: TextStyle(
+                              color: appTheme.whiteA700,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      )),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: appTheme.blogBoxColor,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "VIEWS: 55M",
+                          style: TextStyle(
+                              color: appTheme.whiteA700,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      )),
+                ]),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Text("Our Wedding Journey",
+                      style: TextStyle(
+                          color: appTheme.heading,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold)),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  data[0]["content"],
+                  style: const TextStyle(
+                    fontSize: 16,
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(children: [
-                    Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: appTheme.blogBoxColor,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "EVENTS",
-                            style: TextStyle(
-                                color: appTheme.whiteA700,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )),
-                    const SizedBox(
-                      width: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Date Of Post :",
+                      style: TextStyle(
+                          color: appTheme.heading,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
                     ),
-                    Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: appTheme.blogBoxColor,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "DECORAION",
-                            style: TextStyle(
-                                color: appTheme.whiteA700,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )),
-                    const SizedBox(
-                      width: 10,
+                    Divider(
+                      color: appTheme.heading,
                     ),
-                    Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: appTheme.blogBoxColor,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "WEDDING",
-                            style: TextStyle(
-                                color: appTheme.whiteA700,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )),
-                  ]),
+                    Text(
+                      DateFormat('dd,MMM yyyy').format(
+                        DateTime.parse(data[0]["dateOfPost"].toString()),
+                      ),
+                      style: TextStyle(
+                          color: appTheme.black900,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18),
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Text("Our Wedding Journey",
-                        style: TextStyle(
-                            color: appTheme.heading,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-                    "Lorem Ipsum has been the industry's standard dummy text ever since the 1500",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-                      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500."
-                      "has been the industry's standard dummy text ever since the 1500",
-                      style: TextStyle(fontSize: 16)),
-                ),
-              ],
-            ),
-          )),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

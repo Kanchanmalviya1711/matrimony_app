@@ -167,7 +167,7 @@ class RegisterController extends GetxController {
         // var jsonData = response["payload"];
         // await SessionManager.setUser(json.encode(jsonData));
         Get.offAndToNamed(AppRoutes.profileScreen);
-        customFlutterToast(msg: response['message']);
+        customFlutterToast(msg: "User Updated Successfully");
       } else {
         var response = json.decode(value.body);
         print("Error: ${response['message']}");

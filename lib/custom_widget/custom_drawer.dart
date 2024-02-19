@@ -30,126 +30,135 @@ class _SideMenuState extends State<SideMenu> {
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.8,
       backgroundColor: Colors.white,
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [Color(0xFFfdfcfb), Color(0xFFFFFBEE)],
+      child: SingleChildScrollView(
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [Color(0xFFfdfcfb), Color(0xFFFFFBEE)],
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: appTheme.black900,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      'assets/images/logowhite.png',
-                      color: appTheme.whiteA700,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            DrawerListTile(
-              title: "Home",
-              svgSrc: ImageConstant.dashboardIcon,
-              press: () {
-                Get.offAllNamed(AppRoutes.homeScreen);
-              },
-            ),
-            DrawerListTile(
-              title: "All Profiles",
-              svgSrc: ImageConstant.allProfiles,
-              press: () {
-                Get.offAllNamed(AppRoutes.allProfilesScreen);
-              },
-            ),
-            const Divider(
-              color: Colors.black,
-            ),
-            DrawerListTile(
-              title: "Blog",
-              svgSrc: ImageConstant.blog,
-              press: () {
-                Get.offAllNamed(AppRoutes.blogScreen);
-              },
-            ),
-            DrawerListTile(
-              title: "Testimonials",
-              svgSrc: ImageConstant.testimonials,
-              press: () {
-                Get.offAllNamed(AppRoutes.testimonialsScreen);
-              },
-            ),
-            const Divider(
-              color: Colors.black,
-            ),
-            DrawerListTile(
-              title: "About",
-              svgSrc: ImageConstant.groupAbout,
-              press: () {
-                Get.offAllNamed(AppRoutes.aboutScreen);
-              },
-            ),
-            DrawerListTile(
-              title: "Contact Us",
-              svgSrc: ImageConstant.contact,
-              press: () {
-                Get.offAllNamed(AppRoutes.contactUsScreen);
-              },
-            ),
-            DrawerListTile(
-              title: "Our Services",
-              svgSrc: ImageConstant.contact,
-              press: () {
-                Get.offAllNamed(AppRoutes.ourServiceScreen);
-              },
-            ),
-            DrawerListTile(
-              title: "Chat",
-              svgSrc: ImageConstant.contact,
-              press: () {
-                Get.offAllNamed(AppRoutes.chatScreen);
-              },
-            ),
-            // DrawerListTile(
-            //   title: "Create Profile",
-            //   svgSrc: ImageConstant.contact,
-            //   press: () {
-            //     Get.offAllNamed(AppRoutes.createProfileScreen);
-            //   },
-            // ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-              child: CustomElevatedButton(
-                buttonStyle: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.red),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: appTheme.black900,
                 ),
-                text: "Logout",
-                buttonTextStyle: CustomTextStyles.titleMediumBlackA700,
-                onTap: () {
-                  showAlertDialog(
-                    context,
-                    () {
-                      Get.back();
-                    },
-                    () {
-                      SessionManager.removeToken();
-                      Get.offAllNamed(AppRoutes.loginScreen);
-                    },
-                  );
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        'assets/images/logowhite.png',
+                        color: appTheme.whiteA700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              DrawerListTile(
+                title: "Home",
+                svgSrc: ImageConstant.dashboardIcon,
+                press: () {
+                  Get.offAllNamed(AppRoutes.homeScreen);
                 },
               ),
-            ),
-          ],
+              DrawerListTile(
+                title: "All Profiles",
+                svgSrc: ImageConstant.allProfiles,
+                press: () {
+                  Get.offAllNamed(AppRoutes.allProfilesScreen);
+                },
+              ),
+              const Divider(
+                color: Colors.black,
+              ),
+              DrawerListTile(
+                title: "Blog",
+                svgSrc: ImageConstant.blog,
+                press: () {
+                  Get.offAllNamed(AppRoutes.blogScreen);
+                },
+              ),
+              DrawerListTile(
+                title: "Testimonials",
+                svgSrc: ImageConstant.testimonials,
+                press: () {
+                  Get.offAllNamed(AppRoutes.testimonialsScreen);
+                },
+              ),
+              const Divider(
+                color: Colors.black,
+              ),
+              DrawerListTile(
+                title: "About",
+                svgSrc: ImageConstant.groupAbout,
+                press: () {
+                  Get.offAllNamed(AppRoutes.aboutScreen);
+                },
+              ),
+              DrawerListTile(
+                title: "Contact Us",
+                svgSrc: ImageConstant.contact,
+                press: () {
+                  Get.offAllNamed(AppRoutes.contactUsScreen);
+                },
+              ),
+              DrawerListTile(
+                title: "Our Services",
+                svgSrc: ImageConstant.services,
+                press: () {
+                  Get.offAllNamed(AppRoutes.ourServiceScreen);
+                },
+              ),
+              DrawerListTile(
+                title: "Gallery",
+                svgSrc: ImageConstant.gallery,
+                press: () {
+                  Get.offAllNamed(AppRoutes.galleryScreen);
+                },
+              ),
+              DrawerListTile(
+                title: "Plans & Pricing",
+                svgSrc: ImageConstant.suscription,
+                press: () {
+                  Get.offAllNamed(AppRoutes.plansAndPricing);
+                },
+              ),
+              DrawerListTile(
+                title: "Take Suscription",
+                svgSrc: ImageConstant.suscription,
+                press: () {
+                  Get.offAllNamed(AppRoutes.suscriptionScreen);
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                child: CustomElevatedButton(
+                  buttonStyle: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.red),
+                  ),
+                  text: "Logout",
+                  buttonTextStyle: CustomTextStyles.titleMediumBlackA700,
+                  onTap: () {
+                    showAlertDialog(
+                      context,
+                      () {
+                        Get.back();
+                      },
+                      () {
+                        SessionManager.removeToken();
+                        Get.offAllNamed(AppRoutes.loginScreen);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -174,6 +183,7 @@ class DrawerListTile extends StatelessWidget {
       leading: CustomImageView(
         svgPath: svgSrc,
         height: 22,
+        color: appTheme.black900,
       ),
       title: Text(
         title,
@@ -227,11 +237,11 @@ void showAlertDialog(
                       backgroundColor: appTheme.filterColor,
                     ),
                     onPressed: noTap,
-                    child: Container(
+                    child: SizedBox(
                       width: 50,
                       child: Text(
                         'Cancel',
-                        style: TextStyle(color: appTheme.black900),
+                        style: TextStyle(color: appTheme.whiteA700),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -247,7 +257,7 @@ void showAlertDialog(
                       backgroundColor: Colors.red,
                     ),
                     onPressed: deleteTap,
-                    child: Container(
+                    child: SizedBox(
                       width: 50,
                       child: Text(
                         'Logout',

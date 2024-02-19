@@ -22,7 +22,8 @@ class FriendRequestController extends GetxController {
       var payload = {
         "page": pageKey.toString(),
         "per_page_record": perPage.toString(),
-        "userId": json.decode(SessionManager.getUserId().toString())
+        "userIdForFriendRequestReceived":
+            json.decode(SessionManager.getUserId().toString())
       };
       var value = await api.post(
           ApiNetwork.getFriendRequest, jsonEncode(payload), true,

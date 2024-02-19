@@ -6,10 +6,12 @@ import 'package:matrimony_app/presentation/contact/controller/contact_controller
 import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
+import 'package:matrimony_app/utils/size_utils.dart';
 import 'package:matrimony_app/widgets/custom_app_bar.dart';
 import 'package:matrimony_app/widgets/custom_elevated_button.dart';
 import 'package:matrimony_app/widgets/custom_icon_button.dart';
 import 'package:matrimony_app/widgets/custom_image_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsScreen extends StatefulWidget {
   const ContactUsScreen({Key? key}) : super(key: key);
@@ -218,7 +220,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       const Divider(),
                       const SizedBox(height: 20),
                       Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        padding: const EdgeInsets.only(left: 10, right: 10),
                         child: Card(
                           elevation: 5,
                           surfaceTintColor: Colors.white,
@@ -249,7 +251,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  "Most Trusted and premium Matrimony Service in the World.",
+                                  "Helping you to find your perfect match. By making strong relationship with our customers.",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: appTheme.heading,
@@ -277,7 +279,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       const Divider(),
                       const SizedBox(height: 20),
                       Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 10, bottom: 10),
                         child: Card(
                           elevation: 5,
                           surfaceTintColor: Colors.white,
@@ -308,7 +311,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  "Most Trusted and premium Matrimony Service in the World.",
+                                  "Get in touch with us on WhatsApp. We are here to help you.",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: appTheme.heading,
@@ -331,6 +334,235 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                               ],
                             ),
                           ),
+                        ),
+                      ),
+                      const Divider(),
+                      SizedBox(height: 20.h),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'HELP AND SUPPORT',
+                                style: TextStyle(
+                                  color: appTheme.black900,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.offAndToNamed(AppRoutes.aboutScreen);
+                                    },
+                                    child: Text(
+                                      "About Company",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.heading,
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.offAndToNamed(
+                                          AppRoutes.contactUsScreen);
+                                    },
+                                    child: Text(
+                                      "Contact Us",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.heading,
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.offAndToNamed(
+                                          AppRoutes.ourServiceScreen);
+                                    },
+                                    child: Text(
+                                      "Our Services",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.heading,
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  GestureDetector(
+                                    child: Text(
+                                      "Feedback",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.heading,
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.offAndToNamed(
+                                          AppRoutes.testimonialsScreen);
+                                    },
+                                    child: Text(
+                                      "Testimonials",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.heading,
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 10, bottom: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(height: 10),
+                            CustomImageView(
+                              imagePath: ImageConstant.logoImg,
+                              width: 300,
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              'FOLLOW US',
+                              style: TextStyle(
+                                color: appTheme.black900,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        // 1 linkedIn
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: appTheme.hobbies,
+                                          ),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              launch(
+                                                  'https://www.linkedin.com/');
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: CustomIconButton(
+                                                child: SvgPicture.asset(
+                                                  ImageConstant.linkedin,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+
+                                        const SizedBox(width: 10),
+                                        // 2 facebook
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: appTheme.hobbies,
+                                          ),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              launch(
+                                                  'https://www.facebook.com/');
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: CustomIconButton(
+                                                child: SvgPicture.asset(
+                                                  ImageConstant.facebook,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        // 3 twitter
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: appTheme.hobbies,
+                                          ),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              launch('https://twitter.com/');
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: CustomIconButton(
+                                                child: SvgPicture.asset(
+                                                  ImageConstant.twitter,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        // 4 youtube
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: appTheme.hobbies,
+                                          ),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              launch(
+                                                  'https://www.youtube.com/');
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: CustomIconButton(
+                                                child: SvgPicture.asset(
+                                                  ImageConstant.youtube,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                          ],
                         ),
                       ),
                     ],

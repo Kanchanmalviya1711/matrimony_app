@@ -9,6 +9,7 @@ class SessionManager {
   static const _gender = "gender";
   static const _userProfile = "userProfile";
   static const _profileCreated = "profileCreated";
+  static const _myConnections = "myConnections";
 
   static Future init() async =>
       preferences = await SharedPreferences.getInstance();
@@ -19,6 +20,15 @@ class SessionManager {
 
   static dynamic getUser() {
     return preferences!.getString(_user);
+  }
+
+  // MY CONNECTIONS
+  static dynamic setMyConnections(String myConnections) {
+    return preferences!.setString(_myConnections, myConnections);
+  }
+
+  static dynamic getMyConnections() {
+    return preferences!.getString(_myConnections);
   }
 
   static dynamic setUserProfileData(String userProfile) {

@@ -117,9 +117,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     data == null ? _buildLogoSection() : Container(),
                     SizedBox(height: 10.h),
                     Padding(
-                      padding: const EdgeInsets.only(left: 10, top: 10),
+                      padding: const EdgeInsets.only(top: 10),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
                             onTap: () {
@@ -138,12 +138,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 : "Update User Details".tr,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: CustomTextStyles.labelLargeBlack900,
+                            style: TextStyle(
+                              fontSize: 27,
+                              color: appTheme.black900,
+                              fontWeight: FontWeight.w500,
+                              decorationColor: appTheme.black900,
+                              decoration:
+                                  TextDecoration.underline, // Add this line
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 25.v),
+                    SizedBox(height: 15.v),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
@@ -537,6 +544,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               ),
                                             )),
                                   CustomElevatedButton(
+                                    width: 200,
                                     // isDisabled:
                                     //     registerController.isEdit.value,
                                     text: 'Upload',
@@ -555,12 +563,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ? Container()
                         : Padding(
                             padding: const EdgeInsets.only(
-                              left: 20,
-                              right: 10,
                               bottom: 10,
                             ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   "Already have a member ?",
@@ -569,25 +575,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     color: appTheme.black900,
                                   ),
                                 ),
-                                Column(
-                                  children: [
-                                    CustomElevatedButton(
-                                      buttonStyle: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                appTheme.headerColor),
-                                      ),
-                                      text: "Login",
-                                      buttonTextStyle:
-                                          CustomTextStyles.titleMediumBlackA700,
-                                      onTap: () {
-                                        Get.toNamed(
-                                          AppRoutes.loginScreen,
-                                        );
-                                      },
+                                const SizedBox(width: 5),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(
+                                      AppRoutes.loginScreen,
+                                    );
+                                  },
+                                  child: Text(
+                                    "Login",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: appTheme.blue1600,
+                                      fontWeight: FontWeight.bold,
+                                      decorationColor: appTheme.blue1600,
+                                      decoration: TextDecoration
+                                          .underline, // Add this line
                                     ),
-                                  ],
-                                )
+                                  ),
+                                ),
                               ],
                             ),
                           )

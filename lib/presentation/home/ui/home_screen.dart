@@ -5,6 +5,7 @@ import 'package:matrimony_app/presentation/ProfileListScreen/ui/profileLists_scr
 import 'package:matrimony_app/presentation/home/controller/home_controller.dart';
 import 'package:matrimony_app/presentation/home/homepage/controller/homepage_controller.dart';
 import 'package:matrimony_app/presentation/home/homepage/homepage.dart';
+import 'package:matrimony_app/presentation/myConnections/ui/myConnections_screen.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
@@ -27,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final pages = [
     const HomePage(),
     const ProfileListsScreen(),
+    const MyConnectionsScreen(),
   ];
 
   @override
@@ -147,6 +149,10 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.segment),
             label: 'Profile List',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'My Connections',
           ),
         ],
       ),

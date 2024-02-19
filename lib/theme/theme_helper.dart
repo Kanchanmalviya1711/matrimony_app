@@ -238,6 +238,7 @@ class PrimaryColors {
   // Blue
   Color get blue600 => const Color(0XFF0873e1);
   Color get blue1600 => const Color(0XFF2794CF);
+  Color get credit => const Color(0XFFDB214C);
 
   Color get birthDayCard => const Color(0XFF1D9BF0);
 

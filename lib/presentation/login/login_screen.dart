@@ -81,7 +81,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (value!.isEmpty) {
                               return "Please enter email";
                             }
-
                             // Convert the email to lowercase
                             String lowercaseValue = value.toLowerCase();
 
@@ -184,6 +183,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                   if (_formKey.currentState!.validate()) {
                                     setState(() {
                                       controller.login();
+                                      isLoading =
+                                          true; // Set isLoading to true immediately
+                                    });
+
+                                    // Delayed setState
+                                    Future.delayed(const Duration(seconds: 2),
+                                        () {
+                                      // Check if the widget is still mounted before calling setState
+                                      if (mounted) {
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                      }
                                     });
                                   }
                                 },

@@ -26,7 +26,6 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
-
   var getUserData;
   var getUserProfileData;
 
@@ -74,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               side: BorderSide(color: appTheme.whiteA700),
             ),
             icon: Icon(
-              Icons.more_vert,
+              Icons.edit,
               color: appTheme.whiteA700,
             ),
             itemBuilder: (BuildContext context) => [
@@ -170,37 +169,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            "${getUserProfileData["firstName"]} ${getUserProfileData["lastName"]}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "${getUserProfileData["firstName"]} ${getUserProfileData["lastName"]}",
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                getUserData == null
+                                    ? "No data found"
+                                    : getUserData["nickName"] == null
+                                        ? "No nickname found"
+                                        : "(${getUserData["nickName"].toString()})",
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                           Text(
-                            getUserData == null
-                                ? "No data found"
-                                : getUserData["nickName"] == null
-                                    ? "No nickname found"
-                                    : getUserData["nickName"].toString(),
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                            ),
-                          ),
-                          SizedBox(height: 5.v),
-                          Text(
-                            getUserData == null
-                                ? "No Profession Found"
-                                : getUserData["profession"].toString(),
+                            "By Profession ${getUserData == null ? "No Data Found" : getUserData["profession"]} ",
                             style: TextStyle(
                               color: appTheme.heading,
                               fontWeight: FontWeight.w600,
                               fontSize: 20,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -295,31 +301,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            MyImageWidget(
-                              height: mediaQueryData.size.height * 0.3,
-                              imageUrl: getUserData?["photo1"],
-                              width: double.infinity,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            MyImageWidget(
-                              height: mediaQueryData.size.height * 0.3,
-                              imageUrl: getUserData?["photo2"],
-                              width: double.infinity,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            MyImageWidget(
-                              height: mediaQueryData.size.height * 0.3,
-                              imageUrl: getUserData?["photo3"],
-                              width: double.infinity,
-                            ),
-                          ],
-                        ),
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              MyImageWidget(
+                                  width: 200,
+                                  height: mediaQueryData.size.height * 0.3,
+                                  imageUrl: getUserData == null
+                                      ? ImageConstant.userProfile
+                                      : getUserData["photo1"] == null
+                                          ? ImageConstant.userProfile
+                                          : ApiNetwork.imageUrl +
+                                              getUserData["photo1"]),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              MyImageWidget(
+                                  width: 200,
+                                  height: mediaQueryData.size.height * 0.3,
+                                  imageUrl: getUserData == null
+                                      ? ImageConstant.userProfile
+                                      : getUserData["photo2"] == null
+                                          ? ImageConstant.userProfile
+                                          : ApiNetwork.imageUrl +
+                                              getUserData["photo2"]),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              MyImageWidget(
+                                  width: 200,
+                                  height: mediaQueryData.size.height * 0.3,
+                                  imageUrl: getUserData == null
+                                      ? ImageConstant.userProfile
+                                      : getUserData["photo3"] == null
+                                          ? ImageConstant.userProfile
+                                          : ApiNetwork.imageUrl +
+                                              getUserData["photo3"]),
+                            ]),
                       )
                     ])),
           ),
@@ -667,18 +684,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           child: GestureDetector(
                             onTap: () {
-                              if (getUserData != null) {
-                                String facebookUrl =
-                                    getUserData['facebookUrl'].toString() ??
-                                        "No Data Found";
-                                if (facebookUrl.isNotEmpty) {
-                                  launchUrl(Uri.parse(facebookUrl));
-                                } else {
-                                  print('facebook URL is empty.');
-                                }
-                              } else {
-                                print('getUserData is null.');
-                              }
+                              // if (getUserData != null) {
+                              //   String facebookUrl =
+                              //       getUserData['facebookUrl'].toString() ??
+                              //           "No Data Found";
+                              //   if (facebookUrl.isNotEmpty) {
+                              //     launchUrl(Uri.parse(facebookUrl));
+                              //   } else {
+                              //     print('facebook URL is empty.');
+                              //   }
+                              // } else {
+                              //   print('getUserData is null.');
+                              // }
+                              launch("https://www.facebook.com/");
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -698,19 +716,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           child: GestureDetector(
                             onTap: () {
-                              if (getUserData != null) {
-                                String linkedInUrl =
-                                    getUserData['linkedinUrl'].toString() ??
-                                        "No Data Found";
+                              // if (getUserData != null) {
+                              //   String linkedInUrl =
+                              //       getUserData['linkedinUrl'].toString() ??
+                              //           "No Data Found";
 
-                                if (linkedInUrl.isNotEmpty) {
-                                  launchUrl(Uri.parse(linkedInUrl));
-                                } else {
-                                  print('LinkedIn URL is empty.');
-                                }
-                              } else {
-                                print('getUserData is null.');
-                              }
+                              //   if (linkedInUrl.isNotEmpty) {
+                              //     launchUrl(Uri.parse(linkedInUrl));
+                              //   } else {
+                              //     print('LinkedIn URL is empty.');
+                              //   }
+                              // } else {
+                              //   print('getUserData is null.');
+                              // }
+                              launch("https://www.linkedin.com/");
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -743,6 +762,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               } else {
                                 print('getUserData is null.');
                               }
+                              launch("https://www.whatsapp.com/");
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -883,7 +903,6 @@ class MyImageWidget extends StatelessWidget {
   final double width;
   final double height;
 
-  // Make sure imageUrl is nullable
   MyImageWidget(
       {required this.imageUrl, required this.width, required this.height});
 
@@ -898,7 +917,7 @@ class MyImageWidget extends StatelessWidget {
             loadingBuilder: (BuildContext context, Widget child,
                 ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) {
-                return child; // Image is fully loaded
+                return child; // Displaying the image if it's already loaded
               } else {
                 return Center(
                   child: CircularProgressIndicator(
@@ -913,13 +932,15 @@ class MyImageWidget extends StatelessWidget {
             errorBuilder:
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return CustomImageView(
-                width: 200,
-                imagePath: ImageConstant.userProfile,
-              ); // Display an error icon if the image fails to load
+                  width: 200,
+                  height: height,
+                  fit: BoxFit.cover,
+                  imagePath: ImageConstant.userProfile);
             },
           )
         : CustomImageView(
             width: 200,
+            fit: BoxFit.cover,
             imagePath: ImageConstant.userProfile,
           ); // Display a static image if imageUrl is null
   }

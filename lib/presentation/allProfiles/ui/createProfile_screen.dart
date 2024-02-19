@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
 import 'package:matrimony_app/custom_widget/time_formate_method.dart';
+import 'package:matrimony_app/data/apiClient/http_response.dart';
 import 'package:matrimony_app/presentation/allProfiles/controller/allProfiles_controller.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/custom_text_style.dart';
@@ -10,6 +11,7 @@ import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
 import 'package:matrimony_app/utils/size_utils.dart';
 import 'package:matrimony_app/widgets/custom_app_bar.dart';
+import 'package:matrimony_app/widgets/custom_circuler_loader.dart';
 import 'package:matrimony_app/widgets/custom_dropdown.dart';
 import 'package:matrimony_app/widgets/custom_elevated_button.dart';
 import 'package:matrimony_app/widgets/custom_image_view.dart';
@@ -260,7 +262,44 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
           ),
           title: data[0] != null
               ? "UPDATE YOUR PROFILE".tr
-              : "COMPLETE YOUR PROFILE".tr,
+              : "COMPLETE PROFILE".tr,
+          actions: [
+            data[0] != null
+                ? Container()
+                : PopupMenuButton(
+                    surfaceTintColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: BorderSide(color: appTheme.whiteA700),
+                    ),
+                    icon: Icon(
+                      Icons.more_vert,
+                      color: appTheme.whiteA700,
+                    ),
+                    itemBuilder: (BuildContext context) => [
+                      PopupMenuItem(
+                        child: Row(
+                          children: [
+                            Icon(Icons.account_circle,
+                                color: appTheme.black900, size: 20),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Skip Profile".tr,
+                              style: CustomTextStyles.titleSmall_1,
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          Get.toNamed(
+                            AppRoutes.homeScreen,
+                          );
+                        },
+                      ),
+                    ],
+                  )
+          ],
         ),
         resizeToAvoidBottomInset: false,
         body: Form(
@@ -272,39 +311,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: InkWell(
-                      onTap: () {
-                        Get.offAllNamed(AppRoutes.homeScreen);
-                      },
-                      child: data[0] != null
-                          ? Container()
-                          : Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.red,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15, right: 15, top: 10, bottom: 10),
-                                child: Text(
-                                  "Skip".tr,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: CustomTextStyles.labelLargeBlack900
-                                      .copyWith(
-                                          color: appTheme.whiteA700,
-                                          fontSize: 16.0),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                    ),
-                  ),
-                  SizedBox(height: 25.v),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.h),
+                    padding:
+                        const EdgeInsets.only(left: 10, top: 10, right: 10),
                     child: CustomDropdown(
                       labelText: 'Marital Status',
                       listName: materialStatus
@@ -366,6 +374,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       },
                     ),
                   ),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -411,7 +420,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -432,7 +441,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -453,7 +462,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -474,7 +483,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -495,7 +504,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -517,7 +526,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     ),
                   ),
 
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -538,7 +547,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 13),
                   const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Divider(),
@@ -562,12 +571,11 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         return null;
                       },
                       contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
                         vertical: 18,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -588,7 +596,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -609,7 +617,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -630,7 +638,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -675,7 +683,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -696,7 +704,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -717,7 +725,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -764,7 +772,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -807,7 +815,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
 
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
@@ -858,7 +866,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -879,7 +887,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -900,7 +908,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -921,7 +929,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -945,7 +953,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -970,7 +978,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1017,7 +1025,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1036,12 +1044,11 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         return null;
                       },
                       contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
                         vertical: 18,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1062,7 +1069,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1084,7 +1091,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     ),
                   ),
 
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1112,7 +1119,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     padding: EdgeInsets.all(8.0),
                     child: Divider(),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1133,7 +1140,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1154,7 +1161,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1175,7 +1182,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1196,7 +1203,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1215,12 +1222,11 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         return null;
                       },
                       contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
                         vertical: 18,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1239,13 +1245,12 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         return null;
                       },
                       contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30,
                         vertical: 18,
                       ),
                     ),
                   ),
 
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1266,7 +1271,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1287,7 +1292,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       contentPadding: const EdgeInsets.symmetric(),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 13),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -1550,27 +1555,43 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
           return Row(
             children: [
               Expanded(
-                child: CustomElevatedButton(
-                  buttonStyle: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(appTheme.green600),
-                  ),
-                  onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      data[0] == null
-                          ? allProfilesListController.createProfile(
-                              imageUrl1, imageUrl2, imageUrl3)
-                          : allProfilesListController.updateProfile(imageUrl1,
-                              imageUrl2, imageUrl3, data[0]['id'].toString());
-                    }
-                  },
-                  text: data[0] != null ? "Update Profile".tr : "Submit".tr,
-                  margin: EdgeInsets.only(
-                    left: 23.h,
-                    right: 23.h,
-                    bottom: 20.v,
-                  ),
-                ),
+                child: allProfilesListController.rxRequestStatus.value ==
+                        Status.loading
+                    ? CustomLoading(
+                        color: appTheme.orange,
+                        size: 30,
+                      )
+                    : Container(
+                        width: double.infinity,
+                        child: CustomElevatedButton(
+                          buttonStyle: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(appTheme.green600),
+                          ),
+                          text: data[0] != null
+                              ? "Update Profile".tr
+                              : "Submit".tr,
+                          margin: EdgeInsets.only(
+                            left: 10.h,
+                            right: 10.h,
+                            bottom: 20.v,
+                          ),
+                          onTap: () {
+                            if (_formKey.currentState!.validate()) {
+                              setState(() {
+                                data[0] == null
+                                    ? allProfilesListController.createProfile(
+                                        imageUrl1, imageUrl2, imageUrl3)
+                                    : allProfilesListController.updateProfile(
+                                        imageUrl1,
+                                        imageUrl2,
+                                        imageUrl3,
+                                        data[0]['id'].toString());
+                              });
+                            }
+                          },
+                        ),
+                      ),
               ),
             ],
           );

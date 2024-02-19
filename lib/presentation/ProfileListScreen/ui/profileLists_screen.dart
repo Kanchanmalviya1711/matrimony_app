@@ -84,7 +84,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
                 10,
               ),
               child: Text(
-                "Showing All Profiles For You",
+                "Showing All Members For You",
                 style: TextStyle(
                     color: appTheme.heading,
                     fontSize: 18,
@@ -178,19 +178,26 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
                                       color: Colors.grey,
                                     ),
                                   ),
+                                  Text(
+                                    "+91- ${p1["user"]["phone"]}",
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                           ),
 
-                          // Paragraph
-                          const Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
+                          // // Paragraph
+                          // const Padding(
+                          //   padding: EdgeInsets.all(10),
+                          //   child: Text(
+                          //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                          //     style: TextStyle(fontSize: 16),
+                          //   ),
+                          // ),
                           Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: SingleChildScrollView(

@@ -31,9 +31,8 @@ class _ProfileFormState extends State<ProfileForm> {
             }
             return null;
           },
-          controller: profileListController.name.value,
+          controller: profileListController.firstName.value,
           labelText: "Name",
-          onTap: () {},
         ),
         SizedBox(height: 5.v),
       ],

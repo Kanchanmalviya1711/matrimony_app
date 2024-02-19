@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:intl/intl.dart';
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
 import 'package:matrimony_app/core/constants/session_manager.dart';
@@ -55,7 +56,10 @@ class AllProfilesListController extends GetxController {
   final watsappNumberController = TextEditingController().obs;
   final nickNameController = TextEditingController().obs;
   final dateOfMarriage = TextEditingController().obs;
+  final age = TextEditingController().obs;
+  final gender = TextEditingController().obs;
   var allProfiles;
+  var singleProfiles = {};
   String? haveChildren;
   String? haveChildrenValue;
   String? meritalStatus;
@@ -118,15 +122,22 @@ class AllProfilesListController extends GetxController {
     haveChildren = null;
     meritalStatus = null;
     meritalStatusValue = null;
+    age.value.clear();
+    gender.value.clear();
   }
 
-  getAllProfiles({page, perPageRecord, searchTerm}) async {
+  getAllProfiles({page, perPageRecord}) async {
     try {
       var payload = {
         "page": "",
         "per_page_record": "20",
-        "caste": casteController.value.text
+        "gender": SessionManager.getGender() == "1" ? "2" : "1",
+        "caste": casteController.value.text,
+        "religion": religionController.value.text,
+        "placeOfBirth": placeOfBirthController.value.text,
+        "age": age.value.text,
       };
+      print("payload $payload");
       var value = await api.post(
           ApiNetwork.allProfilesList, jsonEncode(payload), true,
           isCookie: true);
@@ -142,20 +153,54 @@ class AllProfilesListController extends GetxController {
     }
   }
 
+  getSingleProfile(String id) async {
+    print("single api call object $id");
+    var url = Uri.parse(ApiNetwork.singleProfile + id);
+
+    try {
+      var response = await http.get(url, headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        'Authorization': 'Bearer ${SessionManager.getToken()}',
+        "Cookie": "jwtToken=${SessionManager.getToken()}",
+      });
+      if (response.statusCode == 200) {
+        var responseData = json.decode(response.body);
+        singleProfiles = responseData['payload'];
+        print("objective data data data $singleProfiles");
+        return singleProfiles;
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      print('Error fetching profile: $e');
+      throw Exception('Failed to load profile: $e');
+    }
+  }
+
   createProfile(String imageUrl1, String imageUrl2, String imageUrl3) async {
     var userId = await jsonDecode(SessionManager.getUserId().toString());
 
+    // Select time of birth
+    DateTime now = DateTime.now();
+    String timeString = timeOfBirth.value.text;
+    // Combine the date and time
+    DateTime dateTime = DateFormat.Hm().parse(timeString);
+    DateTime combinedDateTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      dateTime.hour,
+      dateTime.minute,
+    );
+
+    // select date of marriage;
     var dateOfMarriageFormatted;
 
     if (dateOfMarriage.value.text != "") {
       dateOfMarriageFormatted = TimeFormateMethod().getTimeFormate(
           formate: "yyyy-MM-ddTHH:mm:ss.SSSSSSZ+0000",
           time: dateOfMarriage.value.text);
-    }
-    var timeOfBirthFormatted;
-    if (timeOfBirth.value.text != "") {
-      timeOfBirthFormatted = TimeFormateMethod()
-          .getTimeFormate(formate: "HH:mm", time: timeOfBirth.value.text);
     }
     var payload = {
       "createdBy": "1",
@@ -188,7 +233,8 @@ class AllProfilesListController extends GetxController {
       "contactPersonRelationShip": relationshipController.value.text,
       "convenientCallTime": timeToCallController.value.text,
       "placeOfBirth": placeOfBirthController.value.text,
-      "timeOFBirth": timeOfBirthFormatted,
+      "timeOFBirth": TimeFormateMethod()
+          .getTimeFormate(formate: "HH:mm", time: combinedDateTime.toString()),
       "nickName": nickNameController.value.text,
       "hobbies": hobbiesController.value.text,
       "interests": interestsController.value.text,
@@ -224,7 +270,7 @@ class AllProfilesListController extends GetxController {
         rxRequestStatus.value = Status.error;
         print("Error , $value ");
         customFlutterToast(
-            backgroundColor: Colors.green, msg: value['message']);
+            backgroundColor: Colors.green, msg: "Profile created successfully");
       }
       Get.offNamed(AppRoutes.homeScreen);
     } catch (e) {
@@ -236,6 +282,17 @@ class AllProfilesListController extends GetxController {
 
   updateProfile(
       String imageUrl1, String imageUrl2, String imageUrl3, String id) async {
+    DateTime now = DateTime.now();
+    String timeString = timeOfBirth.value.text;
+    // Combine the date and time
+    DateTime dateTime = DateFormat.Hm().parse(timeString);
+    DateTime combinedDateTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      dateTime.hour,
+      dateTime.minute,
+    );
     print("hjhhhhhhhhhhhhhhhhh");
     var userId = await jsonDecode(SessionManager.getUserId().toString());
 
@@ -246,12 +303,12 @@ class AllProfilesListController extends GetxController {
           formate: "yyyy-MM-ddTHH:mm:ss.SSSSSSZ+0000",
           time: dateOfMarriage.value.text);
     }
-    var timeOfBirthFormatted;
+    // var timeOfBirthFormatted;
 
-    if (timeOfBirth.value.text != "") {
-      timeOfBirthFormatted = TimeFormateMethod()
-          .getTimeFormate(formate: "HH:mm", time: timeOfBirth.value.text);
-    }
+    // if (timeOfBirth.value.text != "") {
+    //   timeOfBirthFormatted = TimeFormateMethod()
+    //       .getTimeFormate(formate: "HH:mm", time: timeOfBirth.value.text);
+    // }
     print("zhdxjfghdsjfgfjx $id");
     print("zhdxjfghdsjfgfjx $userId");
     var url = Uri.parse(ApiNetwork.updateProfile + id);
@@ -289,7 +346,8 @@ class AllProfilesListController extends GetxController {
         "contactPersonRelationShip": relationshipController.value.text,
         "convenientCallTime": timeToCallController.value.text,
         "placeOfBirth": placeOfBirthController.value.text,
-        "timeOFBirth": timeOfBirthFormatted,
+        "timeOFBirth": TimeFormateMethod().getTimeFormate(
+            formate: "HH:mm", time: combinedDateTime.toString()),
         "hobbies": hobbiesController.value.text,
         "interests": interestsController.value.text,
         "favoriteReads": favoriteReadsController.value.text,

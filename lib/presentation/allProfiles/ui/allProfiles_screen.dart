@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
+import 'package:matrimony_app/core/constants/session_manager.dart';
 import 'package:matrimony_app/custom_widget/custom_drawer.dart';
 import 'package:matrimony_app/custom_widget/custom_filter.dart';
 import 'package:matrimony_app/presentation/allProfiles/controller/allProfiles_controller.dart';
@@ -60,7 +61,6 @@ class _AllProfilesScreenState extends State<AllProfilesScreen> {
       final newItems = await allProfilesListController.getAllProfiles(
         page: pageKey,
         perPageRecord: allProfilesListController.perPage,
-        searchTerm: allProfilesListController.casteController.value.text,
       );
       final isLastPage = newItems.length < allProfilesListController.perPage;
       if (isLastPage) {
@@ -128,185 +128,210 @@ class _AllProfilesScreenState extends State<AllProfilesScreen> {
                     }),
                 pagingController: pagingController,
                 itemBuilder: (p0, p1, p2) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Container(
-                        width: double.maxFinite,
-                        decoration: const BoxDecoration(color: Colors.white),
-                        child: Column(
-                          children: [
-                            Column(
-                              children: [
-                                Stack(
-                                  children: [
-                                    MyImageWidget(
-                                      width: double.infinity,
-                                      height: size.height * 0.4,
-                                      imageUrl: p1["user"] == null
-                                          ? ImageConstant.couple1
-                                          : ApiNetwork.imageUrl +
-                                              p1["user"]["imagePath"],
-                                    ),
-                                  ],
-                                ),
-                              ],
+                  return SessionManager.getUserId() == p1["user"]["id"]
+                      ? Container()
+                      : Padding(
+                          padding:
+                              const EdgeInsets.only(left: 5, right: 5, top: 5),
+                          child: Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(0),
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color: appTheme.black900,
-                                                width: 3.0)),
+                            child: Container(
+                              width: double.maxFinite,
+                              decoration:
+                                  const BoxDecoration(color: Colors.white),
+                              child: Column(
+                                children: [
+                                  Column(
+                                    children: [
+                                      Stack(
+                                        children: [
+                                          MyImageWidget(
+                                            width: double.infinity,
+                                            height: size.height * 0.4,
+                                            imageUrl: p1["user"] == null
+                                                ? ImageConstant.couple1
+                                                : ApiNetwork.imageUrl +
+                                                    p1["user"]["imagePath"],
+                                          ),
+                                        ],
                                       ),
-                                      child: Text(
-                                        p1["user"] == null
-                                            ? "No Name Found"
-                                            : "${p1["user"]["firstName"].toString()} ${p1["user"]["lastName"].toString()}",
-                                        style: TextStyle(
-                                          color: appTheme.black900,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Container(
+                                            padding: const EdgeInsets.all(0),
                                             decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                color: appTheme.gray500),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                p1["profession"] == null
-                                                    ? "no data"
-                                                    : p1["profession"]
-                                                        .toString()
-                                                        .capitalizeFirst!,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: appTheme.whiteA700),
+                                              border: Border(
+                                                  bottom: BorderSide(
+                                                      color: appTheme.black900,
+                                                      width: 3.0)),
+                                            ),
+                                            child: Text(
+                                              p1["user"] == null
+                                                  ? "No Name Found"
+                                                  : "${p1["user"]["firstName"].toString()} ${p1["user"]["lastName"].toString()}",
+                                              style: TextStyle(
+                                                color: appTheme.black900,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                           ),
                                           const SizedBox(
-                                            width: 10,
+                                            height: 10,
                                           ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                color: appTheme.gray500),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                p1["height"] == null
-                                                    ? "No such height"
-                                                    : 'Height: ${p1["height"].toString()} Cm',
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: appTheme.whiteA700),
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                color: appTheme.gray500),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                p1["user"] == null
-                                                    ? "No Date of Birth Found"
-                                                    : _formatDateOfBirth(
-                                                        p1["user"]
-                                                            ["dateOfBirth"]),
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: appTheme.whiteA700,
+                                          SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      color:
+                                                          appTheme.headerColor),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(5),
+                                                    child: Text(
+                                                      p1["profession"] == null
+                                                          ? "no data"
+                                                          : p1["profession"]
+                                                              .toString()
+                                                              .capitalizeFirst!,
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: appTheme
+                                                              .whiteA700),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                color: appTheme.gray500),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                p1["education"] == null
-                                                    ? "No Education"
-                                                    : 'Education: ${p1["education"].toString()}',
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: appTheme.whiteA700),
-                                              ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      color:
+                                                          appTheme.headerColor),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            5.0),
+                                                    child: Text(
+                                                      p1["height"] == null
+                                                          ? "No such height"
+                                                          : 'Height: ${p1["height"].toString()} Cm',
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: appTheme
+                                                              .whiteA700),
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      color:
+                                                          appTheme.headerColor),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            5.0),
+                                                    child: Text(
+                                                      p1["user"] == null
+                                                          ? "No Date of Birth Found"
+                                                          : _formatDateOfBirth(p1[
+                                                                  "user"]
+                                                              ["dateOfBirth"]),
+                                                      style: TextStyle(
+                                                        fontSize: 13,
+                                                        color:
+                                                            appTheme.whiteA700,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      color:
+                                                          appTheme.headerColor),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            5.0),
+                                                    child: Text(
+                                                      p1["education"] == null
+                                                          ? "No Education"
+                                                          : 'Education: ${p1["education"].toString()}',
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: appTheme
+                                                              .whiteA700),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  // Paragraph
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 5,
+                                        left: 10,
+                                        right: 10,
+                                        bottom: 10),
+                                    child: CustomElevatedButton(
+                                        buttonStyle: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  appTheme.green600),
+                                        ),
+                                        text: "More Details",
+                                        onTap: () {
+                                          Get.toNamed(
+                                            AppRoutes.viewAllProfilesScreen,
+                                            arguments: [p1],
+                                          );
+                                        }),
+                                  )
+                                ],
                               ),
                             ),
-                            // Paragraph
-                            Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: CustomElevatedButton(
-                                  buttonStyle: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        appTheme.green600),
-                                  ),
-                                  text: "More Details",
-                                  onTap: () {
-                                    Get.toNamed(
-                                      AppRoutes.viewAllProfilesScreen,
-                                      arguments: [p1],
-                                    );
-                                  }),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                          ),
+                        );
                 }),
           ),
         ]),
@@ -376,7 +401,6 @@ class MyImageWidget extends StatelessWidget {
 
   MyImageWidget(
       {required this.imageUrl, required this.width, required this.height});
-
   @override
   Widget build(BuildContext context) {
     return imageUrl != null
