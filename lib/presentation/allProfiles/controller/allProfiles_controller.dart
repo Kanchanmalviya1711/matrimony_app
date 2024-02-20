@@ -132,10 +132,6 @@ class AllProfilesListController extends GetxController {
         "page": "",
         "per_page_record": "20",
         "gender": SessionManager.getGender() == "1" ? "2" : "1",
-        "caste": casteController.value.text,
-        "religion": religionController.value.text,
-        "placeOfBirth": placeOfBirthController.value.text,
-        "age": age.value.text,
       };
       print("payload $payload");
       var value = await api.post(
@@ -228,7 +224,7 @@ class AllProfilesListController extends GetxController {
       "companyName": companyName.value.text,
       "numberOfBrother": numberOfBrothersController.value.text,
       "numberOfSister": numberOfSistersController.value.text,
-      "contactPersonNumber": contactPersonPhoneNumber.value.text,
+      "contactPersonPhoneNumber": contactPersonPhoneNumber.value.text,
       "contactPersonName": contactPersonNameController.value.text,
       "contactPersonRelationShip": relationshipController.value.text,
       "convenientCallTime": timeToCallController.value.text,
@@ -341,7 +337,7 @@ class AllProfilesListController extends GetxController {
         "nickName": nickNameController.value.text,
         "numberOfBrother": numberOfBrothersController.value.text,
         "numberOfSister": numberOfSistersController.value.text,
-        "contactPersonNumber": contactPersonPhoneNumber.value.text,
+        "contactPersonPhoneNumber": contactPersonPhoneNumber.value.text,
         "contactPersonName": contactPersonNameController.value.text,
         "contactPersonRelationShip": relationshipController.value.text,
         "convenientCallTime": timeToCallController.value.text,
@@ -382,7 +378,7 @@ class AllProfilesListController extends GetxController {
     try {
       if (value.statusCode == 200) {
         rxRequestStatus.value = Status.success;
-        Get.offNamed(AppRoutes.homeScreen);
+        Get.offNamed(AppRoutes.profileScreen);
         print("object $response");
         customFlutterToast(msg: response['message']);
       } else {

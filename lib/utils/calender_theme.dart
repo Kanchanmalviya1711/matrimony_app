@@ -7,16 +7,18 @@ calenderTheme(child, context) {
   return Theme(
       data: Theme.of(context).copyWith(
           colorScheme: ColorScheme.light(
-              primary: appTheme.orange,
-              onPrimary: Colors.white,
-              onSurface: Colors.grey),
+            primary: appTheme.black900,
+            onPrimary: Colors.white,
+            onSurface: Colors.black,
+          ),
           dialogTheme: DialogTheme(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14))),
           textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  textStyle: const TextStyle(fontFamily: "Poppins")))),
+            style: TextButton.styleFrom(
+                foregroundColor: Colors.black,
+                textStyle: const TextStyle(fontSize: 15)),
+          )),
       child: child!);
 }
 

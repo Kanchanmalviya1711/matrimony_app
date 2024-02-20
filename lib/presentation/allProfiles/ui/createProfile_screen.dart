@@ -150,7 +150,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
         data[0]["whatsappUrl"].toString();
     allProfilesListController.contactPersonPhoneNumber.value.text =
         data[0]["contactPersonPhoneNumber"] == null
-            ? "no contact number"
+            ? ""
             : data[0]["contactPersonPhoneNumber"].toString();
     allProfilesListController.usersList.value.downloadURL =
         data[0]["photo1"].toString();
@@ -375,6 +375,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
+
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
@@ -388,7 +389,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter valid no. of children value";
+                          return "Please enter number of children";
+                        }
+                        if (!RegExp(r'^[0-9]{1,}$').hasMatch(value)) {
+                          return "Please enter a valid numeric data";
                         }
                         return null;
                       },
@@ -1561,7 +1565,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         color: appTheme.orange,
                         size: 30,
                       )
-                    : Container(
+                    : SizedBox(
                         width: double.infinity,
                         child: CustomElevatedButton(
                           buttonStyle: ButtonStyle(

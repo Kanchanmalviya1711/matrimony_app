@@ -117,9 +117,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     data == null ? _buildLogoSection() : Container(),
                     SizedBox(height: 10.h),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.only(
+                          left: 15, right: 15, top: 10, bottom: 10),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           GestureDetector(
                             onTap: () {
@@ -142,9 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               fontSize: 27,
                               color: appTheme.black900,
                               fontWeight: FontWeight.w500,
-                              decorationColor: appTheme.black900,
-                              decoration:
-                                  TextDecoration.underline, // Add this line
+                              // Add this line
                             ),
                           ),
                         ],

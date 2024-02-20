@@ -35,6 +35,7 @@ class ApiNetwork {
   static const String getAllGalleryImg = "${baseUrl}gallery/";
   static const String getNotificationList = "${baseUrl}notification/";
   static const String connectionList = "${baseUrl}friend-request/";
+  static const String timeLineData = "${baseUrl}timeline/";
   //get single profile  request
   static const String singleProfile = "${baseUrl}profile/";
 }

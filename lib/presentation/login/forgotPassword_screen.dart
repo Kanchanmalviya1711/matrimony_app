@@ -74,7 +74,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             Icons.email,
                             color: Colors.black,
                           ),
-                          controller: controller.emailController.value,
+                          controller: controller.forgotEmailController.value,
                           labelText: "Email",
                           hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                           validator: (value) {

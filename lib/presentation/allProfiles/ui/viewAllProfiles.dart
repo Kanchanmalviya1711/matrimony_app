@@ -391,6 +391,12 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                             singleProfiles["numberOfSister"].toString(),
                           ),
                           buildInfoItem(
+                            'contact Person Number :',
+                            singleProfiles["contactPersonPhoneNumber"]
+                                .toString()
+                                .toCapitalized(),
+                          ),
+                          buildInfoItem(
                             'contact Person Name :',
                             singleProfiles["contactPersonName"]
                                 .toString()
@@ -618,7 +624,7 @@ class MyImageWidget extends StatelessWidget {
             errorBuilder:
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return CustomImageView(
-                width: 200,
+                width: double.infinity,
                 height: height,
                 fit: BoxFit.cover,
                 imagePath: ImageConstant.couple1,
@@ -626,7 +632,7 @@ class MyImageWidget extends StatelessWidget {
             },
           )
         : CustomImageView(
-            width: 200,
+            width: double.infinity,
             imagePath: ImageConstant.couple1,
           ); // Display a static image if imageUrl is null
   }

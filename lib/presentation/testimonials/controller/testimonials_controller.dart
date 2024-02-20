@@ -12,6 +12,7 @@ class TestimonialsController extends GetxController {
 
   final rxRequestStatus = Rx<Status>(Status.success);
   var slidersList = [].obs;
+  var timeLineList = [].obs;
   var firstName = TextEditingController();
   var pageKey = 1;
   var perPage = 20;
@@ -47,6 +48,7 @@ class TestimonialsController extends GetxController {
           msg: value.data['message'],
           backgroundColor: Colors.red,
         );
+        print("Error message: ${value.data['message']}");
       }
     } catch (error) {
       print("Error message: $error");
@@ -54,6 +56,33 @@ class TestimonialsController extends GetxController {
     } finally {
       // Reset status
       rxRequestStatus.value = Status.success;
+    }
+  }
+
+// get Timeline data
+  getTimeLineData() async {
+    print("Checking if the API is working getTimeLineData");
+    try {
+      var payload = {"page": pageKey, "per_page_record": perPage};
+      print("payload $payload");
+      var value = await api.post(
+          ApiNetwork.timeLineData, jsonEncode(payload), true,
+          isCookie: true);
+      if (value['status'] == "success") {
+        timeLineList = RxList.from(value['payload']['data']);
+        print("timeLineList $timeLineList");
+        rxRequestStatus.value = Status.success;
+      } else {
+        rxRequestStatus.value = Status.error;
+        customFlutterToast(
+          msg: value['message'],
+          backgroundColor: Colors.red,
+        );
+      }
+    } catch (e) {
+      customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
+      rxRequestStatus.value = Status.error;
+      print("Error , $e ");
     }
   }
 }

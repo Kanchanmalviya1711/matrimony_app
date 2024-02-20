@@ -1,6 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
@@ -10,6 +11,7 @@ import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
 import 'package:matrimony_app/utils/size_utils.dart';
+import 'package:matrimony_app/utils/string_capitalization.dart';
 import 'package:matrimony_app/widgets/custom_app_bar.dart';
 import 'package:matrimony_app/widgets/custom_icon_button.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -22,17 +24,24 @@ class TestimonialsScreen extends StatefulWidget {
 }
 
 class _TestimonialsScreenState extends State<TestimonialsScreen> {
+  final PagingController<int, dynamic> pagingController = PagingController(
+    firstPageKey: 1,
+  );
   var scaffoldKey = GlobalKey<ScaffoldState>();
+
   final CarouselController _controller = CarouselController();
 
   TestimonialsController testimonialsController =
       Get.put(TestimonialsController());
 
   int currentPageIndex = 0;
+
   @override
   void initState() {
     super.initState();
     testimonialsController.getTestimonials();
+    // timeline api call
+    testimonialsController.getTimeLineData();
   }
 
   @override
@@ -172,406 +181,85 @@ class _TestimonialsScreenState extends State<TestimonialsScreen> {
                   color: appTheme.heading,
                 ),
               ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(10),
-                    child: CustomImageView(
-                      imagePath: ImageConstant.trust,
-                      width: MediaQuery.of(context).size.width *
-                          0.3, // Adjust width as needed
-                    ),
-                  ),
-                  SizedBox(height: 10.h),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "WELCOME TO SOULMATE",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              color: appTheme.black900,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "Timming: 10:00 AM",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              color: appTheme.red600D8,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Welcome to Soulmate, where hearts unite and love blossoms! Our matrimony app is your gateway to meaningful connections. Discover profiles that resonate with your soul, forge bonds beyond boundaries, and embark on a journey of everlasting companionship. Join us in celebrating the magic of love, exclusively on Soulmate",
-                          style: TextStyle(
-                            fontFamily: 'poppins',
-                            color: appTheme.black900,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalDivider(
-                    thickness: 2,
-                    width: 2, // Adjust thickness as needed
-                    color: Colors.black, // Customize line color as needed
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.h),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Divider(),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: CustomImageView(
-                      imagePath: ImageConstant.rings,
-                      width: MediaQuery.of(context).size.width *
-                          0.3, // Adjust width as needed
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "CEREMONY",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              color: appTheme.black900,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "Timming: 10:00 AM",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              color: appTheme.red600D8,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Welcome to Soulmate, where love finds its match! Our app, a beacon of hope and commitment, brings together hearts in a sacred ceremony of matrimony. With the grace of technology and the essence of tradition, Soulmate celebrates the union of souls. Join us on this journey of love everlasting",
-                          style: TextStyle(
-                            fontFamily: 'poppins',
-                            color: appTheme.black900,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalDivider(
-                    thickness: 2,
-                    width: 2, // Adjust thickness as needed
-                    color: Colors.black, // Customize line color as needed
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: testimonialsController.timeLineList.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: MyImageWidget(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.25,
+                                      imageUrl: testimonialsController
+                                                      .timeLineList[index]
+                                                  ["image"] ==
+                                              null
+                                          ? ImageConstant.couple1
+                                          : ApiNetwork.imageUrl +
+                                              testimonialsController
+                                                  .timeLineList[index]["image"],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          testimonialsController
+                                              .timeLineList[index]['title']
+                                              .toString()
+                                              .toUpperCase(),
+                                          style: TextStyle(
+                                              fontFamily: 'poppins',
+                                              color: appTheme.black900,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          "Timming: ${testimonialsController.timeLineList[index]['time'].toString()}",
+                                          style: TextStyle(
+                                              fontFamily: 'poppins',
+                                              color: appTheme.red600D8,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          "${testimonialsController.timeLineList[index]['description']}",
+                                          style: TextStyle(
+                                            fontFamily: 'poppins',
+                                            color: appTheme.black900,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10.h),
+                              const Divider(),
+                            ],
+                          );
+                        }),
                   ),
                 ],
-              ),
-              SizedBox(height: 10.h),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Divider(),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: CustomImageView(
-                      imagePath: ImageConstant.dinning,
-                      width: MediaQuery.of(context).size.width *
-                          0.3, // Adjust width as needed
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "DINNING",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              color: appTheme.black900,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "Timming: 10:00 AM",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              color: appTheme.red600D8,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Your ultimate matrimony app where connections flourish! Discover your perfect match amidst a sea of possibilities. With advanced algorithms and user-friendly interfaces, Soulmate simplifies your search for lifelong companionship. Embrace love, trust, and compatibility. Your journey to everlasting happiness begins here. Join Soulmate today!",
-                          style: TextStyle(
-                            fontFamily: 'poppins',
-                            color: appTheme.black900,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalDivider(
-                    thickness: 2,
-                    width: 2, // Adjust thickness as needed
-                    color: Colors.black, // Customize line color as needed
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.h),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Divider(),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: CustomImageView(
-                      imagePath: ImageConstant.photoShoot,
-                      width: MediaQuery.of(context).size.width *
-                          0.3, // Adjust width as needed
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "PHOTOSHOOT",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              color: appTheme.black900,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "Timming: 10:00 AM",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              color: appTheme.red600D8,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Welcome to SoulMate, your premier matrimony app for meaningful connections! Explore our diverse community where hearts meet and stories begin. Discover compatibility through tailored matches, engage in genuine conversations, and embark on a journey towards lifelong companionship. Join SoulMate today and capture your love story in every photoshoot moment!",
-                          style: TextStyle(
-                            fontFamily: 'poppins',
-                            color: appTheme.black900,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalDivider(
-                    thickness: 2,
-                    width: 2, // Adjust thickness as needed
-                    color: Colors.black, // Customize line color as needed
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.h),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Divider(),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: CustomImageView(
-                      imagePath: ImageConstant.musicEvents,
-                      width: MediaQuery.of(context).size.width *
-                          0.3, // Adjust width as needed
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "MUSIC AND PARTY EVENT",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              color: appTheme.black900,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "Timming: 10:00 AM",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              color: appTheme.red600D8,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Experience the ultimate fusion of love and rhythm at our Music and Party Event, exclusively tailored for Matrimony App users! Join us for an unforgettable celebration, where harmonies intertwine with joyful hearts. Get ready to dance, mingle, and forge connections beyond borders. Let's create melodies of love together!",
-                          style: TextStyle(
-                            fontFamily: 'poppins',
-                            color: appTheme.black900,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalDivider(
-                    thickness: 2,
-                    width: 2, // Adjust thickness as needed
-                    color: Colors.black, // Customize line color as needed
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.h),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Divider(),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: CustomImageView(
-                      imagePath: ImageConstant.party,
-                      width: MediaQuery.of(context).size.width *
-                          0.3, // Adjust width as needed
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "PARTY",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              color: appTheme.black900,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "Timming: 10:00 AM",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              color: appTheme.red600D8,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "PARTY, the ultimate matrimony app where celebrations of love unite hearts! Discover your perfect match amidst the festivities of companionship. With a vibrant interface and seamless navigation, PARTY brings joy to your journey of finding a life partner. Join us and let the festivities of love begin! ",
-                          style: TextStyle(
-                            fontFamily: 'poppins',
-                            color: appTheme.black900,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalDivider(
-                    thickness: 2,
-                    width: 2, // Adjust thickness as needed
-                    color: Colors.black, // Customize line color as needed
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.h),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Divider(),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: CustomImageView(
-                      imagePath: ImageConstant.sendOff,
-                      width: MediaQuery.of(context).size.width *
-                          0.3, // Adjust width as needed
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "SEND OFF",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              color: appTheme.black900,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "Timming: 10:00 AM",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              color: appTheme.red600D8,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Send Off marks a significant moment on our matrimony app, where couples bid farewell to singlehood. It's not just an event; it's a transition filled with emotions. From heartfelt messages to warm wishes, our platform ensures every send-off reflects love, hope, and the joy of embarking on a new journey together.",
-                          style: TextStyle(
-                            fontFamily: 'poppins',
-                            color: appTheme.black900,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const VerticalDivider(
-                    thickness: 2,
-                    width: 2, // Adjust thickness as needed
-                    color: Colors.black, // Customize line color as needed
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Divider(),
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
@@ -666,7 +354,9 @@ Widget buildCarouselItem(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    MyImageWidget(imageUrl: imagePath, height: 100),
+                    MyImageWidget(
+                      imageUrl: imagePath,
+                    ),
                     const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -754,25 +444,29 @@ Widget buildCarouselItem(
 }
 
 class MyImageWidget extends StatelessWidget {
-  final String? imageUrl; // Make sure imageUrl is nullable
-
-  MyImageWidget({required this.imageUrl, required double height});
-
+  final String? imageUrl;
+  final double? width;
+  final double? height;
+  // Make sure imageUrl is nullable
+  MyImageWidget({required this.imageUrl, this.width, this.height});
   @override
   Widget build(BuildContext context) {
     return imageUrl != null
         ? Image.network(
             imageUrl!,
+            height: height,
+            width: width,
+            fit: BoxFit.cover,
             loadingBuilder: (BuildContext context, Widget child,
                 ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) {
-                return child; // Image is fully loaded
+                return child;
               } else {
                 return Center(
                   child: CircularProgressIndicator(
                     value: loadingProgress.expectedTotalBytes != null
                         ? loadingProgress.cumulativeBytesLoaded /
-                            (loadingProgress.expectedTotalBytes ?? 1)
+                            (loadingProgress.expectedTotalBytes! ?? 1.0)
                         : null,
                   ),
                 );
@@ -782,11 +476,15 @@ class MyImageWidget extends StatelessWidget {
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return CustomImageView(
                 imagePath: ImageConstant.couple1,
-              ); // Display an error icon if the image fails to load
+                height: height,
+                width: width,
+              );
             },
           )
         : CustomImageView(
             imagePath: ImageConstant.couple1,
-          ); // Display a static image if imageUrl is null
+            height: height,
+            width: width,
+          );
   }
 }

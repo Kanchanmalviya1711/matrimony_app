@@ -14,6 +14,8 @@ class LoginController extends GetxController {
   var passwordController = TextEditingController().obs;
   var reserOTP = TextEditingController().obs;
   var newPassword = TextEditingController().obs;
+  // forgot password email controller
+  var forgotEmailController = TextEditingController().obs;
 
   Rx<bool> agreementText = false.obs;
   final rxRequestStatus = Status.success.obs;
@@ -30,6 +32,7 @@ class LoginController extends GetxController {
   clearFields() {
     emailController.value.clear();
     passwordController.value.clear();
+    forgotEmailController.value.clear();
   }
 
   login() async {
@@ -60,6 +63,7 @@ class LoginController extends GetxController {
         await SessionManager.setUserId(json.encode(userId));
         customFlutterToast(
             backgroundColor: Colors.green, msg: "Login Successfully");
+        clearFields();
       } else {
         print("Response Null");
         customFlutterToast(
@@ -81,7 +85,7 @@ class LoginController extends GetxController {
 
   resetPassword() async {
     var payload = {
-      "email": emailController.value.text,
+      "email": forgotEmailController.value.text,
     };
     print("payload $payload");
     rxRequestStatus.value = Status.loading;

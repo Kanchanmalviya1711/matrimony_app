@@ -186,7 +186,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                       isLoading =
                                           true; // Set isLoading to true immediately
                                     });
-
                                     // Delayed setState
                                     Future.delayed(const Duration(seconds: 2),
                                         () {

@@ -813,7 +813,6 @@ class CustomCard extends StatelessWidget {
   final String imageAsset;
   final String title;
   final String subtitle;
-
   const CustomCard({
     Key? key,
     required this.imageAsset,
@@ -932,16 +931,16 @@ class MyImageWidget extends StatelessWidget {
             errorBuilder:
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return CustomImageView(
-                  width: 200,
+                  width: double.infinity,
                   height: height,
                   fit: BoxFit.cover,
                   imagePath: ImageConstant.userProfile);
             },
           )
         : CustomImageView(
-            width: 200,
+            width: double.infinity,
             fit: BoxFit.cover,
-            imagePath: ImageConstant.userProfile,
+            imagePath: ImageConstant.logoImg,
           ); // Display a static image if imageUrl is null
   }
 }
