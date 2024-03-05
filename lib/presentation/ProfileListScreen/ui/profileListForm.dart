@@ -31,7 +31,7 @@ class _ProfileFormState extends State<ProfileForm> {
             }
             return null;
           },
-          controller: profileListController.firstName.value,
+          controller: profileListController.name.value,
           labelText: "Name",
         ),
         SizedBox(height: 5.v),

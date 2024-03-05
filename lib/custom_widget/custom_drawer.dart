@@ -135,6 +135,13 @@ class _SideMenuState extends State<SideMenu> {
                   Get.offAllNamed(AppRoutes.suscriptionScreen);
                 },
               ),
+              DrawerListTile(
+                title: "Settings",
+                svgSrc: ImageConstant.suscription,
+                press: () {
+                  Get.offAllNamed(AppRoutes.settings);
+                },
+              ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
                 child: CustomElevatedButton(

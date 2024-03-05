@@ -396,122 +396,189 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontFamily: "CinzelDecorative"),
                   ),
                 ),
-                buildInfoItem(
-                    'Name :',
-                    getUserProfileData["firstName"] +
-                            " " +
-                            getUserProfileData["lastName"] ??
-                        "No Name Found"),
-                buildInfoItem(
-                  'Nick Name :',
-                  getUserData == null
-                      ? "No data found"
-                      : getUserData["nickName"] == null
-                          ? "No nickname found"
-                          : getUserData["nickName"].toString(),
+                Column(
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.face),
+                      title: const Text('Name'),
+                      subtitle: Text(getUserProfileData["firstName"] +
+                              " " +
+                              getUserProfileData["lastName"] ??
+                          "No Name Found"),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.person),
+                      title: const Text('Nick Name'),
+                      subtitle: Text(
+                        getUserData == null
+                            ? "No data found"
+                            : getUserData["nickName"] == null
+                                ? "No nickname found"
+                                : getUserData["nickName"].toString(),
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.date_range),
+                      title: const Text('Date of birth'),
+                      subtitle: Text(getUserData != null
+                          ? _formatDateOfBirth(
+                              getUserProfileData["dateOfBirth"])
+                          : "No Data Found"),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.height),
+                      title: const Text('Height'),
+                      subtitle: Text(getUserData != null
+                          ? "${getUserData["height"]} ft"
+                          : "No Data Found"),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.line_weight),
+                      title: const Text('Weight'),
+                      subtitle: Text(getUserData != null
+                          ? "${getUserData["weight"]} kg"
+                          : "No Data Found"),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.bloodtype),
+                      title: const Text('Blood Group'),
+                      subtitle: Text(
+                        getUserData != null
+                            ? getUserData["bloodGroup"].toString()
+                            : "No Data Found",
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.fit_screen),
+                      title: const Text('Body Type'),
+                      subtitle: Text(
+                        getUserData != null
+                            ? getUserData["bodyType"].toString().toCapitalized()
+                            : "No Data Found",
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.compare_outlined),
+                      title: const Text('Complexion'),
+                      subtitle: Text(
+                        getUserData != null
+                            ? getUserData["complexion"]
+                                .toString()
+                                .toCapitalized()
+                            : "No Data Found",
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.folder_special),
+                      title: const Text('Special Cases'),
+                      subtitle: Text(
+                        getUserData != null
+                            ? getUserData["specialCases"]
+                                .toString()
+                                .toCapitalized()
+                            : "No Data Found",
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.language),
+                      title: const Text('Mother Tongue'),
+                      subtitle: Text(
+                        getUserData != null
+                            ? getUserData["motherTongue"]
+                                .toString()
+                                .toCapitalized()
+                            : "No Data Found",
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.category),
+                      title: const Text('Religion'),
+                      subtitle: Text(
+                        getUserData != null
+                            ? getUserData["religion"].toString().toCapitalized()
+                            : "No Data Found",
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.cast_for_education),
+                      title: const Text('Caste'),
+                      subtitle: Text(
+                        getUserData != null
+                            ? getUserData["caste"].toString().toCapitalized()
+                            : "No Data Found",
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.subdirectory_arrow_left),
+                      title: const Text('Sub Caste'),
+                      subtitle: Text(
+                        getUserData != null
+                            ? getUserData["subCaste"].toString().toCapitalized()
+                            : "No Data Found",
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.place),
+                      title: const Text('Place Of Birth'),
+                      subtitle: Text(
+                        getUserData != null
+                            ? getUserData["placeOfBirth"]
+                                .toString()
+                                .toCapitalized()
+                            : "No Data Found",
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.punch_clock),
+                      title: const Text('Time Of Birth'),
+                      subtitle: Text(
+                        getUserData == null
+                            ? "Time not found"
+                            : getUserData["timeOFBirth"].toString(),
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.food_bank),
+                      title: const Text('diet'),
+                      subtitle: Text(
+                        getUserData != null
+                            ? getUserData["diet"].toString().toCapitalized()
+                            : "No Data Found",
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.unarchive),
+                      title: const Text('Education'),
+                      subtitle: Text(getUserData != null
+                          ? getUserData["education"]
+                          : "No Data Found"),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.work),
+                      title: const Text('Profession'),
+                      subtitle: Text(getUserData != null
+                          ? getUserData["profession"]
+                          : "No Data Found"),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.comment_outlined),
+                      title: const Text('Company'),
+                      subtitle: Text(
+                        getUserData != null &&
+                                getUserData["companyName"] != null
+                            ? getUserData["companyName"]
+                            : "No Company Found ",
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.currency_rupee),
+                      title: const Text('Annual Income'),
+                      subtitle: Text(getUserData != null
+                          ? "${getUserData["annualIncome"]} LPA"
+                          : "No Income Found"),
+                    ),
+                  ],
                 ),
-                buildInfoItem(
-                    'Date of birth :',
-                    getUserData != null
-                        ? _formatDateOfBirth(getUserProfileData["dateOfBirth"])
-                        : "No Data Found"),
-                buildInfoItem(
-                    'Height :',
-                    getUserData != null
-                        ? "${getUserData["height"]} ft"
-                        : "No Data Found"),
-                buildInfoItem(
-                    'Weight :',
-                    getUserData != null
-                        ? "${getUserData["weight"]} kg"
-                        : "No Data Found"),
-                buildInfoItem(
-                  'Blood Group :',
-                  getUserData != null
-                      ? getUserData["bloodGroup"].toString()
-                      : "No Data Found",
-                ),
-                buildInfoItem(
-                  'Body Type :',
-                  getUserData != null
-                      ? getUserData["bodyType"].toString().toCapitalized()
-                      : "No Data Found",
-                ),
-                buildInfoItem(
-                  'Complexion :',
-                  getUserData != null
-                      ? getUserData["complexion"].toString().toCapitalized()
-                      : "No Data Found",
-                ),
-                buildInfoItem(
-                  'Special Cases :',
-                  getUserData != null
-                      ? getUserData["specialCases"].toString().toCapitalized()
-                      : "No Data Found",
-                ),
-                buildInfoItem(
-                  'Mother Tongue :',
-                  getUserData != null
-                      ? getUserData["motherTongue"].toString().toCapitalized()
-                      : "No Data Found",
-                ),
-                buildInfoItem(
-                  'Religion :',
-                  getUserData != null
-                      ? getUserData["religion"].toString().toCapitalized()
-                      : "No Data Found",
-                ),
-                buildInfoItem(
-                  'Caste :',
-                  getUserData != null
-                      ? getUserData["caste"].toString().toCapitalized()
-                      : "No Data Found",
-                ),
-                buildInfoItem(
-                  'Sub Caste :',
-                  getUserData != null
-                      ? getUserData["subCaste"].toString().toCapitalized()
-                      : "No Data Found",
-                ),
-                buildInfoItem(
-                  'Place Of Birth :',
-                  getUserData != null
-                      ? getUserData["placeOfBirth"].toString().toCapitalized()
-                      : "No Data Found",
-                ),
-                buildInfoItem(
-                  'Time Of Birth :',
-                  getUserData == null
-                      ? "Time not found"
-                      : getUserData["timeOFBirth"].toString(),
-                ),
-                buildInfoItem(
-                  'diet :',
-                  getUserData != null
-                      ? getUserData["diet"].toString().toCapitalized()
-                      : "No Data Found",
-                ),
-                buildInfoItem(
-                    'Education :',
-                    getUserData != null
-                        ? getUserData["education"]
-                        : "No Data Found"),
-                buildInfoItem(
-                    'Profession :',
-                    getUserData != null
-                        ? getUserData["profession"]
-                        : "No Data Found"),
-                buildInfoItem(
-                  'Company :',
-                  getUserData != null && getUserData["companyName"] != null
-                      ? getUserData["companyName"]
-                      : "No Company Found ",
-                ),
-                buildInfoItem(
-                    'Annual Income :',
-                    getUserData != null
-                        ? "${getUserData["annualIncome"]} LPA"
-                        : "No Income Found"),
               ],
             ),
           ),
@@ -536,58 +603,82 @@ class _ProfileScreenState extends State<ProfileScreen> {
               //     getUserData == null
               //         ? "No Data Found"
               //         : getUserData["familyName"].toString().toCapitalized()),
-              buildInfoItem(
-                'Family Status :',
-                getUserData == null
-                    ? "No Data Found"
-                    : getUserData["familyValues"].toString().toCapitalized(),
+              ListTile(
+                leading: const Icon(Icons.star_outline_sharp),
+                title: const Text('Family Status'),
+                subtitle: Text(
+                  getUserData == null
+                      ? "No Data Found"
+                      : getUserData["familyValues"].toString().toCapitalized(),
+                ),
               ),
-              buildInfoItem(
-                'Father\'s Name :',
-                getUserData == null
-                    ? "No Data Found"
-                    : getUserData["fatherName"].toString().capitalizeFirst!,
+              ListTile(
+                leading: const Icon(Icons.person_2_rounded),
+                title: const Text('Father\'s Name'),
+                subtitle: Text(
+                  getUserData == null
+                      ? "No Data Found"
+                      : getUserData["fatherName"].toString().capitalizeFirst!,
+                ),
               ),
-              buildInfoItem(
-                'Mother\'s Name :',
-                getUserData == null
-                    ? "Data Not Found"
-                    : getUserData["motherName"].toString().capitalizeFirst!,
+              ListTile(
+                leading: const Icon(Icons.face_2_rounded),
+                title: const Text('Mother\'s Name'),
+                subtitle: Text(
+                  getUserData == null
+                      ? "No Data Found"
+                      : getUserData["motherName"].toString().capitalizeFirst!,
+                ),
               ),
-              buildInfoItem(
-                'No of Brothers :',
-                getUserData == null
-                    ? "Data Not found"
-                    : getUserData["numberOfBrother"].toString(),
+              ListTile(
+                leading: const Icon(Icons.numbers),
+                title: const Text('No of Brothers'),
+                subtitle: Text(
+                  getUserData == null
+                      ? "Data Not found"
+                      : getUserData["numberOfBrother"].toString(),
+                ),
               ),
-              buildInfoItem(
-                'No of Sisters :',
-                getUserData != null
-                    ? getUserData["numberOfSister"].toString()
-                    : "No Data Found",
+              ListTile(
+                leading: const Icon(Icons.confirmation_number_sharp),
+                title: const Text('No of Sisters'),
+                subtitle: Text(
+                  getUserData != null
+                      ? getUserData["numberOfSister"].toString()
+                      : "No Data Found",
+                ),
               ),
-              buildInfoItem(
-                'Contact Person Number :',
-                getUserData != null &&
-                        getUserData["contactPersonPhoneNumber"] != null
-                    ? getUserData["contactPersonPhoneNumber"].toString()
-                    : "No number found",
+              ListTile(
+                leading: const Icon(Icons.contact_emergency),
+                title: const Text('Contact Person Number'),
+                subtitle: Text(
+                  getUserData != null &&
+                          getUserData["contactPersonPhoneNumber"] != null
+                      ? getUserData["contactPersonPhoneNumber"].toString()
+                      : "No number found",
+                ),
               ),
-              buildInfoItem(
-                'contact Person Name :',
-                getUserData == null
-                    ? "No Data "
-                    : getUserData["contactPersonName"]
-                        .toString()
-                        .toCapitalized(),
+              ListTile(
+                leading: const Icon(Icons.person),
+                title: const Text('Contact Person Name'),
+                subtitle: Text(
+                  getUserData == null
+                      ? "No Data "
+                      : getUserData["contactPersonName"]
+                          .toString()
+                          .toCapitalized(),
+                ),
               ),
-              buildInfoItem(
-                'Contact Person RelationShip :',
-                getUserData == null
-                    ? "No Data "
-                    : getUserData["contactPersonRelationShip"]
-                        .toString()
-                        .toCapitalized(),
+              ListTile(
+                leading: const Icon(Icons.real_estate_agent),
+                title: const Text('Contact Person RelationShip'),
+                subtitle: Text(
+                  getUserData == null
+                      ? "No Data "
+                      : getUserData["contactPersonRelationShip"]
+                          .toString()
+                          .toCapitalized(),
+                ),
               ),
             ]),
           ),

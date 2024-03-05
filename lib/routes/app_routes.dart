@@ -36,6 +36,8 @@ import 'package:matrimony_app/presentation/profile/binding/profile.binding.dart'
 import 'package:matrimony_app/presentation/profile/ui/profile_screen.dart';
 import 'package:matrimony_app/presentation/register/binding/register_binding.dart';
 import 'package:matrimony_app/presentation/register/ui/register_screen.dart';
+import 'package:matrimony_app/presentation/settings/binding/settings_binding.dart';
+import 'package:matrimony_app/presentation/settings/ui/settings_screen.dart';
 import 'package:matrimony_app/presentation/sliders/binding/sliders_binding.dart';
 import 'package:matrimony_app/presentation/sliders/ui/view_sliders_screen.dart';
 import 'package:matrimony_app/presentation/splash/binding/splash_binding.dart';
@@ -74,6 +76,7 @@ class AppRoutes {
   static const String viewSliderScreen = "/viewSliderScreen";
   static const String viewOurTeamDetailsScreen = "/viewOurTeamDetailsScreen";
   static const String plansAndPricing = "/plansAndPricing";
+  static const String settings = "/setting";
 
   static List<GetPage> pages = [
     //splash screen
@@ -230,5 +233,10 @@ class AppRoutes {
       name: plansAndPricing,
       page: () => const PlansScreen(),
     ),
+    //settings
+    GetPage(
+        binding: SettingsBinding(),
+        name: settings,
+        page: () => const SettingsScreen())
   ];
 }

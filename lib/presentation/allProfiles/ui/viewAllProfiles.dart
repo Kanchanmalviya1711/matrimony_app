@@ -15,7 +15,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ViewAllProfiles extends StatefulWidget {
   const ViewAllProfiles({Key? key}) : super(key: key);
-
   @override
   State<ViewAllProfiles> createState() => _ViewAllProfilesState();
 }
@@ -242,7 +241,7 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                     const Divider(
                       thickness: 1,
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
                     SizedBox(
                       width: double.infinity,
                       child: Column(
@@ -257,93 +256,142 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                                 fontFamily: "CinzelDecorative"),
                           ),
                           const SizedBox(height: 15),
-                          buildInfoItem(
-                              'FullName :',
-                              singleProfiles["user"] == null
-                                  ? "No such name"
-                                  : "${singleProfiles["user"]["firstName"].toString()} ${singleProfiles["user"]["lastName"].toString()}"),
-                          buildInfoItem(
-                              'Date of birth :',
-                              singleProfiles["user"] == null
-                                  ? "No date found"
-                                  : _formatDateOfBirth(
-                                      singleProfiles["user"]["dateOfBirth"])),
-                          buildInfoItem(
-                            'Weight :',
-                            '${singleProfiles["weight"].toString()} kg',
+                          ListTile(
+                            leading: const Icon(Icons.person),
+                            title: const Text('FullName'),
+                            subtitle: Text(singleProfiles["user"] == null
+                                ? "No such name"
+                                : "${singleProfiles["user"]["firstName"].toString()} ${singleProfiles["user"]["lastName"].toString()}"),
                           ),
-                          buildInfoItem(
-                            'Height :',
-                            '${singleProfiles["height"].toString()} ft',
+                          ListTile(
+                            leading: const Icon(Icons.date_range),
+                            title: const Text('Date of birth'),
+                            subtitle: Text(singleProfiles["user"] == null
+                                ? "No date found"
+                                : _formatDateOfBirth(
+                                    singleProfiles["user"]["dateOfBirth"])),
                           ),
-                          buildInfoItem(
-                            'Blood Group :',
-                            singleProfiles["bloodGroup"].toString(),
+                          ListTile(
+                            leading: const Icon(Icons.line_weight),
+                            title: const Text('Weight'),
+                            subtitle: Text(
+                              '${singleProfiles["weight"].toString()} kg',
+                            ),
                           ),
-                          buildInfoItem(
-                            'Body Type :',
-                            singleProfiles["bodyType"]
-                                .toString()
-                                .toCapitalized(),
+                          ListTile(
+                            leading: const Icon(Icons.height),
+                            title: const Text('Height'),
+                            subtitle: Text(
+                              '${singleProfiles["height"].toString()} ft',
+                            ),
                           ),
-                          buildInfoItem(
-                            'Complexion :',
-                            singleProfiles["complexion"]
-                                .toString()
-                                .toCapitalized(),
+                          ListTile(
+                            leading: const Icon(Icons.bloodtype),
+                            title: const Text('Blood Group'),
+                            subtitle: Text(
+                              singleProfiles["bloodGroup"].toString(),
+                            ),
                           ),
-                          buildInfoItem(
-                            'Special Cases :',
-                            singleProfiles["specialCases"]
-                                .toString()
-                                .toCapitalized(),
-                          ),
-                          buildInfoItem(
-                            'Mother Tongue :',
-                            singleProfiles["motherTongue"]
-                                .toString()
-                                .toCapitalized(),
-                          ),
-                          buildInfoItem(
-                              'Religion :',
-                              singleProfiles["religion"]
+                          ListTile(
+                            leading: const Icon(Icons.fit_screen),
+                            title: const Text('Body Type'),
+                            subtitle: Text(
+                              singleProfiles["bodyType"]
                                   .toString()
-                                  .toCapitalized()),
-                          buildInfoItem(
-                            'Caste :',
-                            singleProfiles["caste"].toString().toCapitalized(),
+                                  .toCapitalized(),
+                            ),
                           ),
-                          buildInfoItem(
-                            'Sub Caste :',
-                            singleProfiles["subCaste"]
+                          ListTile(
+                            leading: const Icon(Icons.compare_outlined),
+                            title: const Text('Complexion'),
+                            subtitle: Text(
+                              singleProfiles["complexion"]
+                                  .toString()
+                                  .toCapitalized(),
+                            ),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.folder_special),
+                            title: const Text('Special Cases'),
+                            subtitle: Text(
+                              singleProfiles["specialCases"]
+                                  .toString()
+                                  .toCapitalized(),
+                            ),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.language),
+                            title: const Text('Mother Tongue'),
+                            subtitle: Text(
+                              singleProfiles["motherTongue"]
+                                  .toString()
+                                  .toCapitalized(),
+                            ),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.category),
+                            title: const Text('Religion'),
+                            subtitle: Text(singleProfiles["religion"]
                                 .toString()
-                                .toCapitalized(),
+                                .toCapitalized()),
                           ),
-                          buildInfoItem(
-                            'Place Of Birth :',
-                            singleProfiles["placeOfBirth"]
+                          ListTile(
+                            leading: const Icon(Icons.cast_for_education),
+                            title: const Text('Caste'),
+                            subtitle: Text(singleProfiles["caste"]
                                 .toString()
-                                .toCapitalized(),
+                                .toCapitalized()),
                           ),
-                          buildInfoItem(
-                            'Time Of Birth :',
-                            singleProfiles["timeOFBirth"] == null
-                                ? "Time not found"
-                                : singleProfiles["timeOFBirth"].toString(),
+                          ListTile(
+                            leading: const Icon(Icons.subdirectory_arrow_left),
+                            title: const Text('Sub Caste'),
+                            subtitle: Text(
+                              singleProfiles["subCaste"]
+                                  .toString()
+                                  .toCapitalized(),
+                            ),
                           ),
-                          buildInfoItem(
-                            'diet :',
-                            singleProfiles["diet"].toString(),
+                          ListTile(
+                            leading: const Icon(Icons.place),
+                            title: const Text('Place Of Birth'),
+                            subtitle: Text(
+                              singleProfiles["placeOfBirth"]
+                                  .toString()
+                                  .toCapitalized(),
+                            ),
                           ),
-                          buildInfoItem('Degree :',
-                              singleProfiles["education"].toString()),
-                          buildInfoItem(
-                              'Profession :',
-                              singleProfiles["profession"] == null
-                                  ? "No prof found"
-                                  : singleProfiles["profession"]
-                                      .toString()
-                                      .capitalizeFirst!),
+                          ListTile(
+                            leading: const Icon(Icons.punch_clock),
+                            title: const Text('Time Of Birth'),
+                            subtitle: Text(
+                              singleProfiles["timeOFBirth"] == null
+                                  ? "Time not found"
+                                  : singleProfiles["timeOFBirth"].toString(),
+                            ),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.food_bank),
+                            title: const Text('diet'),
+                            subtitle: Text(
+                              singleProfiles["diet"].toString(),
+                            ),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.unarchive),
+                            title: const Text('Education'),
+                            subtitle: Text(
+                              singleProfiles["education"].toString(),
+                            ),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.work),
+                            title: const Text('Profession'),
+                            subtitle: Text(singleProfiles["profession"] == null
+                                ? "No prof found"
+                                : singleProfiles["profession"]
+                                    .toString()
+                                    .capitalizeFirst!),
+                          ),
                         ],
                       ),
                     ),
@@ -363,50 +411,74 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                                 fontFamily: "CinzelDecorative"),
                           ),
                           const SizedBox(height: 20),
-                          buildInfoItem('Family Name :', 'Joney Family'),
-                          buildInfoItem(
-                            'Family Status :',
-                            singleProfiles["familyValues"]
-                                .toString()
-                                .toCapitalized(),
+                          ListTile(
+                            leading: const Icon(Icons.star_outline_sharp),
+                            title: const Text('Family Status'),
+                            subtitle: Text(
+                              singleProfiles["familyValues"]
+                                  .toString()
+                                  .toCapitalized(),
+                            ),
                           ),
-                          buildInfoItem(
-                            'Father\'s Name :',
-                            singleProfiles["fatherName"]
-                                .toString()
-                                .capitalizeFirst!,
+                          ListTile(
+                            leading: const Icon(Icons.person_2_rounded),
+                            title: const Text('Father\'s Name'),
+                            subtitle: Text(
+                              singleProfiles["fatherName"]
+                                  .toString()
+                                  .capitalizeFirst!,
+                            ),
                           ),
-                          buildInfoItem(
-                            'Mother\'s Name :',
-                            singleProfiles["motherName"]
-                                .toString()
-                                .capitalizeFirst!,
+                          ListTile(
+                            leading: const Icon(Icons.face_2_rounded),
+                            title: const Text('Mother\'s Name'),
+                            subtitle: Text(
+                              singleProfiles["motherName"]
+                                  .toString()
+                                  .capitalizeFirst!,
+                            ),
                           ),
-                          buildInfoItem(
-                            'No of Brothers :',
-                            singleProfiles["numberOfBrother"].toString(),
+                          ListTile(
+                            leading: const Icon(Icons.numbers),
+                            title: const Text('No of Brothers '),
+                            subtitle: Text(
+                              singleProfiles["numberOfBrother"].toString(),
+                            ),
                           ),
-                          buildInfoItem(
-                            'No of Sisters :',
-                            singleProfiles["numberOfSister"].toString(),
+                          ListTile(
+                            leading:
+                                const Icon(Icons.confirmation_number_sharp),
+                            title: const Text('No of Sisters '),
+                            subtitle: Text(
+                              singleProfiles["numberOfSister"].toString(),
+                            ),
                           ),
-                          buildInfoItem(
-                            'contact Person Number :',
-                            singleProfiles["contactPersonPhoneNumber"]
-                                .toString()
-                                .toCapitalized(),
+                          ListTile(
+                            leading: const Icon(Icons.contact_emergency),
+                            title: const Text('Contact Person Number'),
+                            subtitle: Text(
+                              singleProfiles["contactPersonPhoneNumber"]
+                                  .toString()
+                                  .toCapitalized(),
+                            ),
                           ),
-                          buildInfoItem(
-                            'contact Person Name :',
-                            singleProfiles["contactPersonName"]
-                                .toString()
-                                .toCapitalized(),
+                          ListTile(
+                            leading: const Icon(Icons.person),
+                            title: const Text('Contact Person Name'),
+                            subtitle: Text(
+                              singleProfiles["contactPersonName"]
+                                  .toString()
+                                  .toCapitalized(),
+                            ),
                           ),
-                          buildInfoItem(
-                            'Contact Person RelationShip :',
-                            singleProfiles["contactPersonRelationShip"]
-                                .toString()
-                                .toCapitalized(),
+                          ListTile(
+                            leading: const Icon(Icons.real_estate_agent),
+                            title: const Text('Contact Person RelationShip'),
+                            subtitle: Text(
+                              singleProfiles["contactPersonRelationShip"]
+                                  .toString()
+                                  .toCapitalized(),
+                            ),
                           ),
                         ]),
                     const SizedBox(height: 20),

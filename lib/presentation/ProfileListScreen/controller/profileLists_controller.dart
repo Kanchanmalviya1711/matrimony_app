@@ -32,10 +32,12 @@ class ProfileListController extends GetxController {
 
   getUsers({int? page, int? perPageRecord, String? searchTerm}) async {
     var payload = {
+      //"firstName": name.value.text,
+      "gender": SessionManager.getGender() == "1" ? "2" : "1",
+      // below userID is required by Default
+      "userId": json.decode(SessionManager.getUserId().toString()),
       "page": page ?? pageKey,
       "per_page_record": perPageRecord ?? perPage,
-      "gender": SessionManager.getGender() == "1" ? "2" : "1",
-      "userId": json.decode(SessionManager.getUserId().toString()),
     };
 
     try {

@@ -1,8 +1,8 @@
 class ApiNetwork {
   // BASE URL
-  static const String baseUrl = "http://192.168.1.34:9090/";
-  static const String imageUrl = "http://192.168.1.34:9090";
-  static const String fileDownloadUrl = "http://192.168.1.34:9090/";
+  static const String baseUrl = "http://192.168.1.19:9090/";
+  static const String imageUrl = "http://192.168.1.19:9090";
+  static const String fileDownloadUrl = "http://192.168.1.19:9090/";
 
   // LOGIN
   static const String login = "${baseUrl}login/jwt";

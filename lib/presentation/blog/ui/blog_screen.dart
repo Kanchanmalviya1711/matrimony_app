@@ -113,7 +113,7 @@ class _BlogScreenState extends State<BlogScreen> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 20, left: 10, right: 10, bottom: 20),
+                      top: 10, left: 10, right: 10, bottom: 10),
                   child: Align(
                     alignment: Alignment.center,
                     child: Column(
