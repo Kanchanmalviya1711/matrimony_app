@@ -1,8 +1,6 @@
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/presentation/ProfileListScreen/controller/profileLists_controller.dart';
 import 'package:matrimony_app/presentation/ProfileListScreen/ui/profileListForm.dart';
-import 'package:matrimony_app/routes/app_routes.dart';
-import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/size_utils.dart';
 
 class ProfileListFilter extends StatefulWidget {
@@ -14,8 +12,14 @@ class ProfileListFilter extends StatefulWidget {
 }
 
 class _ProfileListFilterState extends State<ProfileListFilter> {
-  ProfileListController profileListController =
-      Get.put(ProfileListController());
+  final _formKey = GlobalKey<FormState>();
+  late ProfileListController profileListController;
+
+  @override
+  void initState() {
+    super.initState();
+    profileListController = Get.put(ProfileListController());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,52 +32,12 @@ class _ProfileListFilterState extends State<ProfileListFilter> {
             color: Colors.grey.withOpacity(0.1)),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 15.v),
-          child: SingleChildScrollView(
+          child: const SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const ProfileForm(),
-                SizedBox(
-                  height: 5.v,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: appTheme.red600D8,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10))),
-                        onPressed: () {
-                          Get.back();
-                          profileListController.clearInputField();
-                        },
-                        child: const Text("Cancel",
-                            style: TextStyle(color: Colors.white)),
-                      ),
-                      SizedBox(
-                        width: 10.v,
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: appTheme.blue1600,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10))),
-                        onPressed: () {
-                          Get.offAndToNamed(AppRoutes.profileListScreen);
-                        },
-                        child: const Text(
-                          "Apply Filter",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      )
-                    ],
-                  ),
-                )
+                ProfileForm(),
               ],
             ),
           ),

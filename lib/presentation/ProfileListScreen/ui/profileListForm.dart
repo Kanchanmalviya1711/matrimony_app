@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/presentation/ProfileListScreen/controller/profileLists_controller.dart';
+import 'package:matrimony_app/routes/app_routes.dart';
+import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/size_utils.dart';
 import 'package:matrimony_app/widgets/custom_text_form_field.dart';
 
@@ -35,6 +38,41 @@ class _ProfileFormState extends State<ProfileForm> {
           labelText: "Name",
         ),
         SizedBox(height: 5.v),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: appTheme.red600D8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {
+                profileListController.clearInputField();
+              },
+              child: const Text(
+                "Cancel",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: appTheme.blue1600,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {
+                Get.offAndToNamed(AppRoutes.profileListScreen);
+              },
+              child: const Text(
+                "Apply Filter",
+                style: TextStyle(color: Colors.white),
+              ),
+            )
+          ],
+        )
       ],
     );
   }

@@ -3,7 +3,6 @@ class ApiNetwork {
   static const String baseUrl = "http://192.168.1.19:9090/";
   static const String imageUrl = "http://192.168.1.19:9090";
   static const String fileDownloadUrl = "http://192.168.1.19:9090/";
-
   // LOGIN
   static const String login = "${baseUrl}login/jwt";
   static const String usersList = "${baseUrl}user/register/";
@@ -38,4 +37,5 @@ class ApiNetwork {
   static const String timeLineData = "${baseUrl}timeline/";
   //get single profile  request
   static const String singleProfile = "${baseUrl}profile/";
+  static const String faq = "${baseUrl}faq/";
 }

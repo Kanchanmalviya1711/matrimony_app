@@ -38,10 +38,8 @@ class MyConnectionsController extends GetxController {
       // if (value['status'] == "success") {
       //   print("fsdfdsf pradhufjsdf ${value['payload']['data']}");
       //   allBlogs = value['payload']['data'];
-
       //   print("object");
       //   print("fgdfgfdgdfg fdg $allBlogs");
-
       //   return allBlogs;
       // }
     } catch (e) {
