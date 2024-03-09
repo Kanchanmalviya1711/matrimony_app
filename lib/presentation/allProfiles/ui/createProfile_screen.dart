@@ -222,13 +222,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
       );
       request.files
           .add(await http.MultipartFile.fromPath('uploadFile', file.path));
-
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
-
       print("Response status code: ${response.statusCode}");
       print("Response body: ${response.body}");
-
       if (response.statusCode == 200) {
         final result = jsonDecode(response.body) as Map<String, dynamic>;
         print("Checking data: $result");
@@ -253,10 +250,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
           centerTitle: true,
           leading: IconButton(
             onPressed: () {
-              Get.offAndToNamed(AppRoutes.profileScreen);
+              print("Skip");
             },
             icon: Icon(
-              Icons.arrow_back,
+              Icons.face,
               color: appTheme.whiteA700,
             ),
           ),

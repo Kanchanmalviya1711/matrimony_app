@@ -59,7 +59,7 @@ class _ViewOurTeamScreenState extends State<ViewOurTeamScreen> {
                 width: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 5, right: 5, top: 10, bottom: 10),
+                      left: 8, right: 8, top: 10, bottom: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -111,7 +111,7 @@ class _ViewOurTeamScreenState extends State<ViewOurTeamScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 30,
                       ),
                       SizedBox(
                         width: double.infinity,

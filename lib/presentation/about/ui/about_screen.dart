@@ -82,25 +82,12 @@ class _AboutScreenState extends State<AboutScreen> {
                             child: Column(
                               children: [
                                 Text(
-                                  "About Us",
+                                  aboutUsController.getAboutDetails[index]
+                                      ["title"],
                                   style: TextStyle(
                                       color: appTheme.black900,
                                       fontSize: 40,
                                       fontWeight: FontWeight.bold),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 10),
-                                  child: Text(
-                                    aboutUsController.getAboutDetails[index]
-                                            ["description"]
-                                        .toString()
-                                        .capitalizeFirst!,
-                                    style: TextStyle(
-                                      color: appTheme.black900,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
                                 ),
                               ],
                             ),
@@ -111,14 +98,15 @@ class _AboutScreenState extends State<AboutScreen> {
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: Text(
-                          aboutUsController.getAboutDetails[index]["title"]
+                          aboutUsController.getAboutDetails[index]
+                                  ["description"]
                               .toString()
                               .capitalizeFirst!,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontFamily: 'CinzelDecorative',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                            color: appTheme.heading,
+                            fontSize: 16,
+                            height: 1.7,
+                            color: appTheme.headerColor,
                           ),
                         ),
                       ),

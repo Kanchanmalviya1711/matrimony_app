@@ -30,8 +30,10 @@ class LoginController extends GetxController {
   }
 
   clearFields() {
+    // login credentials
     emailController.value.clear();
     passwordController.value.clear();
+    // reset password
     forgotEmailController.value.clear();
   }
 

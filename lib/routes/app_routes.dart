@@ -75,7 +75,7 @@ class AppRoutes {
   static const String pageNotFound = "/pageNotFound";
   static const String viewSliderScreen = "/viewSliderScreen";
   static const String viewOurTeamDetailsScreen = "/viewOurTeamDetailsScreen";
-  static const String plansAndPricing = "/plansAndPricing";
+  static const String plansAndPricingScreen = "/plansAndPricingScreen";
   static const String settings = "/setting";
 
   static List<GetPage> pages = [
@@ -230,8 +230,8 @@ class AppRoutes {
     // plans and pricing screen
     GetPage(
       binding: PlansAndPricingBinding(),
-      name: plansAndPricing,
-      page: () => const PlansScreen(),
+      name: plansAndPricingScreen,
+      page: () => const PlansAndPricingScreen(),
     ),
     //settings
     GetPage(

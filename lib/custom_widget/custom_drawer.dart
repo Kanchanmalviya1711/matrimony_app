@@ -125,19 +125,12 @@ class _SideMenuState extends State<SideMenu> {
                 title: "Plans & Pricing",
                 svgSrc: ImageConstant.suscription,
                 press: () {
-                  Get.offAllNamed(AppRoutes.plansAndPricing);
-                },
-              ),
-              DrawerListTile(
-                title: "Take Suscription",
-                svgSrc: ImageConstant.suscription,
-                press: () {
-                  Get.offAllNamed(AppRoutes.suscriptionScreen);
+                  Get.offAllNamed(AppRoutes.plansAndPricingScreen);
                 },
               ),
               DrawerListTile(
                 title: "Settings",
-                svgSrc: ImageConstant.suscription,
+                svgSrc: ImageConstant.settings,
                 press: () {
                   Get.offAllNamed(AppRoutes.settings);
                 },

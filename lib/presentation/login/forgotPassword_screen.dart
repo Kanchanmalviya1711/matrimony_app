@@ -106,6 +106,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                                 onTap: () {
+                                  controller.clearFields();
                                   if (_formKey.currentState!.validate()) {
                                     controller.resetPassword();
                                   }

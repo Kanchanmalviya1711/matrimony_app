@@ -128,14 +128,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (value!.isEmpty) {
                                 return "Please enter password";
                               }
-
                               // Check if the password meets the required conditions
                               if (!RegExp(
                                       r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{5,}$')
                                   .hasMatch(value)) {
                                 return "Plase enter a correct password";
                               }
-
                               return null;
                             },
                             contentPadding: const EdgeInsets.symmetric(
@@ -183,8 +181,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   if (_formKey.currentState!.validate()) {
                                     setState(() {
                                       controller.login();
-                                      isLoading =
-                                          true; // Set isLoading to true immediately
                                     });
                                     // Delayed setState
                                     Future.delayed(const Duration(seconds: 2),

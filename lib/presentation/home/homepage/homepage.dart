@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                                 .toString(),
                       ),
                       Positioned(
-                        bottom: 20,
+                        bottom: 0,
                         left: 0,
                         right: 0,
                         child: Align(
@@ -110,11 +110,15 @@ class _HomePageState extends State<HomePage> {
 
             Column(
               children: [
-                Lottie.asset(
-                  "assets/lottie/heart.json",
-                  repeat: true,
-                  animate: true,
-                  fit: BoxFit.cover,
+                SizedBox(
+                  height: 40,
+                  width: double.infinity,
+                  child: Lottie.asset(
+                    "assets/lottie/heart.json",
+                    repeat: true,
+                    animate: true,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 const Text(
                   "Quick Access",

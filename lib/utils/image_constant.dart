@@ -43,6 +43,7 @@ class ImageConstant {
   static String twitter = '$svgPath/twitter.svg';
   static String suscription = '$svgPath/suscription.svg';
   static String services = '$svgPath/services.svg';
+  static String settings = '$svgPath/settings.svg';
 
   // iPhone 14 Pro - 107 images
   static String imgLocation = '$imagePath/img_location.svg';
@@ -133,7 +134,6 @@ class ImageConstant {
   static String ourServices = '$imagePath/ourServices.png';
   static String noData = '$imagePath/noData.png';
   static String noDatabell = '$imagePath/noDataBell.png';
-
   //Lottie Images
   static String lottieLoading = '$lottiePath/leaf.json';
 }

@@ -22,8 +22,6 @@ class MyConnectionsController extends GetxController {
       var payload = {
         "userId": json.decode(SessionManager.getMyConnections().toString()),
         "status": "1", //accepted
-        "page": pageKey.toString(),
-        "per_page_record": perPage.toString()
       };
       var value = await api.post(
           ApiNetwork.connectionList, jsonEncode(payload), true,

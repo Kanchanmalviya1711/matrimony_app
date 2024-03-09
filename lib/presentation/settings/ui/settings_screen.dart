@@ -5,7 +5,6 @@ import 'package:matrimony_app/presentation/settings/controller/settings_controll
 import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
-import 'package:matrimony_app/utils/size_utils.dart';
 import 'package:matrimony_app/widgets/custom_app_bar.dart';
 import 'package:matrimony_app/widgets/custom_image_view.dart';
 
@@ -21,7 +20,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   );
   var scaffoldKey = GlobalKey<ScaffoldState>();
   SettingsController settingsController = Get.put(SettingsController());
-
   @override
   void initState() {
     super.initState();
@@ -103,58 +101,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
           ),
         ),
-        SingleChildScrollView(
-          child: Container(
-            width: double.infinity,
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Welcome to",
-                    style: TextStyle(
-                      fontFamily: 'CinzelDecorative',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      color: appTheme.heading,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  CustomImageView(
-                    imagePath: ImageConstant.logoImg,
-                    width: 250,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    "Finding your life partner is a journey filled with excitement,"
-                    "and we are here to make that journey smoother and more meaningful."
-                    "Soulmate is a platform dedicated to helping individuals"
-                    "discover their perfect match and embark on a lifelong journey of love"
-                    "and companionship",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: appTheme.headerColor,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.allProfilesScreen);
-                    },
-                    child: const Text(
-                      "Click here to start your matrimony service now.",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ),
-                ],
+        Container(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomImageView(
+                imagePath: ImageConstant.logoImg,
+                width: 250,
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  "© 2021 Soulmate. All rights reserved.",
+                  style: TextStyle(
+                    color: appTheme.black900,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],

@@ -263,6 +263,7 @@ class PrimaryColors {
   Color get actionButton => const Color(0XFFFd7e14);
   Color get firstSite => const Color(0XFFffb400);
   Color get trustedColor => const Color(0XFFCC9966);
+  Color get planCancel => const Color(0XFFFFF3CD);
 
   // Green
   Color get green600 => const Color(0XFF28C76F);
