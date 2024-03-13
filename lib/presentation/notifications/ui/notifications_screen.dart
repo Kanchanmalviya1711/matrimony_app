@@ -1,6 +1,5 @@
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:matrimony_app/core/app_export.dart';
-import 'package:matrimony_app/core/constants/api_network.dart';
 import 'package:matrimony_app/presentation/friendRequestScreen/ui/friendRequest_screen.dart';
 import 'package:matrimony_app/presentation/notifications/controller/notifications_controller.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
@@ -115,6 +114,8 @@ class _NotificationsState extends State<Notifications> {
                       pagingController: pagingController,
                       itemBuilder: (p0, p1, p2) {
                         return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             ListTile(
                               leading: Container(
@@ -146,22 +147,18 @@ class _NotificationsState extends State<Notifications> {
                               ),
                               trailing: Container(
                                 decoration: BoxDecoration(
-                                  color: appTheme.heading,
                                   borderRadius: BorderRadius.circular(50),
                                 ),
-                                child: ClipOval(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5),
-                                    child: Text(
-                                      p1["userId"]["createdAt"] == null
-                                          ? "00:00"
-                                          : p1["userId"]["createdAt"]
-                                              .toString(),
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.normal,
-                                        color: appTheme.whiteA700,
-                                      ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Text(
+                                    p1["userId"]["createdAt"] == null
+                                        ? "00:00"
+                                        : p1["userId"]["createdAt"].toString(),
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: appTheme.black900,
                                     ),
                                   ),
                                 ),

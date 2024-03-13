@@ -122,6 +122,13 @@ class _SideMenuState extends State<SideMenu> {
                 },
               ),
               DrawerListTile(
+                title: "Chats",
+                svgSrc: ImageConstant.gallery,
+                press: () {
+                  Get.offAllNamed(AppRoutes.chatScreen);
+                },
+              ),
+              DrawerListTile(
                 title: "Plans & Pricing",
                 svgSrc: ImageConstant.suscription,
                 press: () {

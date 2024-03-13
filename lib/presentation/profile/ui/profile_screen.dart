@@ -995,7 +995,6 @@ class MyImageWidget extends StatelessWidget {
 
   MyImageWidget(
       {required this.imageUrl, required this.width, required this.height});
-
   @override
   Widget build(BuildContext context) {
     return imageUrl != null
@@ -1022,16 +1021,17 @@ class MyImageWidget extends StatelessWidget {
             errorBuilder:
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return CustomImageView(
-                  width: double.infinity,
-                  height: height,
+                  width: 200,
+                  height: mediaQueryData.size.height * 0.3,
                   fit: BoxFit.cover,
-                  imagePath: ImageConstant.userProfile);
+                  imagePath: ImageConstant.couple1);
             },
           )
         : CustomImageView(
-            width: double.infinity,
+            width: 200,
+            height: mediaQueryData.size.height * 0.3,
             fit: BoxFit.cover,
-            imagePath: ImageConstant.logoImg,
+            imagePath: ImageConstant.couple1,
           ); // Display a static image if imageUrl is null
   }
 }

@@ -111,7 +111,7 @@ class _AllProfilesScreenState extends State<AllProfilesScreen> {
             child: Text(
               "Showing All Profiles For You",
               style: TextStyle(
-                  color: appTheme.heading,
+                  color: appTheme.subHeadingColor,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   fontFamily: "CinzelDecorative"),

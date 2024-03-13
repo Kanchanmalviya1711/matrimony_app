@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
@@ -238,7 +237,7 @@ class _BlogScreenState extends State<BlogScreen> {
                                                     ? Colors.green
                                                     : Colors.red,
                                                 fontSize: 16,
-                                                fontWeight: FontWeight.normal,
+                                                fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                           )

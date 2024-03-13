@@ -10,6 +10,7 @@ import 'package:matrimony_app/presentation/blog/binding/blog_binding.dart';
 import 'package:matrimony_app/presentation/blog/ui/blog_screen.dart';
 import 'package:matrimony_app/presentation/blog/ui/view_blog_screen.dart';
 import 'package:matrimony_app/presentation/chats/binding/chat_binding.dart';
+import 'package:matrimony_app/presentation/chats/ui/chatUi.dart';
 import 'package:matrimony_app/presentation/chats/ui/chat_screen.dart';
 import 'package:matrimony_app/presentation/contact/binding/contact_binding.dart';
 import 'package:matrimony_app/presentation/contact/contactusScreen.dart';
@@ -42,8 +43,6 @@ import 'package:matrimony_app/presentation/sliders/binding/sliders_binding.dart'
 import 'package:matrimony_app/presentation/sliders/ui/view_sliders_screen.dart';
 import 'package:matrimony_app/presentation/splash/binding/splash_binding.dart';
 import 'package:matrimony_app/presentation/splash/ui/splash_screen.dart';
-import 'package:matrimony_app/presentation/suscriptions/binding/suscriptions_binding.dart';
-import 'package:matrimony_app/presentation/suscriptions/ui/suscriptions_screen.dart';
 import 'package:matrimony_app/presentation/testimonials/binding/testimonials_binding.dart';
 import 'package:matrimony_app/presentation/testimonials/ui/testimonials_screen.dart';
 
@@ -69,6 +68,7 @@ class AppRoutes {
   static const String verifyOtpScreen = "/verifyOtpScreen";
   static const String notificationScreen = "/notificationScreen";
   static const String chatScreen = "/chatScreen";
+  static const String chatUiScreen = "/chatUiScreen";
   static const String galleryScreen = "/galleryScreen";
   static const String ourServicesDetailsScreen = "/ourServicesDetailsScreen";
   static const String suscriptionScreen = "/suscriptionScreen";
@@ -192,12 +192,18 @@ class AppRoutes {
         binding: NotificationsBinding(),
         name: notificationScreen,
         page: () => const Notifications()),
-    //chat screen
+
+    //our service details screen
     GetPage(
         binding: ChatBinding(),
         name: chatScreen,
         page: () => const ChatScreen()),
-    //our service details screen
+    //Encrypted ChatScreen
+    GetPage(
+        binding: ChatBinding(),
+        name: chatUiScreen,
+        page: () => (const ChatUIScreen())),
+    //Our Services
     GetPage(
       binding: OurServicesBinding(),
       name: ourServicesDetailsScreen,
@@ -208,12 +214,6 @@ class AppRoutes {
       binding: GalleryBinding(),
       name: galleryScreen,
       page: () => const GalleryScreen(),
-    ),
-    //suscription screen
-    GetPage(
-      binding: SuscriptionBinding(),
-      name: suscriptionScreen,
-      page: () => const SuscriptionScreen(),
     ),
     //page not found screen
     GetPage(

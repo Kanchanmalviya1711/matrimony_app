@@ -20,6 +20,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   );
   var scaffoldKey = GlobalKey<ScaffoldState>();
   SettingsController settingsController = Get.put(SettingsController());
+
   @override
   void initState() {
     super.initState();
@@ -39,7 +40,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             color: appTheme.whiteA700,
           ),
         ),
-        title: "Frequently Asked Questions",
+        title: "FAQs",
         centerTitle: true,
       ),
       body: Stack(
@@ -101,7 +102,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
           ),
         ),
-        Container(
+        SizedBox(
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -113,7 +114,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
-                  "© 2021 Soulmate. All rights reserved.",
+                  "© 2021 Soulmate. All Rights Reserved.",
                   style: TextStyle(
                     color: appTheme.black900,
                     fontSize: 16,

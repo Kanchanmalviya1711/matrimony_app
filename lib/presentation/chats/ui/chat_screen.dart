@@ -15,7 +15,6 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final ChatController chatController = ChatController();
-
   @override
   void initState() {
     super.initState();
@@ -25,7 +24,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-          title: "CHATLIST".tr,
+          title: "ALL CHATS".tr,
           centerTitle: true,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
@@ -38,219 +37,224 @@ class _ChatScreenState extends State<ChatScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 10,
-              top: 10,
-            ),
-            child: Text(
-              "CHATS",
-              style: TextStyle(
-                color: appTheme.heading,
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                fontFamily: "CinzelDecorative",
-              ),
-              textAlign: TextAlign.start,
-            ),
-          ),
           Card(
-            elevation: 5,
-            surfaceTintColor: Colors.white,
+            surfaceTintColor: appTheme.whiteA700,
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ClipOval(
-                        child: CustomImageView(
-                          imagePath: ImageConstant.couple1,
-                          height: 70,
-                          width: 70,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Adarsh Sharma",
-                            style: TextStyle(
-                              color: appTheme.black900,
-                              fontSize: 18,
+                  GestureDetector(
+                    onTap: () async {
+                      await Get.offAllNamed(AppRoutes.chatUiScreen);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            ClipOval(
+                              child: CustomImageView(
+                                imagePath: ImageConstant.couple1,
+                                height: 60,
+                                width: 60,
+                              ),
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            "Hii Manju, How are you?",
-                            style: TextStyle(
-                              color: appTheme.black900,
-                              fontSize: 13,
+                            const SizedBox(
+                              width: 10,
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 50,
-                      ),
-                      Text(
-                        "12:00 PM",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal,
-                          color: appTheme.heading,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Ashish Sharma",
+                                  style: TextStyle(
+                                    color: appTheme.black900,
+                                    fontSize: 18,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "Hii Aditi, How are you?",
+                                  style: TextStyle(
+                                    color: appTheme.black900,
+                                    fontSize: 13,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                        Text(
+                          "12:00 PM",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                            color: appTheme.heading,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ClipOval(
-                        child: CustomImageView(
-                          imagePath: ImageConstant.couple1,
-                          height: 70,
-                          width: 70,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Adarsh Sharma",
-                            style: TextStyle(
-                              color: appTheme.black900,
-                              fontSize: 18,
+                  GestureDetector(
+                    onTap: () {
+                      Get.offAllNamed(AppRoutes.chatUiScreen);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            ClipOval(
+                              child: CustomImageView(
+                                imagePath: ImageConstant.couple1,
+                                height: 60,
+                                width: 60,
+                              ),
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            "Hii Manju, How are you?",
-                            style: TextStyle(
-                              color: appTheme.black900,
-                              fontSize: 13,
+                            const SizedBox(width: 10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Advik Malviya",
+                                  style: TextStyle(
+                                    color: appTheme.black900,
+                                    fontSize: 18,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "Hii, How are you?",
+                                  style: TextStyle(
+                                    color: appTheme.black900,
+                                    fontSize: 13,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 50,
-                      ),
-                      Text(
-                        "12:00 PM",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal,
-                          color: appTheme.heading,
+                          ],
                         ),
-                      ),
-                    ],
+                        Text(
+                          "12:00 PM",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                            color: appTheme.heading,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ClipOval(
-                        child: CustomImageView(
-                          imagePath: ImageConstant.couple1,
-                          height: 70,
-                          width: 70,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Adarsh Sharma",
-                            style: TextStyle(
-                              color: appTheme.black900,
-                              fontSize: 18,
+                  GestureDetector(
+                    onTap: () {
+                      Get.offAllNamed(AppRoutes.chatUiScreen);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            ClipOval(
+                              child: CustomImageView(
+                                imagePath: ImageConstant.couple1,
+                                height: 60,
+                                width: 60,
+                              ),
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            "Hii Manju, How are you?",
-                            style: TextStyle(
-                              color: appTheme.black900,
-                              fontSize: 13,
+                            const SizedBox(
+                              width: 10,
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 50,
-                      ),
-                      Text(
-                        "12:00 PM",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal,
-                          color: appTheme.heading,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Aniket Verma",
+                                  style: TextStyle(
+                                    color: appTheme.black900,
+                                    fontSize: 18,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "Hii Manju, How are you?",
+                                  style: TextStyle(
+                                    color: appTheme.black900,
+                                    fontSize: 13,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                        Text(
+                          "12:00 PM",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                            color: appTheme.heading,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ClipOval(
-                        child: CustomImageView(
-                          imagePath: ImageConstant.couple1,
-                          height: 70,
-                          width: 70,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Adarsh Sharma",
-                            style: TextStyle(
-                              color: appTheme.black900,
-                              fontSize: 18,
+                  GestureDetector(
+                    onTap: () {
+                      Get.offAllNamed(AppRoutes.chatUiScreen);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            ClipOval(
+                              child: CustomImageView(
+                                imagePath: ImageConstant.couple1,
+                                height: 60,
+                                width: 60,
+                              ),
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            "Hii Manju, How are you?",
-                            style: TextStyle(
-                              color: appTheme.black900,
-                              fontSize: 13,
+                            const SizedBox(
+                              width: 10,
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 50,
-                      ),
-                      Text(
-                        "12:00 PM",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal,
-                          color: appTheme.heading,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Rudra Jat",
+                                  style: TextStyle(
+                                    color: appTheme.black900,
+                                    fontSize: 18,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "Hii Manju, How are you?",
+                                  style: TextStyle(
+                                    color: appTheme.black900,
+                                    fontSize: 13,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                        Text(
+                          "12:00 PM",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                            color: appTheme.heading,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

@@ -249,9 +249,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
         appBar: CustomAppBar(
           centerTitle: true,
           leading: IconButton(
-            onPressed: () {
-              print("Skip");
-            },
+            onPressed: () {},
             icon: Icon(
               Icons.face,
               color: appTheme.whiteA700,

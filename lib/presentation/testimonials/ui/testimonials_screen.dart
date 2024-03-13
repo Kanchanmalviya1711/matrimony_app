@@ -11,7 +11,6 @@ import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
 import 'package:matrimony_app/utils/size_utils.dart';
-import 'package:matrimony_app/utils/string_capitalization.dart';
 import 'package:matrimony_app/widgets/custom_app_bar.dart';
 import 'package:matrimony_app/widgets/custom_icon_button.dart';
 import 'package:carousel_slider/carousel_slider.dart';

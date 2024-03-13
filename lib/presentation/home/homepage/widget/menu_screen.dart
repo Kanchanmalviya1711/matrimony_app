@@ -31,10 +31,10 @@ class MyMenuBar extends StatelessWidget {
                             child: Text(
                               controller.menusList[index]["menu"]["name"] ==
                                       null
-                                  ? "No data"
+                                  ? "No data found"
                                   : controller.menusList[index]["menu"]
                                           ["name"] ??
-                                      "No data",
+                                      "No data found",
                             ),
                           );
                         },
@@ -86,10 +86,10 @@ class MyMenuBar extends StatelessWidget {
                                 Text(
                                   controller.menusList[index]["menu"]["name"] ==
                                           null
-                                      ? "No data"
+                                      ? "No data found"
                                       : controller.menusList[index]["menu"]
                                               ["name"] ??
-                                          "No data",
+                                          "No data found",
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
