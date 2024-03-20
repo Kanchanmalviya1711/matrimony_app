@@ -262,7 +262,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
             data[0] != null
                 ? Container()
                 : PopupMenuButton(
-                    surfaceTintColor: Colors.white,
+                    surfaceTintColor: appTheme.whiteA700,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                       side: BorderSide(color: appTheme.whiteA700),
@@ -374,9 +374,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.child_care,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .numberOfChildrenController.value,
@@ -402,9 +402,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.line_weight,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.weightController.value,
@@ -423,9 +423,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.height,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.heightController.value,
@@ -444,9 +444,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.type_specimen,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.bodyTypeController.value,
@@ -465,9 +465,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.face,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.complexionController.value,
@@ -486,9 +486,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.person,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .specialCasesController.value,
@@ -507,9 +507,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.bloodtype,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.bloodGroupController.value,
@@ -529,9 +529,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.food_bank,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .dieatryHabitsController.value,
@@ -555,9 +555,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.recycling,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.religionController.value,
@@ -578,9 +578,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.person_pin_circle_rounded,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .motherTongueController.value,
@@ -599,9 +599,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.contacts_sharp,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.casteController.value,
@@ -620,9 +620,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.subdirectory_arrow_left,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.subCasteController.value,
@@ -641,9 +641,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.crisis_alert_sharp,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.manglikController.value,
@@ -665,9 +665,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.language,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .spokenLanguagesController.value,
@@ -686,9 +686,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.radar_sharp,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.moonSignController.value,
@@ -707,9 +707,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.star_sharp,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.nakshatraController.value,
@@ -728,9 +728,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.stars,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .astroprofileController.value,
@@ -754,9 +754,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.cast_for_education,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.educationController.value,
@@ -775,9 +775,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.business_center,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController.companyName.value,
                       labelText: "Company Name",
@@ -797,9 +797,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.portrait_outlined,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.professionController.value,
@@ -819,9 +819,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.incomplete_circle,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .annualIncomeController.value,
@@ -848,9 +848,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.face_6_sharp,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.nickNameController.value,
@@ -869,9 +869,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.family_restroom,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .familyValuesController.value,
@@ -890,9 +890,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.face_4,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.motherNameController.value,
@@ -911,9 +911,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.tag_faces_sharp,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.fatherNameController.value,
@@ -932,9 +932,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.format_list_numbered_rtl_rounded,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .numberOfBrothersController.value,
@@ -956,9 +956,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.numbers,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .numberOfSistersController.value,
@@ -981,9 +981,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.keyboard,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .contactPersonPhoneNumber.value,
@@ -1007,9 +1007,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.contact_phone_rounded,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .contactPersonNameController.value,
@@ -1028,9 +1028,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.real_estate_agent,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .relationshipController.value,
@@ -1051,9 +1051,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.watch_later,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.timeToCallController.value,
@@ -1072,9 +1072,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.place_outlined,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .placeOfBirthController.value,
@@ -1094,9 +1094,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.calendar_today,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       readOnly: true,
                       validator: (value) {
@@ -1122,9 +1122,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.hot_tub_outlined,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.hobbiesController.value,
@@ -1143,9 +1143,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.interpreter_mode_sharp,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.interestsController.value,
@@ -1164,9 +1164,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.bookmark_added_sharp,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .favoriteReadsController.value,
@@ -1185,9 +1185,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.movie_sharp,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .preferredMoviesController.value,
@@ -1206,9 +1206,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.sports,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.sportsController.value,
@@ -1229,9 +1229,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.food_bank_outlined,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .favoriteCuisineController.value,
@@ -1253,9 +1253,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.link,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .facebookLinkController.value,
@@ -1274,9 +1274,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.link_outlined,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller:
                           allProfilesListController.linkedinUrlController.value,
@@ -1295,9 +1295,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.wallet_membership_sharp,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .watsappNumberController.value,
@@ -1321,9 +1321,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomTextFormField(
-                      prefix: const Icon(
+                      prefix: Icon(
                         Icons.info,
-                        color: Colors.black,
+                        color: appTheme.black900,
                       ),
                       controller: allProfilesListController
                           .aboutYourselfController.value,
@@ -1354,7 +1354,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.orange.withOpacity(0.5),
+                          color: appTheme.orange.withOpacity(0.5),
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -1409,7 +1409,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Colors.orange.withOpacity(0.5),
+                            color: appTheme.orange.withOpacity(0.5),
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -1462,7 +1462,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Colors.orange.withOpacity(0.5),
+                            color: appTheme.orange.withOpacity(0.5),
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),

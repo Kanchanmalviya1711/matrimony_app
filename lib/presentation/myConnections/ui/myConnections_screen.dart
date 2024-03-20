@@ -3,7 +3,6 @@ import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
 import 'package:matrimony_app/presentation/myConnections/controller/myConnections_controller.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
-import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
 import 'package:matrimony_app/widgets/custom_image_view.dart';
 import 'package:matrimony_app/widgets/custom_pagination_view.dart';
@@ -25,7 +24,6 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
   @override
   void initState() {
     super.initState();
-
     pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
@@ -101,7 +99,10 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: [Color(0xFFfdfcfb), Color(0xFFFFFBEE)],
+                      colors: [
+                        Color.fromARGB(255, 248, 245, 242),
+                        Color.fromARGB(255, 224, 223, 217)
+                      ],
                     ),
                   ),
                   child: Column(
@@ -109,19 +110,25 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Card(
+                        elevation: 6,
                         surfaceTintColor: Colors.white,
                         child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            MyImageWidget(
-                              width: 100,
-                              height: 100,
-                              imageUrl: ApiNetwork.imageUrl +
-                                  (p1["friendRequest"]["sender_id"]
-                                          ["imagePath"] ??
-                                      ""),
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: ClipOval(
+                                child: MyImageWidget(
+                                  width: 80,
+                                  height: 80,
+                                  imageUrl: ApiNetwork.imageUrl +
+                                      (p1["friendRequest"]["sender_id"]
+                                              ["imagePath"] ??
+                                          ""),
+                                ),
+                              ),
                             ),
-                            const SizedBox(width: 10),
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -130,7 +137,8 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
                                   children: [
                                     Text(
                                       // ignore: prefer_interpolation_to_compose_strings
-                                      "${p1["friendRequest"]["sender_id"]["firstName"]} " +
+                                      "${p1["friendRequest"]["sender_id"]["firstName"]}"
+                                              " " +
                                           p1["friendRequest"]["sender_id"]
                                               ["lastName"],
                                       style: const TextStyle(
@@ -138,27 +146,19 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    const SizedBox(height: 5),
                                     Text(
-                                      p1["friendRequest"]["sender_id"]["phone"]
-                                          .toString(),
+                                      // ignore: prefer_interpolation_to_compose_strings
+                                      "${p1["friendRequest"]["sender_id"]["emailAddress"]}",
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Phone- ${p1["friendRequest"]["sender_id"]["phone"]}",
                                       style: const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Text(
-                                      p1["friendRequest"]?["sender_id"]
-                                                  ["address"]
-                                              ?.toString() ??
-                                          "No Data Found",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: appTheme.gray500,
-                                      ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ],
                                 ),
@@ -194,6 +194,7 @@ class MyImageWidget extends StatelessWidget {
             imageUrl!,
             width: width,
             height: height,
+            fit: BoxFit.cover,
             loadingBuilder: (BuildContext context, Widget child,
                 ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) {

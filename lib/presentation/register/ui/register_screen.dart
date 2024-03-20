@@ -153,9 +153,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
-                        prefix: const Icon(
+                        prefix: Icon(
                           Icons.person,
-                          color: Colors.black,
+                          color: appTheme.black900,
                         ),
                         controller:
                             registerController.firstNameController.value,
@@ -177,9 +177,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
-                        prefix: const Icon(
+                        prefix: Icon(
                           Icons.person,
-                          color: Colors.black,
+                          color: appTheme.black900,
                         ),
                         controller: registerController.lastNameController.value,
                         labelText: "Lastname",
@@ -200,9 +200,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
-                        prefix: const Icon(
+                        prefix: Icon(
                           Icons.person_2_rounded,
-                          color: Colors.black,
+                          color: appTheme.black900,
                         ),
                         controller: registerController.userNameController.value,
                         labelText: "Username",
@@ -224,9 +224,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
                         readOnly: true,
-                        prefix: const Icon(
+                        prefix: Icon(
                           Icons.calendar_today,
-                          color: Colors.black,
+                          color: appTheme.black900,
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -260,9 +260,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
-                        prefix: const Icon(
+                        prefix: Icon(
                           Icons.person_2_rounded,
-                          color: Colors.black,
+                          color: appTheme.black900,
                         ),
                         controller: registerController.userTypeController.value,
                         labelText: "Usertype",
@@ -283,9 +283,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
-                        prefix: const Icon(
+                        prefix: Icon(
                           Icons.email,
-                          color: Colors.black,
+                          color: appTheme.black900,
                         ),
                         controller: registerController.emailController.value,
                         labelText: "Email",
@@ -330,12 +330,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               registerController.isPasswordVisible.value
                                   ? Icons.visibility_off
                                   : Icons.visibility,
-                              color: Colors.black,
+                              color: appTheme.black900,
                             ),
                           ),
-                          prefix: const Icon(
+                          prefix: Icon(
                             Icons.lock,
-                            color: Colors.black,
+                            color: appTheme.black900,
                           ),
                           controller:
                               registerController.passwordController.value,
@@ -366,9 +366,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
-                        prefix: const Icon(
+                        prefix: Icon(
                           Icons.keyboard,
-                          color: Colors.black,
+                          color: appTheme.black900,
                         ),
                         controller: registerController.phoneController.value,
                         labelText: "Phone Number",
@@ -394,9 +394,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomTextFormField(
-                        prefix: const Icon(
+                        prefix: Icon(
                           Icons.place,
-                          color: Colors.black,
+                          color: appTheme.black900,
                         ),
                         controller: registerController.addressController.value,
                         labelText: "Complete Address",
@@ -418,9 +418,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomDropdown(
                         labelText: 'Suscription Type',
-                        prefixIcon: const Icon(
+                        prefixIcon: Icon(
                           Icons.person_2_rounded,
-                          color: Colors.black,
+                          color: appTheme.black900,
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -447,9 +447,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomDropdown(
                         labelText: 'Status',
-                        prefixIcon: const Icon(
+                        prefixIcon: Icon(
                           Icons.person_2_rounded,
-                          color: Colors.black,
+                          color: appTheme.black900,
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -475,9 +475,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 10.h),
                       child: CustomDropdown(
                         labelText: 'Gender',
-                        prefixIcon: const Icon(
+                        prefixIcon: Icon(
                           Icons.person_2_rounded,
-                          color: Colors.red,
+                          color: appTheme.red600D8,
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -509,7 +509,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: Colors.orange.withOpacity(0.5),
+                                  color: appTheme.orange.withOpacity(0.5),
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),

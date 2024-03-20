@@ -118,13 +118,13 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
+                              color: appTheme.gray.withOpacity(0.5),
                               spreadRadius: 5,
                               blurRadius: 7,
                               offset: const Offset(0, 3),
                             ),
                           ],
-                          color: Colors.white,
+                          color: appTheme.whiteA700,
                         ),
                         child: Column(
                           children: [

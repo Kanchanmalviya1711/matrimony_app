@@ -1,6 +1,7 @@
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/presentation/allProfiles/controller/allProfiles_controller.dart';
 import 'package:matrimony_app/presentation/allProfiles/ui/allProfiles.form.dart';
+import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/size_utils.dart';
 
 class AllProfilesFilter extends StatefulWidget {
@@ -30,7 +31,7 @@ class _AllProfilesFilterFilterState extends State<AllProfilesFilter> {
           width: size.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
-            color: Colors.grey.withOpacity(0.1),
+            color: appTheme.gray.withOpacity(0.1),
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 30.v),

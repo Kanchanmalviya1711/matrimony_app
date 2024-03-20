@@ -74,9 +74,9 @@ class _ViewSliderScreenState extends State<ViewSliderScreen> {
                           padding: const EdgeInsets.all(8),
                           child: Text(
                             data['title'],
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 17,
-                              color: Colors.white,
+                              color: appTheme.whiteA700,
                             ),
                           ),
                         ),
@@ -86,8 +86,9 @@ class _ViewSliderScreenState extends State<ViewSliderScreen> {
                         Text(
                           data["status"] == 0 ? "Active" : "Inactive",
                           style: TextStyle(
-                            color:
-                                data["status"] == 0 ? Colors.green : Colors.red,
+                            color: data["status"] == 0
+                                ? appTheme.green600
+                                : appTheme.red600D8,
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
@@ -97,39 +98,45 @@ class _ViewSliderScreenState extends State<ViewSliderScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      data['description'] + ".",
-                      style: const TextStyle(
-                        fontSize: 17,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 7, top: 8),
+                      child: Text(
+                        data['description'] + ".",
+                        style: const TextStyle(
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Date Of Post :",
-                          style: TextStyle(
-                            color: appTheme.black900,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Divider(
-                          color: appTheme.heading,
-                        ),
-                        Text(
-                          DateFormat('dd-MMM yyyy').format(
-                            DateTime.parse(data["createdAt"].toString()),
-                          ),
-                          style: TextStyle(
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Date Of Post :",
+                            style: TextStyle(
                               color: appTheme.black900,
+                              fontSize: 18,
                               fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                      ],
+                            ),
+                          ),
+                          Divider(
+                            color: appTheme.heading,
+                          ),
+                          Text(
+                            DateFormat('dd-MMM yyyy').format(
+                              DateTime.parse(data["createdAt"].toString()),
+                            ),
+                            style: TextStyle(
+                                color: appTheme.black900,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

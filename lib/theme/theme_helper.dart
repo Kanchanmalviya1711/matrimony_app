@@ -234,6 +234,7 @@ class PrimaryColors {
 
   // Black
   Color get black900 => const Color(0XFF000000);
+  Color get black908 => const Color(0XFF70798c);
 
   // Blue
   Color get blue600 => const Color(0XFF0873e1);
@@ -264,9 +265,14 @@ class PrimaryColors {
   Color get firstSite => const Color(0XFFffb400);
   Color get trustedColor => const Color(0XFFCC9966);
   Color get planCancel => const Color(0XFFFFF3CD);
+  Color get siteName => const Color(0XFFff9f1c);
 
   // Green
   Color get green600 => const Color(0XFF28C76F);
+  Color get newGreen => const Color(0XFF38a3a5);
+  Color get redColor => const Color(0XFFe56b6f);
+  Color get tealColor => const Color(0XFF008080);
+
   Color get activeBackgroundColor => const Color.fromARGB(40, 20, 20, 20);
 
   //grey
@@ -277,8 +283,8 @@ class PrimaryColors {
 
   // RedD
   Color get red600D8 => const Color.fromARGB(215, 202, 5, 25);
-  Color get pink => Color.fromARGB(255, 255, 94, 255);
-
+  Color get pink => const Color.fromARGB(255, 255, 94, 255);
+  Color get newPink => const Color(0XFFef476f);
   Color get bellIconNotification => const Color(0XFFEA5455);
 
   // White

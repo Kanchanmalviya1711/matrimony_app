@@ -18,7 +18,6 @@ import 'package:matrimony_app/widgets/custom_pagination_view.dart';
 
 class AllProfilesScreen extends StatefulWidget {
   const AllProfilesScreen({Key? key}) : super(key: key);
-
   @override
   _AllProfilesScreenState createState() => _AllProfilesScreenState();
 }
@@ -28,7 +27,6 @@ class _AllProfilesScreenState extends State<AllProfilesScreen> {
     firstPageKey: 1,
   );
   var scaffoldKey = GlobalKey<ScaffoldState>();
-
   AllProfilesListController allProfilesListController =
       Get.put(AllProfilesListController());
 
@@ -172,17 +170,18 @@ class _AllProfilesScreenState extends State<AllProfilesScreen> {
                                                   );
                                                 },
                                                 child: Container(
-                                                  decoration:
-                                                      const BoxDecoration(
+                                                  decoration: BoxDecoration(
                                                     border: Border(
                                                         bottom: BorderSide(
-                                                            color: Colors.green,
+                                                            color: appTheme
+                                                                .green600,
                                                             width: 3.0)),
                                                   ),
-                                                  child: const Text(
+                                                  child: Text(
                                                     "More Details",
                                                     style: TextStyle(
-                                                        color: Colors.green,
+                                                        color:
+                                                            appTheme.green600,
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ),

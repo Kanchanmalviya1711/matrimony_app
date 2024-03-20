@@ -12,7 +12,7 @@ class SplashController extends GetxController {
   jumpToHome() async {
     await Future.delayed(const Duration(seconds: 3), () {
       Get.offNamed(SessionManager.getToken() == null
-          ? AppRoutes.loginScreen
+          ? AppRoutes.onBoardingScreen
           : AppRoutes.homeScreen);
     });
   }

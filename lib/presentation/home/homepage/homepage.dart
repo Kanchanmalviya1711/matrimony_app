@@ -22,7 +22,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HomepageController homepageController = Get.put(HomepageController());
-
   @override
   void initState() {
     super.initState();
@@ -59,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         return Column(
           children: [
             ListTile(
-              tileColor: Colors.black,
+              tileColor: appTheme.black900,
               contentPadding: const EdgeInsets.all(0),
               title: Column(
                 children: [
@@ -107,7 +106,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             // MENU BAR DATA DISPLAY END
-
             Column(
               children: [
                 SizedBox(
@@ -138,11 +136,9 @@ class _HomePageState extends State<HomePage> {
                         fontFamily: "CinzelDecorative"),
                   ),
                 ),
-
                 const SizedBox(
                   height: 10,
                 ),
-
                 // ---------Slider module start--------------
                 // Slider module
                 CarouselSlider(
@@ -211,7 +207,7 @@ class _HomePageState extends State<HomePage> {
                         position: _currentIndex.toDouble().toInt(),
                         decorator: DotsDecorator(
                           color: appTheme.black900,
-                          activeColor: Colors.pink,
+                          activeColor: appTheme.newPink,
                           size: const Size.square(11),
                           activeSize: const Size(11, 11),
                         ),
@@ -220,11 +216,9 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 // ---------Slider module end--------------
-
                 const SizedBox(height: 30),
                 const Divider(),
                 const SizedBox(height: 20),
-
                 const Text(
                   "Trusted Brands ",
                   style: TextStyle(
@@ -232,7 +226,6 @@ class _HomePageState extends State<HomePage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Text(
@@ -282,21 +275,21 @@ class _HomePageState extends State<HomePage> {
                               end: Alignment.centerRight,
                             ).createShader(bounds);
                           },
-                          child: const Text(
+                          child: Text(
                             'Why Choose Us !',
                             style: TextStyle(
                                 fontSize: 28,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: appTheme.whiteA700,
                                 fontFamily: "PlayfairDisplay"),
                           ),
                         ),
                         const SizedBox(height: 15),
-                        const Text(
+                        Text(
                           "Most Trusted and premium Matrimony Service in the World.",
                           style: TextStyle(
                               fontSize: 16,
-                              color: Colors.white,
+                              color: appTheme.whiteA700,
                               fontWeight: FontWeight.w500,
                               fontFamily: "Poppins"),
                         )
@@ -307,8 +300,8 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 10),
                 Card(
                   elevation: 5,
-                  surfaceTintColor: Colors.white,
-                  color: Colors.white,
+                  surfaceTintColor: appTheme.whiteA700,
+                  color: appTheme.whiteA700,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
@@ -591,7 +584,6 @@ class _HomePageState extends State<HomePage> {
 
 class MyImageWidget extends StatelessWidget {
   final String? imageUrl; // Make sure imageUrl is nullable
-
   MyImageWidget({required this.imageUrl});
 
   @override
@@ -643,7 +635,7 @@ Widget buildCarouselItem({
     child: SingleChildScrollView(
       child: Card(
         shape: Border.all(
-          color: Colors.white70,
+          color: appTheme.whiteA700,
           width: 4,
         ),
         surfaceTintColor: appTheme.whiteA700,
@@ -678,14 +670,14 @@ Widget buildCarouselItem({
                           ),
                         ),
                         Container(
-                          color: Colors.green.withOpacity(0.2),
+                          color: appTheme.green600.withOpacity(0.2),
                           child: Padding(
                             padding: const EdgeInsets.all(8),
                             child: Text(
                               status,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.green,
+                                  color: appTheme.green600,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -716,7 +708,7 @@ Widget buildCarouselItem({
               child: Container(
                 width: 150,
                 decoration: BoxDecoration(
-                  color: Colors.pink,
+                  color: appTheme.newPink,
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: Column(
@@ -728,10 +720,10 @@ Widget buildCarouselItem({
                           horizontal: 20, vertical: 5),
                       child: GestureDetector(
                         onTap: onExploreTap,
-                        child: const Text(
+                        child: Text(
                           "Explore",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: appTheme.whiteA700,
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),

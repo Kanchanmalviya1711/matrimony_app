@@ -143,7 +143,7 @@ class _TestimonialsScreenState extends State<TestimonialsScreen> {
                       position: currentPageIndex.toDouble().toInt(),
                       decorator: DotsDecorator(
                         color: appTheme.black900,
-                        activeColor: Colors.red,
+                        activeColor: appTheme.redColor,
                         size: const Size.square(11),
                         activeSize: const Size(11, 11),
                       ),
@@ -297,12 +297,12 @@ class _TestimonialsScreenState extends State<TestimonialsScreen> {
                       onTap: () {
                         Get.toNamed(AppRoutes.allProfilesScreen);
                       },
-                      child: const Text(
+                      child: Text(
                         "Click here to start your matrimony service now.",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue,
+                          color: appTheme.blue1600,
                         ),
                       ),
                     ),
@@ -342,7 +342,7 @@ Widget buildCarouselItem(
         Container(
           decoration: BoxDecoration(
             border: Border.all(
-              color: Colors.grey,
+              color: appTheme.gray,
               width: 0.1,
             ),
           ),
@@ -368,8 +368,8 @@ Widget buildCarouselItem(
                         Container(
                           decoration: BoxDecoration(
                             color: status == 1
-                                ? Colors.green.withOpacity(0.2)
-                                : Colors.red.withOpacity(0.2),
+                                ? appTheme.green600.withOpacity(0.2)
+                                : appTheme.redColor.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(7),
                           ),
                           child: Padding(
@@ -377,8 +377,9 @@ Widget buildCarouselItem(
                             child: Text(
                               status == 1 ? "Active" : "Inactive",
                               style: TextStyle(
-                                  color:
-                                      status == 1 ? Colors.green : Colors.red,
+                                  color: status == 1
+                                      ? appTheme.green600
+                                      : appTheme.red600D8,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -401,15 +402,15 @@ Widget buildCarouselItem(
                                 DateFormat('dd-MM-yy').format(
                                   DateTime.parse(dateOfMarriage.toString()),
                                 ),
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 16)),
+                                style: TextStyle(
+                                    color: appTheme.black900, fontSize: 16)),
                           ],
                         ),
                         RatingBarIndicator(
                           rating: rating,
-                          itemBuilder: (context, index) => const Icon(
+                          itemBuilder: (context, index) => Icon(
                             Icons.star,
-                            color: Colors.amber,
+                            color: appTheme.firstSite,
                           ),
                           itemCount: 5,
                           itemSize: 25.0,
@@ -425,8 +426,8 @@ Widget buildCarouselItem(
                         children: [
                           Text(
                             description,
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 16),
+                            style: TextStyle(
+                                color: appTheme.black900, fontSize: 16),
                           ),
                         ],
                       ),

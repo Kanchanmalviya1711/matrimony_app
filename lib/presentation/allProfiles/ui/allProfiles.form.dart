@@ -88,9 +88,9 @@ class _AllProfilesFormState extends State<AllProfilesForm> {
               onPressed: () {
                 allProfilesListController.clearInputField();
               },
-              child: const Text(
+              child: Text(
                 "Cancel",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: appTheme.whiteA700),
               ),
             ),
             ElevatedButton(
@@ -103,9 +103,9 @@ class _AllProfilesFormState extends State<AllProfilesForm> {
               onPressed: () {
                 Get.offAndToNamed(AppRoutes.allProfilesScreen);
               },
-              child: const Text(
+              child: Text(
                 "Apply Filter",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: appTheme.whiteA700),
               ),
             )
           ],

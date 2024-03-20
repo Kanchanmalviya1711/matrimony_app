@@ -51,9 +51,9 @@ class _ProfileFormState extends State<ProfileForm> {
               onPressed: () {
                 profileListController.clearInputField();
               },
-              child: const Text(
+              child: Text(
                 "Cancel",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: appTheme.whiteA700),
               ),
             ),
             ElevatedButton(
@@ -66,9 +66,9 @@ class _ProfileFormState extends State<ProfileForm> {
               onPressed: () {
                 Get.offAndToNamed(AppRoutes.profileListScreen);
               },
-              child: const Text(
+              child: Text(
                 "Apply Filter",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: appTheme.whiteA700),
               ),
             )
           ],

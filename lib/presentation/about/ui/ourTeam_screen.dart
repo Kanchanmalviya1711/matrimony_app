@@ -76,7 +76,7 @@ class _OurTeamScreenState extends State<OurTeamScreen> {
                 position: _currentIndex.toDouble().toInt(),
                 decorator: DotsDecorator(
                   color: appTheme.black900,
-                  activeColor: Colors.blue,
+                  activeColor: appTheme.blue1600,
                   size: const Size.square(11),
                   activeSize: const Size(11, 11),
                 ),
@@ -104,7 +104,7 @@ class _OurTeamScreenState extends State<OurTeamScreen> {
         child: SingleChildScrollView(
           child: Card(
             shape: Border.all(
-              color: Colors.white70,
+              color: appTheme.whiteA700,
               width: 4,
             ),
             surfaceTintColor: appTheme.whiteA700,
@@ -137,9 +137,9 @@ class _OurTeamScreenState extends State<OurTeamScreen> {
                         ),
                         Text(
                           designation,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey,
+                            color: appTheme.gray,
                           ),
                         ),
                       ],

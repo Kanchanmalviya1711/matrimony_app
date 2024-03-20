@@ -56,11 +56,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           imagePath: ImageConstant.logoImg,
                         ),
                         const SizedBox(height: 25),
-                        const Text(
+                        Text(
                           "Welcome to India's Best Matrimony App",
                           style: TextStyle(
                             fontSize: 15,
-                            color: Colors.black,
+                            color: appTheme.black900,
                           ),
                         ),
                         const SizedBox(height: 15),
@@ -70,9 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 40),
                         CustomTextFormField(
-                          prefix: const Icon(
+                          prefix: Icon(
                             Icons.email,
-                            color: Colors.black,
+                            color: appTheme.black900,
                           ),
                           controller: controller.emailController.value,
                           labelText: "Email",
@@ -93,7 +93,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (value != lowercaseValue) {
                               return "Email should be correct";
                             }
-
                             return null;
                           },
                           contentPadding: const EdgeInsets.symmetric(
@@ -113,13 +112,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ? Icons.visibility_off
                                     : Icons.visibility,
                                 color: controller.isPasswordVisible.value
-                                    ? Colors.black
-                                    : const Color.fromARGB(255, 103, 199, 106),
+                                    ? appTheme.black900
+                                    : appTheme.green600,
                               ),
                             ),
-                            prefix: const Icon(
+                            prefix: Icon(
                               Icons.lock,
-                              color: Colors.black,
+                              color: appTheme.black900,
                             ),
                             controller: controller.passwordController.value,
                             labelText: "Password",
@@ -152,11 +151,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   AppRoutes.forgotPasswordScreen,
                                 );
                               },
-                              child: const Text(
+                              child: Text(
                                 "Forgot Password",
                                 style: TextStyle(
                                   fontSize: 15,
-                                  color: Colors.black,
+                                  color: appTheme.black900,
                                   fontWeight: FontWeight.normal,
                                 ),
                               ),

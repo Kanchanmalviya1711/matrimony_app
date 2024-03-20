@@ -1,9 +1,11 @@
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
+import 'package:matrimony_app/theme/custom_text_style.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
 import 'package:matrimony_app/widgets/custom_app_bar.dart';
 import 'package:matrimony_app/widgets/custom_image_view.dart';
+import 'package:matrimony_app/widgets/custom_text_form_field.dart';
 
 class ChatUIScreen extends StatelessWidget {
   const ChatUIScreen({Key? key}) : super(key: key);
@@ -18,9 +20,9 @@ class ChatUIScreen extends StatelessWidget {
           onPressed: () {
             Get.offAllNamed(AppRoutes.chatScreen);
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back,
-            color: Colors.white,
+            color: appTheme.whiteA700,
           ),
         ),
       ),
@@ -28,7 +30,7 @@ class ChatUIScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            color: Colors.black,
+            color: appTheme.black900,
             padding: const EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,20 +45,20 @@ class ChatUIScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           "Adarsh Sharma",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: appTheme.whiteA700,
                             fontSize: 15,
                           ),
                         ),
                         Text(
                           "Last seen today at 18:45",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: appTheme.whiteA700,
                             fontSize: 13,
                           ),
                         ),
@@ -109,89 +111,85 @@ class ChatUIScreen extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              color: Colors.blueGrey,
+              color: const Color.fromARGB(255, 233, 237, 240),
               width: double.infinity,
               child: Padding(
                 padding: const EdgeInsets.all(8),
-                child: Column(children: [
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Chat bubbles or messages will go here
+                    Expanded(
+                      child: ListView(
+                        reverse: true,
+                        children: [
+                          // Example chat bubbles
+                          _buildChatBubble("Hello .", true),
+                          _buildChatBubble(
+                              "Hey there! How are you doing today?", false),
+                          // Add more chat bubbles as needed
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color.fromARGB(255, 153, 153, 146),
-                          ),
-                          padding: const EdgeInsets.all(5),
-                          child: const Text(
-                            "Your chat content goes here.",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
+                        Expanded(
+                          child: CustomTextFormField(
+                            prefix: Icon(
+                              Icons.face,
+                              size: 25,
+                              color: appTheme.tealColor,
+                            ),
+                            labelText: "Type your message...",
+                            hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter text";
+                              }
+                              return null;
+                            },
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10,
                             ),
                           ),
                         ),
-                        const SizedBox(height: 5),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: const Color.fromARGB(255, 153, 153, 146),
-                          ),
-                          padding: const EdgeInsets.only(
-                              left: 20, right: 10, top: 10, bottom: 10),
-                          child: const Text(
-                            "Your chat content goes here. Your chat content goes here.Your chat content goes here.Your chat content goes here.",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                            ),
+                        const SizedBox(width: 10),
+                        IconButton(
+                          onPressed: () {
+                            print("This is a Button");
+                          },
+                          icon: Icon(
+                            Icons.send,
+                            color: appTheme.black900,
                           ),
                         ),
-                      ]),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color.fromARGB(255, 153, 153, 146),
-                          ),
-                          padding: const EdgeInsets.all(5),
-                          child: const Text(
-                            "Your chat content goes here.",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: const Color.fromARGB(255, 153, 153, 146),
-                          ),
-                          padding: const EdgeInsets.only(
-                              left: 20, right: 10, top: 10, bottom: 10),
-                          child: const Text(
-                            "Your chat content goes here. Your chat content goes here.Your chat content goes here.Your chat content goes here.",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                      ])
-                ]),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildChatBubble(String text, bool isSender) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: isSender ? const Color.fromARGB(255, 80, 79, 79) : appTheme.gray,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: appTheme.whiteA700,
+          fontSize: 15,
+        ),
       ),
     );
   }

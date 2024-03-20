@@ -57,7 +57,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
             itemCount: contactUsController.getContactUsDetails.length,
             itemBuilder: (context, index) {
               return ListTile(
-                tileColor: Colors.black,
+                tileColor: appTheme.black900,
                 contentPadding: const EdgeInsets.all(0),
                 title: Container(
                   width: double.infinity,
@@ -107,27 +107,27 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                     end: Alignment.centerRight,
                                   ).createShader(bounds);
                                 },
-                                child: const Text(
+                                child: Text(
                                   'Contact Us !',
                                   style: TextStyle(
                                       fontSize: 40,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                                      color: appTheme.whiteA700,
                                       fontFamily: "PlayfairDisplay"),
                                 ),
                               ),
                               const SizedBox(height: 10),
-                              const Column(
+                              Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(10),
                                     child: Text(
                                       "Most Trusted and premium Matrimony Service in the World.",
                                       style: TextStyle(
                                         fontSize: 20,
-                                        color: Colors.white,
+                                        color: appTheme.whiteA700,
                                         fontWeight: FontWeight.w500,
                                         fontFamily: "Poppins",
                                       ),
@@ -145,8 +145,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         padding: const EdgeInsets.only(left: 20, right: 20),
                         child: Card(
                           elevation: 5,
-                          surfaceTintColor: Colors.white,
-                          color: Colors.white,
+                          surfaceTintColor: appTheme.whiteA700,
+                          color: appTheme.whiteA700,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
@@ -223,8 +223,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         padding: const EdgeInsets.only(left: 10, right: 10),
                         child: Card(
                           elevation: 5,
-                          surfaceTintColor: Colors.white,
-                          color: Colors.white,
+                          surfaceTintColor: appTheme.whiteA700,
+                          color: appTheme.whiteA700,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),
@@ -283,8 +283,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             left: 10, right: 10, bottom: 10),
                         child: Card(
                           elevation: 5,
-                          surfaceTintColor: Colors.white,
-                          color: Colors.white,
+                          surfaceTintColor: appTheme.whiteA700,
+                          color: appTheme.whiteA700,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),

@@ -154,9 +154,8 @@ class _BlogScreenState extends State<BlogScreen> {
                         children: [
                           Card(
                             elevation: 5,
-                            surfaceTintColor: Colors
-                                .white, // Add a subtle shadow for elevation
-                            color: Colors.white, // Set a white background color
+                            surfaceTintColor: appTheme.whiteA700,
+                            color: appTheme.whiteA700,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
                                   4), // Add rounded corners
@@ -174,15 +173,15 @@ class _BlogScreenState extends State<BlogScreen> {
                                     Positioned(
                                       bottom: 10,
                                       child: Container(
-                                        color: Colors.white,
+                                        color: appTheme.whiteA700,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Column(
                                             children: [
                                               Text(
                                                 "${p1["title"]}",
-                                                style: const TextStyle(
-                                                  color: Colors.black,
+                                                style: TextStyle(
+                                                  color: appTheme.black900,
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -225,8 +224,10 @@ class _BlogScreenState extends State<BlogScreen> {
                                           ),
                                           Container(
                                             color: p1["status"] == 1
-                                                ? Colors.green.withOpacity(0.2)
-                                                : Colors.red.withOpacity(0.2),
+                                                ? appTheme.green600
+                                                    .withOpacity(0.2)
+                                                : appTheme.red600D8
+                                                    .withOpacity(0.2),
                                             padding: const EdgeInsets.all(7),
                                             child: Text(
                                               p1["status"] == 1
@@ -234,8 +235,8 @@ class _BlogScreenState extends State<BlogScreen> {
                                                   : "Inactive",
                                               style: TextStyle(
                                                 color: p1["status"] == 1
-                                                    ? Colors.green
-                                                    : Colors.red,
+                                                    ? appTheme.green600
+                                                    : appTheme.red600D8,
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -265,9 +266,10 @@ class _BlogScreenState extends State<BlogScreen> {
                                           Get.offNamed(AppRoutes.viewBlogScreen,
                                               arguments: [p1]);
                                         },
-                                        child: const Text(
+                                        child: Text(
                                           'Read More...',
-                                          style: TextStyle(color: Colors.black),
+                                          style: TextStyle(
+                                              color: appTheme.black900),
                                         ),
                                       ),
                                     ],

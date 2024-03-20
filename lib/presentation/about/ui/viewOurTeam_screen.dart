@@ -17,7 +17,6 @@ class ViewOurTeamScreen extends StatefulWidget {
 class _ViewOurTeamScreenState extends State<ViewOurTeamScreen> {
   bool isExpanded = false;
   late var data;
-
   @override
   void initState() {
     super.initState();
@@ -43,7 +42,7 @@ class _ViewOurTeamScreenState extends State<ViewOurTeamScreen> {
         centerTitle: true,
       ),
       body: Container(
-        decoration: const BoxDecoration(color: Colors.white),
+        decoration: BoxDecoration(color: appTheme.whiteA700),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -78,15 +77,15 @@ class _ViewOurTeamScreenState extends State<ViewOurTeamScreen> {
                           Container(
                             padding: const EdgeInsets.all(5),
                             color: data["status"] == 1
-                                ? Colors.green.withOpacity(0.3)
-                                : Colors.red,
+                                ? appTheme.green600.withOpacity(0.2)
+                                : appTheme.red600D8.withOpacity(0.2),
                             child: Text(
                               data["status"] == 1 ? "Active" : "Inactive",
                               style: TextStyle(
                                 fontSize: 20,
                                 color: data["status"] == 1
-                                    ? Colors.green
-                                    : Colors.red,
+                                    ? appTheme.green600
+                                    : appTheme.red600D8,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

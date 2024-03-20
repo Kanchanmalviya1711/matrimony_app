@@ -88,7 +88,7 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                         Positioned(
                           bottom: 10,
                           child: Container(
-                            color: Colors.white,
+                            color: appTheme.whiteA700,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
@@ -97,8 +97,8 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                                     singleProfiles["user"] == null
                                         ? "No such name"
                                         : "${singleProfiles["user"]["firstName"].toString()} ${singleProfiles["user"]["lastName"].toString()}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
+                                    style: TextStyle(
+                                      color: appTheme.black900,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),

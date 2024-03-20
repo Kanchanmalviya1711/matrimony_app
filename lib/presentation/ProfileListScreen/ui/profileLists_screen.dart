@@ -27,6 +27,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
   TextEditingController searchController = TextEditingController();
   @override
   void initState() {
+    super.initState();
     pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
@@ -99,155 +100,133 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
               onTap: () {
                 filterDialog(context, size, const ProfileListFilter());
               },
-              child: const Icon(
+              child: Icon(
                 Icons.search,
-                color: Colors.black,
+                color: appTheme.black900,
               ),
             ),
           ],
         ),
         Expanded(
           child: CustomPaginationView(
-              noDataFound: () {
-                Get.offNamed(AppRoutes.homeScreen);
-              },
-              onRefresh: () => Future.sync(() {
-                    pagingController.refresh();
-                  }),
-              pagingController: pagingController,
-              itemBuilder: (p0, p1, p2) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 5, right: 5),
-                  child: Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Container(
-                      width: double.maxFinite,
-                      decoration: const BoxDecoration(color: Colors.white),
-                      child: Column(
-                        children: [
-                          Column(
-                            children: [
-                              Stack(
-                                children: [
-                                  MyImageWidget(
-                                      height: size.height * 0.4,
-                                      width: double.maxFinite,
-                                      imageUrl: ApiNetwork.imageUrl +
-                                          p1["user"]["imagePath"]),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        p1["user"]["firstName"]
-                                            .toString()
-                                            .capitalizeFirst!,
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                        p1["user"]["lastName"]
-                                            .toString()
-                                            .capitalizeFirst!,
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    p1["user"]["emailAddress"].toString(),
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  Text(
-                                    "+91- ${p1["user"]["phone"]}",
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
+            noDataFound: () {
+              Get.offNamed(AppRoutes.homeScreen);
+            },
+            onRefresh: () => Future.sync(() {
+              pagingController.refresh();
+            }),
+            pagingController: pagingController,
+            itemBuilder: (p0, p1, p2) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 5, right: 5),
+                child: Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Container(
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(color: appTheme.black900),
+                    child: Column(
+                      children: [
+                        Column(
+                          children: [
+                            Stack(
+                              children: [
+                                MyImageWidget(
+                                    height: size.height * 0.4,
+                                    width: double.maxFinite,
+                                    imageUrl: ApiNetwork.imageUrl +
+                                        p1["user"]["imagePath"]),
+                              ],
                             ),
-                          ),
-
-                          // // Paragraph
-                          // const Padding(
-                          //   padding: EdgeInsets.all(10),
-                          //   child: Text(
-                          //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                          //     style: TextStyle(fontSize: 16),
-                          //   ),
-                          // ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 5),
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  const SizedBox(width: 5),
-                                  ElevatedButton(
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.green
-                                        // This is what you need!
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "${p1["user"]["firstName"].toString().capitalizeFirst!} ${p1["user"]["lastName"].toString().capitalizeFirst!}",
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                    child: const Text(
-                                      'Chat Now',
-                                      style: TextStyle(color: Colors.white),
+                                      ],
                                     ),
-                                  ),
-                                  const SizedBox(width: 5),
-                                  ElevatedButton(
-                                    onPressed: () {},
-                                    child: const Text('WhatsApp'),
-                                  ),
-                                  const SizedBox(width: 5),
-                                  ElevatedButton(
+                                    Text(
+                                      p1["user"]["emailAddress"].toString(),
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: appTheme.black908,
+                                      ),
+                                    ),
+                                    Text(
+                                      "+91- ${p1["user"]["phone"]}",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: appTheme.black908,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 150,
+                                  child: ElevatedButton(
                                     onPressed: () {
                                       profileListController.sendFriendRequest(
                                         p1["user"]["id"].toString(),
                                         status[1]["id"].toString(),
                                       );
                                     },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: p1["friendRequest"]?["sender_id"]
+                                                  ["status"] ==
+                                              1
+                                          ? appTheme.siteName
+                                          : appTheme.newGreen,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                        vertical: 15,
+                                      ),
+                                    ),
                                     child: p1["friendRequest"]?["sender_id"]
                                                 ["status"] ==
                                             1
-                                        ? const Text('Pending...')
-                                        : const Text('Send Interest'),
+                                        ? Text(
+                                            'Pending...',
+                                            style: TextStyle(
+                                                color: appTheme.whiteA700,
+                                                fontSize: 15),
+                                          )
+                                        : Text(
+                                            'Send Interest',
+                                            style: TextStyle(
+                                                color: appTheme.whiteA700,
+                                                fontSize: 15),
+                                          ),
                                   ),
-                                  const SizedBox(width: 5),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                );
-              }),
+                ),
+              );
+            },
+          ),
         ),
       ],
     );

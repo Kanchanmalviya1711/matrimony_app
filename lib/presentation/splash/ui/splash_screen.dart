@@ -1,4 +1,5 @@
 import 'package:matrimony_app/presentation/splash/controller/splash_controller.dart';
+import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
 import 'package:matrimony_app/utils/size_utils.dart';
 import 'package:matrimony_app/widgets/custom_image_view.dart';
@@ -13,11 +14,10 @@ class SplashScreen extends GetWidget<SplashController> {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: appTheme.whiteA700,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: appTheme.whiteA700,
         elevation: 0,
         toolbarHeight: 0,
       ),

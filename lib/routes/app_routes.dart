@@ -26,6 +26,8 @@ import 'package:matrimony_app/presentation/login/login_screen.dart';
 import 'package:matrimony_app/presentation/login/update_otpverify_screen.dart';
 import 'package:matrimony_app/presentation/notifications/binding/notifications_binding.dart';
 import 'package:matrimony_app/presentation/notifications/ui/notifications_screen.dart';
+import 'package:matrimony_app/presentation/onBoardingScreen/binding/onBoarding_binding.dart';
+import 'package:matrimony_app/presentation/onBoardingScreen/ui/onBoarding_screen.dart';
 import 'package:matrimony_app/presentation/ourServices/binding/ourServices_binding.dart';
 import 'package:matrimony_app/presentation/ourServices/ui/ourServicesDetailsScreen.dart';
 import 'package:matrimony_app/presentation/ourServices/ui/ourServices_screen.dart';
@@ -77,6 +79,7 @@ class AppRoutes {
   static const String viewOurTeamDetailsScreen = "/viewOurTeamDetailsScreen";
   static const String plansAndPricingScreen = "/plansAndPricingScreen";
   static const String settings = "/setting";
+  static const String onBoardingScreen = "/onboardingScreen";
 
   static List<GetPage> pages = [
     //splash screen
@@ -237,6 +240,11 @@ class AppRoutes {
     GetPage(
         binding: SettingsBinding(),
         name: settings,
-        page: () => const SettingsScreen())
+        page: () => const SettingsScreen()),
+    //onBoarding
+    GetPage(
+        binding: OnBoardingBinding(),
+        name: onBoardingScreen,
+        page: () => const OnBoardingScreen())
   ];
 }

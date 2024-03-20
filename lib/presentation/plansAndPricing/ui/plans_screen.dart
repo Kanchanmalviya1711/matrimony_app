@@ -114,12 +114,12 @@ class _PlansAndPricingScreenState extends State<PlansAndPricingScreen> {
                             end: Alignment.centerRight,
                           ).createShader(bounds);
                         },
-                        child: const Text(
+                        child: Text(
                           'Get Started !',
                           style: TextStyle(
                               fontSize: 40,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: appTheme.whiteA700,
                               fontFamily: "PlayfairDisplay"),
                         ),
                       ),
@@ -128,13 +128,13 @@ class _PlansAndPricingScreenState extends State<PlansAndPricingScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.all(10),
                             child: Text(
                               "Get the best plan for you",
                               style: TextStyle(
                                 fontSize: 20,
-                                color: Colors.white,
+                                color: appTheme.whiteA700,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: "Poppins",
                               ),
@@ -159,13 +159,13 @@ class _PlansAndPricingScreenState extends State<PlansAndPricingScreen> {
                               borderRadius: BorderRadius.circular(30),
                               color: appTheme.credit,
                             ),
-                            child: const Padding(
-                              padding: EdgeInsets.all(5.0),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
                               child: Text(
                                 "No Credit Card Required. No Hidden Charges.",
                                 style: TextStyle(
                                   fontSize: 13,
-                                  color: Colors.white,
+                                  color: appTheme.whiteA700,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: "Poppins",
                                 ),
@@ -545,12 +545,12 @@ class _PlansAndPricingScreenState extends State<PlansAndPricingScreen> {
                   onTap: () {
                     Get.toNamed(AppRoutes.allProfilesScreen);
                   },
-                  child: const Text(
+                  child: Text(
                     "Click here to start your matrimony service now.",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                      color: appTheme.blue1600,
                     ),
                   ),
                 ),
@@ -574,15 +574,15 @@ class _PlansAndPricingScreenState extends State<PlansAndPricingScreen> {
               child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: appTheme.trustedColor,
+                    color: appTheme.planCancel,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Text(
                       "Plan cancellation. Click Here to cancel the Current Plan",
                       style: TextStyle(
-                          color: appTheme.whiteA700,
-                          fontSize: 18,
+                          color: appTheme.black900,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),

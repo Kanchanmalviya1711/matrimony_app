@@ -1,6 +1,7 @@
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/presentation/ProfileListScreen/controller/profileLists_controller.dart';
 import 'package:matrimony_app/presentation/ProfileListScreen/ui/profileListForm.dart';
+import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/size_utils.dart';
 
 class ProfileListFilter extends StatefulWidget {
@@ -29,7 +30,7 @@ class _ProfileListFilterState extends State<ProfileListFilter> {
         width: size.width,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
-            color: Colors.grey.withOpacity(0.1)),
+            color: appTheme.gray.withOpacity(0.1)),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 15.v),
           child: const SingleChildScrollView(

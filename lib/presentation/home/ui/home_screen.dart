@@ -76,9 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 right: 13,
                 top: 10,
                 child: Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.red,
+                    color: appTheme.red600D8,
                   ),
                   constraints: const BoxConstraints(
                     minWidth: 9,
@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           PopupMenuButton<String>(
-            surfaceTintColor: Colors.white,
+            surfaceTintColor: appTheme.whiteA700,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
               side: BorderSide(color: appTheme.whiteA700),

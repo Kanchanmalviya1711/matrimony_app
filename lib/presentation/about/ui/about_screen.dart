@@ -56,7 +56,7 @@ class _AboutScreenState extends State<AboutScreen> {
             itemCount: aboutUsController.getAboutDetails.length,
             itemBuilder: (context, index) {
               return ListTile(
-                tileColor: Colors.black,
+                tileColor: appTheme.black900,
                 contentPadding: const EdgeInsets.all(0),
                 title: Container(
                   decoration: const BoxDecoration(
@@ -114,8 +114,8 @@ class _AboutScreenState extends State<AboutScreen> {
                         padding: const EdgeInsets.only(left: 20, right: 20),
                         child: Card(
                           elevation: 5,
-                          surfaceTintColor: Colors.white,
-                          color: Colors.white,
+                          surfaceTintColor: appTheme.whiteA700,
+                          color: appTheme.whiteA700,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 12.0), // Add rounded corners
@@ -166,9 +166,10 @@ class _AboutScreenState extends State<AboutScreen> {
                         padding: const EdgeInsets.only(left: 20, right: 20),
                         child: Card(
                           elevation: 5,
-                          surfaceTintColor:
-                              Colors.white, // Add a subtle shadow for elevation
-                          color: Colors.white, // Set a white background color
+                          surfaceTintColor: appTheme
+                              .whiteA700, // Add a subtle shadow for elevation
+                          color: appTheme
+                              .whiteA700, // Set a white background color
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 12.0), // Add rounded corners
@@ -217,9 +218,10 @@ class _AboutScreenState extends State<AboutScreen> {
                         padding: const EdgeInsets.only(left: 20, right: 20),
                         child: Card(
                           elevation: 5,
-                          surfaceTintColor:
-                              Colors.white, // Add a subtle shadow for elevation
-                          color: Colors.white, // Set a white background color
+                          surfaceTintColor: appTheme
+                              .whiteA700, // Add a subtle shadow for elevation
+                          color: appTheme
+                              .whiteA700, // Set a white background color
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 12.0), // Add rounded corners
@@ -327,12 +329,12 @@ class _AboutScreenState extends State<AboutScreen> {
                               onTap: () {
                                 Get.toNamed(AppRoutes.allProfilesScreen);
                               },
-                              child: const Text(
+                              child: Text(
                                 "Click here to start your matrimony service now.",
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.blue,
+                                  color: appTheme.blue1600,
                                 ),
                               ),
                             ),
