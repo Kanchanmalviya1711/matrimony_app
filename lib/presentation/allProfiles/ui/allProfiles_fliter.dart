@@ -28,10 +28,10 @@ class _AllProfilesFilterFilterState extends State<AllProfilesFilter> {
       alignment: Alignment.center,
       children: [
         Container(
-          width: size.width,
+          width: size.width * .9,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
-            color: appTheme.gray.withOpacity(0.1),
+            color: appTheme.whiteA700,
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 30.v),
@@ -50,3 +50,11 @@ class _AllProfilesFilterFilterState extends State<AllProfilesFilter> {
     );
   }
 }
+
+//write a program add two numbers
+
+
+
+
+
+

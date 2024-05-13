@@ -91,7 +91,7 @@ class _TestimonialsScreenState extends State<TestimonialsScreen> {
               CarouselSlider(
                   carouselController: _controller,
                   options: CarouselOptions(
-                    height: 400,
+                    height: MediaQuery.of(context).size.height * 0.5,
                     autoPlay: true,
                     enlargeCenterPage: true,
                     enableInfiniteScroll: true,
@@ -132,6 +132,7 @@ class _TestimonialsScreenState extends State<TestimonialsScreen> {
                             ),
                           ),
                         ]),
+              const SizedBox(height: 20),
               Stack(
                 alignment: AlignmentDirectional.bottomCenter,
                 children: [
@@ -153,7 +154,7 @@ class _TestimonialsScreenState extends State<TestimonialsScreen> {
               ),
               const SizedBox(height: 20),
               const Divider(),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Text(
                 "Moments",
                 style: TextStyle(
@@ -180,36 +181,42 @@ class _TestimonialsScreenState extends State<TestimonialsScreen> {
                   color: appTheme.heading,
                 ),
               ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: ListView.builder(
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: testimonialsController.timeLineList.isEmpty
+                    ? const Text(
+                        'Data not found',
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      )
+                    : ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: testimonialsController.timeLineList.length,
                         itemBuilder: (context, index) {
                           return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(10),
-                                    child: MyImageWidget(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.25,
-                                      imageUrl: testimonialsController
-                                                      .timeLineList[index]
-                                                  ["image"] ==
-                                              null
-                                          ? ImageConstant.couple1
-                                          : ApiNetwork.imageUrl +
-                                              testimonialsController
-                                                  .timeLineList[index]["image"],
+                                    child: SizedBox(
+                                      width: 90,
+                                      height: 90,
+                                      child: MyImageWidget(
+                                        imageUrl: testimonialsController
+                                                        .timeLineList[index]
+                                                    ["image"] ==
+                                                null
+                                            ? ImageConstant.couple1
+                                            : ApiNetwork.imageUrl +
+                                                testimonialsController
+                                                        .timeLineList[index]
+                                                    ["image"],
+                                      ),
                                     ),
                                   ),
                                   Expanded(
@@ -223,18 +230,20 @@ class _TestimonialsScreenState extends State<TestimonialsScreen> {
                                               .toString()
                                               .toUpperCase(),
                                           style: TextStyle(
-                                              fontFamily: 'poppins',
-                                              color: appTheme.black900,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
+                                            fontFamily: 'poppins',
+                                            color: appTheme.black900,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                         Text(
-                                          "Timming: ${testimonialsController.timeLineList[index]['time'].toString()}",
+                                          "Timing: ${testimonialsController.timeLineList[index]['time'].toString()}",
                                           style: TextStyle(
-                                              fontFamily: 'poppins',
-                                              color: appTheme.red600D8,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
+                                            fontFamily: 'poppins',
+                                            color: appTheme.red600D8,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                         const SizedBox(
                                           height: 10,
@@ -252,13 +261,11 @@ class _TestimonialsScreenState extends State<TestimonialsScreen> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10.h),
                               const Divider(),
                             ],
                           );
-                        }),
-                  ),
-                ],
+                        },
+                      ),
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
@@ -329,119 +336,229 @@ class _TestimonialsScreenState extends State<TestimonialsScreen> {
   }
 }
 
-Widget buildCarouselItem(
-    {required String imagePath,
-    required String title,
-    required String description,
-    required String dateOfMarriage,
-    required double rating,
-    required int status}) {
+Widget buildCarouselItem({
+  required String imagePath,
+  required String title,
+  required String description,
+  required String dateOfMarriage,
+  required double rating,
+  required int status,
+}) {
   return SingleChildScrollView(
-    child: Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: appTheme.gray,
-              width: 0.1,
-            ),
-          ),
-          width: double.infinity,
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
+    child: Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: appTheme.gray,
+          width: 0.1,
+        ),
+      ),
+      width: double.infinity,
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                MyImageWidget(
+                  imageUrl: imagePath,
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    MyImageWidget(
-                      imageUrl: imagePath,
+                    Text(
+                      title,
+                      style: TextStyle(color: appTheme.black900, fontSize: 18),
                     ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          title,
-                          style:
-                              TextStyle(color: appTheme.black900, fontSize: 18),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: status == 1
-                                ? appTheme.green600.withOpacity(0.2)
-                                : appTheme.redColor.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(7),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              status == 1 ? "Active" : "Inactive",
-                              style: TextStyle(
-                                  color: status == 1
-                                      ? appTheme.green600
-                                      : appTheme.red600D8,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Date of Marriage",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            Text(
-                                DateFormat('dd-MM-yy').format(
-                                  DateTime.parse(dateOfMarriage.toString()),
-                                ),
-                                style: TextStyle(
-                                    color: appTheme.black900, fontSize: 16)),
-                          ],
-                        ),
-                        RatingBarIndicator(
-                          rating: rating,
-                          itemBuilder: (context, index) => Icon(
-                            Icons.star,
-                            color: appTheme.firstSite,
-                          ),
-                          itemCount: 5,
-                          itemSize: 25.0,
-                          direction: Axis.horizontal,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            description,
-                            style: TextStyle(
-                                color: appTheme.black900, fontSize: 16),
-                          ),
-                        ],
+                    Container(
+                      decoration: BoxDecoration(
+                        color: status == 1
+                            ? appTheme.green600.withOpacity(0.2)
+                            : appTheme.redColor.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(7),
                       ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          status == 1 ? "Active" : "Inactive",
+                          style: TextStyle(
+                              color: status == 1
+                                  ? appTheme.green600
+                                  : appTheme.red600D8,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Date of Marriage",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Text(
+                            DateFormat('dd-MM-yy').format(
+                              DateTime.parse(dateOfMarriage.toString()),
+                            ),
+                            style: TextStyle(
+                                color: appTheme.black900, fontSize: 16)),
+                      ],
+                    ),
+                    RatingBarIndicator(
+                      rating: rating,
+                      itemBuilder: (context, index) => Icon(
+                        Icons.star,
+                        color: appTheme.firstSite,
+                      ),
+                      itemCount: 5,
+                      itemSize: 25.0,
+                      direction: Axis.horizontal,
                     ),
                   ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        description,
+                        style:
+                            TextStyle(color: appTheme.black900, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }
+
+// Widget buildCarouselItem(
+//     {required String imagePath,
+//     required String title,
+//     required String description,
+//     required String dateOfMarriage,
+//     required double rating,
+//     required int status}) {
+//   return SingleChildScrollView(
+//     child: Column(
+//       children: [
+//         Container(
+//           decoration: BoxDecoration(
+//             border: Border.all(
+//               color: appTheme.gray,
+//               width: 0.1,
+//             ),
+//           ),
+//           width: double.infinity,
+//           child: Stack(
+//             children: [
+//               Padding(
+//                 padding: const EdgeInsets.all(8.0),
+//                 child: Column(
+//                   children: [
+//                     MyImageWidget(
+//                       imageUrl: imagePath,
+//                     ),
+//                     const SizedBox(height: 10),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       children: [
+//                         Text(
+//                           title,
+//                           style:
+//                               TextStyle(color: appTheme.black900, fontSize: 18),
+//                         ),
+//                         Container(
+//                           decoration: BoxDecoration(
+//                             color: status == 1
+//                                 ? appTheme.green600.withOpacity(0.2)
+//                                 : appTheme.redColor.withOpacity(0.2),
+//                             borderRadius: BorderRadius.circular(7),
+//                           ),
+//                           child: Padding(
+//                             padding: const EdgeInsets.all(10),
+//                             child: Text(
+//                               status == 1 ? "Active" : "Inactive",
+//                               style: TextStyle(
+//                                   color: status == 1
+//                                       ? appTheme.green600
+//                                       : appTheme.red600D8,
+//                                   fontSize: 15,
+//                                   fontWeight: FontWeight.bold),
+//                             ),
+//                           ),
+//                         )
+//                       ],
+//                     ),
+//                     const SizedBox(height: 20),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       children: [
+//                         Column(
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           children: [
+//                             const Text(
+//                               "Date of Marriage",
+//                               style: TextStyle(fontSize: 16),
+//                             ),
+//                             Text(
+//                                 DateFormat('dd-MM-yy').format(
+//                                   DateTime.parse(dateOfMarriage.toString()),
+//                                 ),
+//                                 style: TextStyle(
+//                                     color: appTheme.black900, fontSize: 16)),
+//                           ],
+//                         ),
+//                         RatingBarIndicator(
+//                           rating: rating,
+//                           itemBuilder: (context, index) => Icon(
+//                             Icons.star,
+//                             color: appTheme.firstSite,
+//                           ),
+//                           itemCount: 5,
+//                           itemSize: 25.0,
+//                           direction: Axis.horizontal,
+//                         ),
+//                       ],
+//                     ),
+//                     const SizedBox(height: 20),
+//                     SizedBox(
+//                       width: double.infinity,
+//                       child: Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           Text(
+//                             description,
+//                             style: TextStyle(
+//                                 color: appTheme.black900, fontSize: 16),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }
 
 class MyImageWidget extends StatelessWidget {
   final String? imageUrl;
@@ -454,8 +571,8 @@ class MyImageWidget extends StatelessWidget {
     return imageUrl != null
         ? Image.network(
             imageUrl!,
-            height: height,
-            width: width,
+            height: 200,
+            width: 200,
             fit: BoxFit.cover,
             loadingBuilder: (BuildContext context, Widget child,
                 ImageChunkEvent? loadingProgress) {
@@ -476,15 +593,15 @@ class MyImageWidget extends StatelessWidget {
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return CustomImageView(
                 imagePath: ImageConstant.couple1,
-                height: height,
-                width: width,
+                height: 200,
+                width: 200,
               );
             },
           )
         : CustomImageView(
             imagePath: ImageConstant.couple1,
-            height: height,
-            width: width,
+            height: 200,
+            width: 200,
           );
   }
 }

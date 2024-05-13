@@ -6,6 +6,7 @@ import 'package:matrimony_app/presentation/home/controller/home_controller.dart'
 import 'package:matrimony_app/presentation/home/homepage/controller/homepage_controller.dart';
 import 'package:matrimony_app/presentation/home/homepage/homepage.dart';
 import 'package:matrimony_app/presentation/myConnections/ui/myConnections_screen.dart';
+import 'package:matrimony_app/presentation/notifications/controller/notifications_controller.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
@@ -14,7 +15,6 @@ import 'package:matrimony_app/widgets/custom_icon_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -23,16 +23,38 @@ class _HomeScreenState extends State<HomeScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   HomepageController controller = Get.put(HomepageController());
   HomeController homeController = Get.put(HomeController());
-  int currentIndex = 0;
+  NotificationsController notificationsController =
+      Get.put(NotificationsController());
+  var data = Get.arguments;
+  int? currentIndex;
+  String? searchItem;
+  bool hasNotifications = false; // Flag to track if there are notifications
+  @override
+  void initState() {
+    if (data != null) getData();
+    // Call the API and set the flag based on whether data is empty or not
+    notificationsController.getAllNotification().then((responseData) {
+      setState(() {
+        hasNotifications = responseData.isNotEmpty;
+      });
+    });
+    super.initState();
+  }
 
-  final pages = [
-    const HomePage(),
-    const ProfileListsScreen(),
-    const MyConnectionsScreen(),
-  ];
+  getData() {
+    homeController.count.value = data[0] == 1 ? 1 : 0;
+    searchItem = data != null ? data[1] : null;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final pages = [
+      const HomePage(),
+      ProfileListsScreen(
+        searchItem: searchItem,
+      ),
+      const MyConnectionsScreen(),
+    ];
     return Scaffold(
       key: scaffoldKey,
       appBar: CustomAppBar(
@@ -59,6 +81,36 @@ class _HomeScreenState extends State<HomeScreen> {
               color: appTheme.whiteA700,
             ),
           ),
+          // Stack(
+          //   // Use Stack to overlay the red dot
+          //   children: [
+          //     IconButton(
+          //       onPressed: () {
+          //         Get.offNamed(AppRoutes.notificationScreen);
+          //       },
+          //       icon: Icon(
+          //         Icons.notifications,
+          //         color: appTheme.whiteA700,
+          //       ),
+          //     ),
+          //     // Conditionally show the red dot
+          //     Positioned(
+          //       right: 13,
+          //       top: 10,
+          //       child: Container(
+          //         decoration: BoxDecoration(
+          //           shape: BoxShape.circle,
+          //           color: appTheme.red600D8,
+          //         ),
+          //         constraints: const BoxConstraints(
+          //           minWidth: 9,
+          //           minHeight: 9,
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+
           Stack(
             // Use Stack to overlay the red dot
             children: [
@@ -72,20 +124,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               // Conditionally show the red dot
-              Positioned(
-                right: 13,
-                top: 10,
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: appTheme.red600D8,
-                  ),
-                  constraints: const BoxConstraints(
-                    minWidth: 9,
-                    minHeight: 9,
+              if (hasNotifications)
+                Positioned(
+                  right: 13,
+                  top: 10,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: appTheme.red600D8,
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 9,
+                      minHeight: 9,
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
           PopupMenuButton<String>(
@@ -100,13 +153,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             onSelected: (value) {
               if (value == "0") {
-                Get.toNamed(AppRoutes.ourServiceScreen);
+                Get.toNamed(AppRoutes.allProfilesScreen);
               } else if (value == "1") {
-                Get.toNamed(AppRoutes.blogScreen);
+                Get.toNamed(AppRoutes.contactUsScreen);
               } else if (value == "2") {
                 Get.toNamed(AppRoutes.testimonialsScreen);
               } else if (value == "3") {
-                Get.toNamed(AppRoutes.allProfilesScreen);
+                Get.toNamed(AppRoutes.ourServiceScreen);
               }
             },
             itemBuilder: (BuildContext context) {
@@ -129,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Obx(() {
-        return homeController.pagesList[homeController.count.value];
+        return pages[homeController.count.value];
       }),
       // Home page
       bottomNavigationBar: BottomNavigationBar(

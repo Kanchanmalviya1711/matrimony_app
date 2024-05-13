@@ -39,10 +39,12 @@ class LoginController extends GetxController {
 
   login() async {
     var payload = {
-      "fcmToken": fcmToken,
+      "fcmToken":
+          "cfOEg74WQQqQ2RggJ-_-xt:APA91bF2fEpCFsRugqQx0_68U7ctBabF7eEGtdoJRARCaLmmBikTRR0x05ewkcyq5KM_O5KGN8TsueNhmiwuMQmfj4T9AfWHHK9eIlcsgHqukKnD0CEhkrv9i_oSAgndn2hddNRAX88t",
       "email": emailController.value.text,
       "password": passwordController.value.text,
     };
+    print("Login Payload : $payload");
     rxRequestStatus.value = Status.loading;
     try {
       var response =
@@ -53,14 +55,18 @@ class LoginController extends GetxController {
             ? Get.offNamed(AppRoutes.createProfileScreen,
                 arguments: [response["payload"]["profile"]])
             : Get.offNamed(AppRoutes.homeScreen);
-        // Get.offNamed(AppRoutes.homeScreen);
         await SessionManager.setToken(response["payload"]["userToken"]);
-        var jsonData = response["payload"]["profile"];
+        var jsonData = response["payload"]["user"];
         await SessionManager.setUser(json.encode(jsonData));
-        var jsonProfileData = response["payload"]["user"];
-        await SessionManager.setUserProfileData(json.encode(jsonProfileData));
+        // var jsonProfileData = response["payload"]["profile"];
+        // await SessionManager.setUserProfileData(json.encode(jsonProfileData));
+        //  print("sfglogin json data, $jsonProfileData");
+        // Registered Gender
         await SessionManager.setGender(
             response["payload"]["user"]["gender"].toString());
+        // interested Gender
+        await SessionManager.setInterestedGender(
+            response["payload"]["user"]["genderIntrest"].toString());
         var userId = response["payload"]["user"]["id"];
         await SessionManager.setUserId(json.encode(userId));
         customFlutterToast(
@@ -71,17 +77,15 @@ class LoginController extends GetxController {
         customFlutterToast(
             backgroundColor: Colors.red,
             msg: "Login Failed Invalid Credential or User Not Found");
-
         rxRequestStatus.value = Status.error;
+        clearFields();
       }
-      clearFields();
       rxRequestStatus.value = Status.error;
     } catch (e) {
-      print("checking error, $e");
+      print("checking error login credentials, $e");
       customFlutterToast(
           backgroundColor: Colors.red, msg: "Login Failed Invalid Credential");
       rxRequestStatus.value = Status.error;
-      clearFields();
     }
   }
 

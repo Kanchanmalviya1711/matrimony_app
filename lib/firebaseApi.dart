@@ -85,7 +85,6 @@ class FirebaseApi {
     await _firebaseMessaging.requestPermission();
     final fCMToken = await _firebaseMessaging.getToken();
     print('FCM Token: $fCMToken');
-
     initPushNotification();
     initLocalNotification();
   }

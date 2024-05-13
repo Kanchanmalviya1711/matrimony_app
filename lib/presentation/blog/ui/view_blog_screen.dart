@@ -203,12 +203,18 @@ class _ViewBlogScreenState extends State<ViewBlogScreen> {
                           fontWeight: FontWeight.bold)),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  data[0]["content"],
-                  style: const TextStyle(
-                    fontSize: 16,
+              Container(
+                color: const Color.fromARGB(255, 219, 217, 217),
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    data[0]["content".toString()],
+                    softWrap: true,
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.start,
                   ),
                 ),
               ),

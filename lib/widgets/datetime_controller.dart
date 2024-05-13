@@ -41,23 +41,45 @@ class DateTimePickerController extends GetxController {
     }
   }
 
+  // Future<void> selectTime(TextEditingController timeController) async {
+  //   TimeOfDay? pickedTime = await showTimePicker(
+  //     initialTime: TimeOfDay.now(),
+  //     context: Get.context!,
+  //   );
+  //   if (pickedTime != null) {
+  //     // Create a DateTime object with the selected time and today's date.
+  //     DateTime selectedDateTime = DateTime.now().subtract(Duration(
+  //         hours: DateTime.now().hour,
+  //         minutes: DateTime.now().minute,
+  //         seconds: DateTime.now().second,
+  //         milliseconds: DateTime.now().millisecond,
+  //         microseconds: DateTime.now().microsecond));
+  //     selectedDateTime = selectedDateTime
+  //         .add(Duration(hours: pickedTime.hour, minutes: pickedTime.minute));
+
+  //     // Format the selected time as per the "hh:mm" format.
+  //     String formattedTime = DateFormat('HH:mm').format(selectedDateTime);
+
+  //     // Update the text in the TextEditingController.
+  //     timeController.text = formattedTime;
+  //   }
+  // }
+
   Future<void> selectTime(TextEditingController timeController) async {
     TimeOfDay? pickedTime = await showTimePicker(
       initialTime: TimeOfDay.now(),
       context: Get.context!,
     );
     if (pickedTime != null) {
-      // Create a DateTime object with the selected time and today's date.
-      DateTime selectedDateTime = DateTime.now().subtract(Duration(
-          hours: DateTime.now().hour,
-          minutes: DateTime.now().minute,
-          seconds: DateTime.now().second,
-          milliseconds: DateTime.now().millisecond,
-          microseconds: DateTime.now().microsecond));
-      selectedDateTime = selectedDateTime
-          .add(Duration(hours: pickedTime.hour, minutes: pickedTime.minute));
+      // Create a DateTime object with today's date and the selected time.
+      DateTime selectedDateTime = DateTime(
+          DateTime.now().year,
+          DateTime.now().month,
+          DateTime.now().day,
+          pickedTime.hour,
+          pickedTime.minute);
 
-      // Format the selected time as per the "hh:mm" format.
+      // Format the selected time as per the "HH:mm" format.
       String formattedTime = DateFormat('HH:mm').format(selectedDateTime);
 
       // Update the text in the TextEditingController.

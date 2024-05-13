@@ -3,8 +3,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
 import 'package:matrimony_app/presentation/home/homepage/controller/homepage_controller.dart';
-import 'package:matrimony_app/routes/app_routes.dart';
-import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/widgets/custom_elevated_button.dart';
 
 class ImagesSlider extends StatelessWidget {
@@ -115,7 +113,7 @@ Widget buildCarouselItem({
                       ),
                     ),
                     const Text(
-                      "adding some data in the image carousel ",
+                      "adding some data in the image  carousel ",
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey,

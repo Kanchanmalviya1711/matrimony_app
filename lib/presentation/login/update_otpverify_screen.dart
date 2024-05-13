@@ -122,7 +122,7 @@ class _UpdateOtpVerifyScreenState extends State<UpdateOtpVerifyScreen> {
                               return null;
                             },
                             contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 30,
+                              horizontal: 10,
                               vertical: 18,
                             ),
                           ),

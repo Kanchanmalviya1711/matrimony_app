@@ -4,6 +4,7 @@ import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/size_utils.dart';
 import 'package:matrimony_app/utils/string_capitalization.dart';
 import '../core/app_export.dart';
+import 'package:multiselect_dropdown_flutter/multiselect_dropdown_flutter.dart';
 
 class CustomDropdown extends StatefulWidget {
   final String labelText;
@@ -51,7 +52,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        //  _textLabel(),
+        _textLabel(),
         Stack(
           children: [
             Container(
@@ -67,6 +68,8 @@ class _CustomDropdownState extends State<CustomDropdown> {
             ),
             DropdownSearch<String>(
               popupProps: PopupProps.menu(
+                fit: FlexFit
+                    .loose, // to increase the height according to data length.
                 showSelectedItems: true,
                 disabledItemFn: (String s) => s.startsWith('I'),
               ),

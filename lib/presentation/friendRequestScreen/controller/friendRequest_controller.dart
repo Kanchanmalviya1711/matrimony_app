@@ -92,12 +92,10 @@ class FriendRequestController extends GetxController {
           isCookie: true);
       if (value['status'] == "success") {
         rxRequestStatus.value = Status.success;
+        allRequestList = value['payload'];
         customFlutterToast(
             backgroundColor: Colors.red, msg: "Request Rejected");
-        print("fsdfdsf pradhufjsdf ${value['payload']['data']}");
-        Get.offAndToNamed(AppRoutes.homeScreen);
-        allRequestList = value['payload']['data'];
-        print("object");
+        Get.offAllNamed(AppRoutes.homeScreen);
         return allRequestList;
       }
     } catch (e) {

@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:matrimony_app/core/network/network_info.dart';
@@ -9,7 +8,7 @@ class InitialBindings extends Bindings {
   void dependencies() {
     Get.put(PrefUtils());
 
-    Connectivity connectivity = Connectivity();
-    Get.put(NetworkInfo(connectivity));
+    // Connectivity connectivity = Connectivity();
+    // Get.put(NetworkInfo(connectivity));
   }
 }

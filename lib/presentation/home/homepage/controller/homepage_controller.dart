@@ -71,7 +71,12 @@ class HomepageController extends GetxController {
       // Make the POST request using Dio
       var value = await dio.post(
         apiMenuUrl,
-        data: {"page": pageKey, "per_page_record": perPage},
+        data: {
+          // "id": "15",
+          // "name": "about",
+          "page": pageKey,
+          "per_page_record": perPage
+        },
         options: Options(headers: {
           "Content-Type": "application/json",
           'Cookie': 'jwtToken=${SessionManager.getToken()}',
@@ -103,17 +108,15 @@ class HomepageController extends GetxController {
   getAppSettings({page, perPageRecord}) async {
     //print("get about pageeee");
     try {
-      var payload = {"page": "", "per_page_record": "10"};
+      var payload = {"page": "1", "per_page_record": "10"};
       var value = await api.post(
           ApiNetwork.getAppSettings, jsonEncode(payload), true,
           isCookie: true);
       if (value['status'] == "success") {
         //   print("fsdfdsf pradhufjsdf ${value['payload']['data']}");
         getAppSettingsDetails.value = value['payload']['data'];
-
         // print("object");
         //  print("fgdfgfdgdfg fdg $getAppSettingsDetails");
-
         return getAppSettingsDetails;
       }
     } catch (e) {

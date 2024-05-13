@@ -7,6 +7,7 @@ class SessionManager {
   static const _userId = "userId";
   static const _role = "role";
   static const _gender = "gender";
+  static const _interestedGender = "gender";
   static const _userProfile = "userProfile";
   static const _profileCreated = "profileCreated";
   static const _myConnections = "myConnections";
@@ -67,12 +68,20 @@ class SessionManager {
     return preferences!.remove(_token);
   }
 
+  static dynamic setGender(String gender) {
+    return preferences!.setString(_gender, gender);
+  }
+
   static String? getGender() {
     return preferences!.getString(_gender);
   }
 
-  static dynamic setGender(String gender) {
-    return preferences!.setString(_gender, gender);
+  static dynamic setInterestedGender(String interestedGender) {
+    return preferences!.setString(_interestedGender, interestedGender);
+  }
+
+  static String? getInterestedGender() {
+    return preferences!.getString(_interestedGender);
   }
 
   static bool isProfileCreated() {
@@ -88,7 +97,6 @@ class AuthService {
   static Future<bool> loginUser(
       String username, String password, String userId, String token) async {
     // Perform authentication logic here
-
     bool authenticationSuccessful =
         true; // Define the variable authenticationSuccessful
 

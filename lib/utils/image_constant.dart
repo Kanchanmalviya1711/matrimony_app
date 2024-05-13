@@ -25,7 +25,8 @@ class ImageConstant {
   static String myProfile4 = '$imagePath/profilePic4.png';
   static String myProfile5 = '$imagePath/profilePic5.png';
   static String sendOff = '$imagePath/sendOff.png';
-  static String wedding = '$imagePath/wedding.png';
+  static String wedding = '$imagePath/6.png';
+
   static String party = '$imagePath/party.png';
   static String dinning = '$imagePath/dinning.png';
   static String musicEvents = '$imagePath/musicEvents.png';
@@ -38,12 +39,14 @@ class ImageConstant {
   static String google = '$svgPath/google.svg';
   static String facebook = '$svgPath/facebook.svg';
   static String whatsapp = '$svgPath/whatsapp.svg';
+  static String instagram = '$svgPath/insta.svg';
   static String linkedin = '$svgPath/linkedin.svg';
   static String youtube = '$svgPath/youtube.svg';
   static String twitter = '$svgPath/twitter.svg';
   static String suscription = '$svgPath/suscription.svg';
   static String services = '$svgPath/services.svg';
   static String settings = '$svgPath/settings.svg';
+  static String profileData = '$svgPath/profileData.svg';
 
   // iPhone 14 Pro - 107 images
   static String imgLocation = '$imagePath/img_location.svg';
@@ -98,6 +101,7 @@ class ImageConstant {
   static String manpower = '$svgPath/manpower.svg';
   static String contact = '$svgPath/phone.svg';
   static String gallery = '$svgPath/gallery.svg';
+  static String chats = '$svgPath/chats.svg';
   static String blog = '$svgPath/blogWebsite.svg';
   static String allProfiles = '$svgPath/allProfiles.svg';
   static String testimonials = '$svgPath/testimonial.svg';

@@ -43,18 +43,16 @@ class _SideMenuState extends State<SideMenu> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               DrawerHeader(
-                decoration: BoxDecoration(
-                  color: appTheme.black900,
-                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        'assets/images/logowhite.png',
-                        color: appTheme.whiteA700,
-                      ),
+                      // child: Image.asset(
+                      //   'assets/images/logowhite.png',
+                      //   color: appTheme.whiteA700,
+                      // ),
+                      child: CustomImageView(imagePath: ImageConstant.logoImg),
                     ),
                   ],
                 ),
@@ -123,7 +121,7 @@ class _SideMenuState extends State<SideMenu> {
               ),
               DrawerListTile(
                 title: "Chats",
-                svgSrc: ImageConstant.gallery,
+                svgSrc: ImageConstant.chats,
                 press: () {
                   Get.offAllNamed(AppRoutes.chatScreen);
                 },

@@ -67,40 +67,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Column(
       children: [
         Expanded(
-          child: ListView.builder(
-            itemCount: settingsController.allFaqs.length,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  ListTile(
-                    contentPadding: const EdgeInsets.only(left: 10),
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          settingsController.allFaqs[index]["question"] + "?",
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          settingsController.allFaqs[index]["answer"],
-                          style: const TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        const Divider(color: Colors.grey),
-                      ],
+          child: settingsController.allFaqs.isEmpty
+              ? const Center(
+                  child: Text(
+                    'Data not found',
+                    style: TextStyle(
+                      fontSize: 17,
                     ),
                   ),
-                ],
-              );
-            },
-          ),
+                )
+              : ListView.builder(
+                  itemCount: settingsController.allFaqs.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        ListTile(
+                          contentPadding: const EdgeInsets.only(left: 10),
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                settingsController.allFaqs[index]["question"],
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                settingsController.allFaqs[index]["answer"],
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              const Divider(color: Colors.grey),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
         ),
         SizedBox(
           width: double.infinity,

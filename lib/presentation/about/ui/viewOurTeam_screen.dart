@@ -7,6 +7,7 @@ import 'package:matrimony_app/utils/image_constant.dart';
 import 'package:matrimony_app/widgets/custom_app_bar.dart';
 import 'package:matrimony_app/widgets/custom_icon_button.dart';
 import 'package:matrimony_app/widgets/custom_image_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ViewOurTeamScreen extends StatefulWidget {
   const ViewOurTeamScreen({Key? key}) : super(key: key);
@@ -110,7 +111,7 @@ class _ViewOurTeamScreenState extends State<ViewOurTeamScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 10,
                       ),
                       SizedBox(
                         width: double.infinity,
@@ -128,22 +129,106 @@ class _ViewOurTeamScreenState extends State<ViewOurTeamScreen> {
                             const SizedBox(height: 10),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    buildSocialMediaIcon(
-                                        ImageConstant.linkedin),
-                                    const SizedBox(width: 10),
-                                    buildSocialMediaIcon(
-                                        ImageConstant.facebook),
-                                    const SizedBox(width: 10),
-                                    buildSocialMediaIcon(
-                                        ImageConstant.whatsapp),
-                                  ],
-                                ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  // 1. linkedIn
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: appTheme.hobbies,
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        print("hsgrhsterf");
+                                        if (data != null) {
+                                          String linkedinUrl =
+                                              data['linkedinUrl'].toString();
+                                          if (linkedinUrl.isNotEmpty) {
+                                            launchUrl(Uri.parse(linkedinUrl));
+                                          } else {
+                                            print('linkedinUrl is empty.');
+                                          }
+                                        } else {
+                                          print('Index out of bounds.');
+                                        }
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: CustomIconButton(
+                                          child: SvgPicture.asset(
+                                            ImageConstant.linkedin,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  // 2. facebook
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: appTheme.hobbies,
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        print("hsgrhsterf");
+                                        if (data != null) {
+                                          String facebookUrl =
+                                              data['facebookUrl'].toString();
+                                          if (facebookUrl.isNotEmpty) {
+                                            launchUrl(Uri.parse(facebookUrl));
+                                          } else {
+                                            print('facebook Url URL is empty.');
+                                          }
+                                        } else {
+                                          print('Index out of bounds.');
+                                        }
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: CustomIconButton(
+                                          child: SvgPicture.asset(
+                                            ImageConstant.facebook,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  // 3. watsapp
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: appTheme.hobbies,
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        print("hsgrhsterf");
+                                        if (data != null) {
+                                          String watsappUrl =
+                                              data['whatsappUrl'].toString();
+                                          if (watsappUrl.isNotEmpty) {
+                                            launchUrl(Uri.parse(watsappUrl));
+                                          } else {
+                                            print('whatsappUrl is empty.');
+                                          }
+                                        } else {
+                                          print('Index out of bounds.');
+                                        }
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: CustomIconButton(
+                                          child: SvgPicture.asset(
+                                            ImageConstant.whatsapp,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],

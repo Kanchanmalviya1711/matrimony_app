@@ -359,7 +359,12 @@ class _AboutScreenState extends State<AboutScreen> {
             },
           );
         }
-        return Container(child: const Text("data not found"));
+        return Center(
+            child: Container(
+                child: const Text(
+          "Data not found",
+          style: TextStyle(fontSize: 20),
+        )));
       }),
       drawer: const SideMenu(),
     );

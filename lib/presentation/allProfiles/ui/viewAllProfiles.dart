@@ -7,7 +7,6 @@ import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
 import 'package:matrimony_app/utils/size_utils.dart';
-import 'package:matrimony_app/utils/string_capitalization.dart';
 import 'package:matrimony_app/widgets/custom_app_bar.dart';
 import 'package:matrimony_app/widgets/custom_icon_button.dart';
 import 'package:matrimony_app/widgets/custom_image_view.dart';
@@ -22,7 +21,7 @@ class ViewAllProfiles extends StatefulWidget {
 class _ViewAllProfilesState extends State<ViewAllProfiles> {
   AllProfilesListController allProfilesListController =
       Get.find<AllProfilesListController>();
-
+  var data = Get.arguments;
   @override
   void initState() {
     super.initState();
@@ -30,19 +29,17 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
   }
 
   void fetchData() async {
-    var data = Get.arguments ?? [];
-    var singleId = data.isNotEmpty ? data[0]["id"] : null;
+    print("data ${data[0]}");
+
+    var singleId = data.isNotEmpty ? data[0] : null;
     if (singleId != null) {
-      await allProfilesListController.getSingleProfile(singleId.toString());
-      setState(() {}); // Update the UI after data retrieval
+      singleProfiles = data[0]; // Update the UI after data retrieval
     }
   }
 
+  var singleProfiles;
   @override
   Widget build(BuildContext context) {
-    var singleProfiles = allProfilesListController.singleProfiles;
-    print("singleProfiles profiles data retrive $singleProfiles");
-
     return Scaffold(
       appBar: CustomAppBar(
         leading: IconButton(
@@ -78,9 +75,8 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                                     imageUrl: singleProfiles["user"] == null
                                         ? ImageConstant.couple1
                                         : ApiNetwork.imageUrl +
-                                                singleProfiles["user"]
-                                                    ["imagePath"] ??
-                                            "No such image"),
+                                            singleProfiles["user"]
+                                                ["imagePath"]),
                               ],
                             ),
                           ],
@@ -96,7 +92,9 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                                   Text(
                                     singleProfiles["user"] == null
                                         ? "No such name"
-                                        : "${singleProfiles["user"]["firstName"].toString()} ${singleProfiles["user"]["lastName"].toString()}",
+                                        : singleProfiles["user"]["fullName"]
+                                            .toString()
+                                            .capitalizeFirst!,
                                     style: TextStyle(
                                       color: appTheme.black900,
                                       fontSize: 20,
@@ -136,9 +134,12 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: Text(
-                              singleProfiles["aboutYourself"]
-                                  .toString()
-                                  .capitalizeFirst!,
+                              singleProfiles == null ||
+                                      singleProfiles.isEmpty ||
+                                      singleProfiles["aboutYourself"] == null ||
+                                      singleProfiles["aboutYourself"].isEmpty
+                                  ? "About information not available"
+                                  : singleProfiles["aboutYourself"].toString(),
                               style: TextStyle(
                                   color: appTheme.heading,
                                   fontWeight: FontWeight.w400,
@@ -169,14 +170,20 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                          MainAxisAlignment.start,
                                       children: [
                                         MyImageWidget(
-                                            width: 200,
                                             height: mediaQueryData.size.height *
                                                 0.3,
-                                            imageUrl: ApiNetwork.imageUrl +
-                                                singleProfiles["photo1"]),
+                                            width: 200,
+                                            imageUrl: singleProfiles == null
+                                                ? ImageConstant.couple1
+                                                : singleProfiles["photo1"] ==
+                                                        null
+                                                    ? ImageConstant.couple1
+                                                    : ApiNetwork.imageUrl +
+                                                        singleProfiles[
+                                                            "photo1"]),
                                         const SizedBox(
                                           width: 10,
                                         ),
@@ -184,8 +191,14 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                                             height: mediaQueryData.size.height *
                                                 0.3,
                                             width: 200,
-                                            imageUrl: ApiNetwork.imageUrl +
-                                                singleProfiles["photo2"]),
+                                            imageUrl: singleProfiles == null
+                                                ? ImageConstant.couple1
+                                                : singleProfiles["photo2"] ==
+                                                        null
+                                                    ? ImageConstant.couple1
+                                                    : ApiNetwork.imageUrl +
+                                                        singleProfiles[
+                                                            "photo2"]),
                                         const SizedBox(
                                           width: 10,
                                         ),
@@ -193,8 +206,14 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                                             height: mediaQueryData.size.height *
                                                 0.3,
                                             width: 200,
-                                            imageUrl: ApiNetwork.imageUrl +
-                                                singleProfiles["photo3"]),
+                                            imageUrl: singleProfiles == null
+                                                ? ImageConstant.couple1
+                                                : singleProfiles["photo3"] ==
+                                                        null
+                                                    ? ImageConstant.couple1
+                                                    : ApiNetwork.imageUrl +
+                                                        singleProfiles[
+                                                            "photo3"]),
                                       ]),
                                 )
                               ])),
@@ -261,7 +280,9 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                             title: const Text('FullName'),
                             subtitle: Text(singleProfiles["user"] == null
                                 ? "No such name"
-                                : "${singleProfiles["user"]["firstName"].toString()} ${singleProfiles["user"]["lastName"].toString()}"),
+                                : singleProfiles["user"]["fullName"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.date_range),
@@ -288,106 +309,153 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                           ListTile(
                             leading: const Icon(Icons.bloodtype),
                             title: const Text('Blood Group'),
-                            subtitle: Text(
-                              singleProfiles["bloodGroup"].toString(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["bloodGroup"] == null ||
+                                    singleProfiles["bloodGroup"].isEmpty
+                                ? "Bloodgroup not found"
+                                : singleProfiles["bloodGroup"].toString()),
                           ),
                           ListTile(
                             leading: const Icon(Icons.fit_screen),
                             title: const Text('Body Type'),
-                            subtitle: Text(
-                              singleProfiles["bodyType"]
-                                  .toString()
-                                  .toCapitalized(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["bodyType"] == null ||
+                                    singleProfiles["bodyType"].isEmpty
+                                ? "Bodytype not found"
+                                : singleProfiles["bodyType"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.compare_outlined),
                             title: const Text('Complexion'),
-                            subtitle: Text(
-                              singleProfiles["complexion"]
-                                  .toString()
-                                  .toCapitalized(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["complexion"] == null ||
+                                    singleProfiles["complexion"].isEmpty
+                                ? "Complexion not found"
+                                : singleProfiles["complexion"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.folder_special),
                             title: const Text('Special Cases'),
-                            subtitle: Text(
-                              singleProfiles["specialCases"]
-                                  .toString()
-                                  .toCapitalized(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["specialCases"] == null ||
+                                    singleProfiles["specialCases"].isEmpty
+                                ? "Specialcases not found"
+                                : singleProfiles["specialCases"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.language),
                             title: const Text('Mother Tongue'),
-                            subtitle: Text(
-                              singleProfiles["motherTongue"]
-                                  .toString()
-                                  .toCapitalized(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["motherTongue"] == null ||
+                                    singleProfiles["motherTongue"].isEmpty
+                                ? "Mothertougue not found"
+                                : singleProfiles["motherTongue"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.category),
                             title: const Text('Religion'),
-                            subtitle: Text(singleProfiles["religion"]
-                                .toString()
-                                .toCapitalized()),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["religion"] == null ||
+                                    singleProfiles["religion"].isEmpty
+                                ? "Religion not found"
+                                : singleProfiles["religion"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.cast_for_education),
                             title: const Text('Caste'),
-                            subtitle: Text(singleProfiles["caste"]
-                                .toString()
-                                .toCapitalized()),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["caste"] == null ||
+                                    singleProfiles["caste"].isEmpty
+                                ? "Caste not found"
+                                : singleProfiles["caste"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.subdirectory_arrow_left),
                             title: const Text('Sub Caste'),
-                            subtitle: Text(
-                              singleProfiles["subCaste"]
-                                  .toString()
-                                  .toCapitalized(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["subCaste"] == null ||
+                                    singleProfiles["subCaste"].isEmpty
+                                ? "Subcaste  not found"
+                                : singleProfiles["subCaste"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.place),
                             title: const Text('Place Of Birth'),
-                            subtitle: Text(
-                              singleProfiles["placeOfBirth"]
-                                  .toString()
-                                  .toCapitalized(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["placeOfBirth"] == null ||
+                                    singleProfiles["placeOfBirth"].isEmpty
+                                ? "Place of birth not found"
+                                : singleProfiles["placeOfBirth"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.punch_clock),
                             title: const Text('Time Of Birth'),
-                            subtitle: Text(
-                              singleProfiles["timeOFBirth"] == null
-                                  ? "Time not found"
-                                  : singleProfiles["timeOFBirth"].toString(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["timeOFBirth"] == null ||
+                                    singleProfiles["timeOFBirth"].isEmpty
+                                ? "Time of birth not found"
+                                : singleProfiles["timeOFBirth"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.food_bank),
                             title: const Text('diet'),
-                            subtitle: Text(
-                              singleProfiles["diet"].toString(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["diet"] == null ||
+                                    singleProfiles["diet"].isEmpty
+                                ? "Diet not found"
+                                : singleProfiles["diet"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.unarchive),
                             title: const Text('Education'),
-                            subtitle: Text(
-                              singleProfiles["education"].toString(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["education"] == null ||
+                                    singleProfiles["education"].isEmpty
+                                ? "Education not found"
+                                : singleProfiles["education"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.work),
                             title: const Text('Profession'),
-                            subtitle: Text(singleProfiles["profession"] == null
-                                ? "No prof found"
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["profession"] == null ||
+                                    singleProfiles["profession"].isEmpty
+                                ? "Profession not found"
                                 : singleProfiles["profession"]
                                     .toString()
                                     .capitalizeFirst!),
@@ -414,71 +482,121 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                           ListTile(
                             leading: const Icon(Icons.star_outline_sharp),
                             title: const Text('Family Status'),
-                            subtitle: Text(
-                              singleProfiles["familyValues"]
-                                  .toString()
-                                  .toCapitalized(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["familyValues"] == null ||
+                                    singleProfiles["familyValues"].isEmpty
+                                ? "Familyvalues not found"
+                                : singleProfiles["familyValues"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.person_2_rounded),
                             title: const Text('Father\'s Name'),
-                            subtitle: Text(
-                              singleProfiles["fatherName"]
-                                  .toString()
-                                  .capitalizeFirst!,
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["fatherName"] == null ||
+                                    singleProfiles["fatherName"].isEmpty
+                                ? "Father name not found"
+                                : singleProfiles["fatherName"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.face_2_rounded),
                             title: const Text('Mother\'s Name'),
-                            subtitle: Text(
-                              singleProfiles["motherName"]
-                                  .toString()
-                                  .capitalizeFirst!,
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["motherName"] == null ||
+                                    singleProfiles["motherName"].isEmpty
+                                ? "Mother name not found"
+                                : singleProfiles["motherName"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.numbers),
                             title: const Text('No of Brothers '),
-                            subtitle: Text(
-                              singleProfiles["numberOfBrother"].toString(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["numberOfBrother"] == null ||
+                                    singleProfiles["numberOfBrother"].isEmpty
+                                ? "Number of brother not found"
+                                : singleProfiles["numberOfBrother"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading:
                                 const Icon(Icons.confirmation_number_sharp),
                             title: const Text('No of Sisters '),
-                            subtitle: Text(
-                              singleProfiles["numberOfSister"].toString(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["numberOfSister"] == null ||
+                                    singleProfiles["numberOfSister"].isEmpty
+                                ? "Number of sister not found"
+                                : singleProfiles["numberOfSister"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.contact_emergency),
                             title: const Text('Contact Person Number'),
-                            subtitle: Text(
-                              singleProfiles["contactPersonPhoneNumber"]
-                                  .toString()
-                                  .toCapitalized(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles[
+                                            "contactPersonPhoneNumber"] ==
+                                        null ||
+                                    singleProfiles["contactPersonPhoneNumber"]
+                                        .isEmpty
+                                ? "Contactperson number not found"
+                                : singleProfiles["contactPersonPhoneNumber"]
+                                    .toString()),
                           ),
                           ListTile(
                             leading: const Icon(Icons.person),
                             title: const Text('Contact Person Name'),
-                            subtitle: Text(
-                              singleProfiles["contactPersonName"]
-                                  .toString()
-                                  .toCapitalized(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles["contactPersonName"] ==
+                                        null ||
+                                    singleProfiles["contactPersonName"].isEmpty
+                                ? "Contactperson name not found"
+                                : singleProfiles["contactPersonName"]
+                                    .toString()
+                                    .capitalizeFirst!),
                           ),
                           ListTile(
                             leading: const Icon(Icons.real_estate_agent),
                             title: const Text('Contact Person RelationShip'),
-                            subtitle: Text(
-                              singleProfiles["contactPersonRelationShip"]
-                                  .toString()
-                                  .toCapitalized(),
-                            ),
+                            subtitle: Text(singleProfiles == null ||
+                                    singleProfiles.isEmpty ||
+                                    singleProfiles[
+                                            "contactPersonRelationShip"] ==
+                                        null ||
+                                    singleProfiles["contactPersonRelationShip"]
+                                        .isEmpty
+                                ? "contactperson relationShip not found"
+                                : singleProfiles["contactPersonRelationShip"]
+                                    .toString()
+                                    .capitalizeFirst!),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.language),
+                            title: const Text('Language Known'),
+                            subtitle: singleProfiles["languageSelectedList"] ==
+                                        null ||
+                                    singleProfiles["languageSelectedList"]
+                                        .isEmpty
+                                ? const Text("No language found")
+                                : SingleChildScrollView(
+                                    child: Text(
+                                        singleProfiles["languageSelectedList"]
+                                                [0]["language"]["name"]
+                                            .toString()
+                                            .capitalizeFirst!),
+                                  ),
                           ),
                         ]),
                     const SizedBox(height: 20),
@@ -509,9 +627,16 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        singleProfiles != null
-                                            ? singleProfiles["hobbies"]
-                                            : "No Data Found",
+                                        singleProfiles == null ||
+                                                singleProfiles.isEmpty ||
+                                                singleProfiles["hobbies"] ==
+                                                    null ||
+                                                singleProfiles["hobbies"]
+                                                    .isEmpty
+                                            ? "Hobbies not found"
+                                            : singleProfiles["hobbies"]
+                                                .toString()
+                                                .capitalizeFirst!,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 17,
@@ -527,9 +652,16 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        singleProfiles != null
-                                            ? singleProfiles["interests"]
-                                            : "No Data Found",
+                                        singleProfiles == null ||
+                                                singleProfiles.isEmpty ||
+                                                singleProfiles["interests"] ==
+                                                    null ||
+                                                singleProfiles["interests"]
+                                                    .isEmpty
+                                            ? "Interests not found"
+                                            : singleProfiles["interests"]
+                                                .toString()
+                                                .capitalizeFirst!,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 17,
@@ -664,12 +796,9 @@ Widget buildInfoItem(String title, String value) {
 
 class MyImageWidget extends StatelessWidget {
   final String? imageUrl;
-  final double width;
-  final double height;
-
-  MyImageWidget(
-      {required this.imageUrl, required this.width, required this.height});
-
+  final double? width;
+  final double? height;
+  MyImageWidget({required this.imageUrl, this.width, this.height});
   @override
   Widget build(BuildContext context) {
     return imageUrl != null
@@ -696,15 +825,16 @@ class MyImageWidget extends StatelessWidget {
             errorBuilder:
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return CustomImageView(
-                width: double.infinity,
-                height: height,
+                width: 200,
+                height: mediaQueryData.size.height * 0.3,
                 fit: BoxFit.cover,
                 imagePath: ImageConstant.couple1,
               );
             },
           )
         : CustomImageView(
-            width: double.infinity,
+            width: 200,
+            height: mediaQueryData.size.height * 0.3,
             imagePath: ImageConstant.couple1,
           ); // Display a static image if imageUrl is null
   }

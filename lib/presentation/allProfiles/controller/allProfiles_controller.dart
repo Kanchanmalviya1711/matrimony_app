@@ -56,16 +56,31 @@ class AllProfilesListController extends GetxController {
   final watsappNumberController = TextEditingController().obs;
   final nickNameController = TextEditingController().obs;
   final dateOfMarriage = TextEditingController().obs;
-  final age = TextEditingController().obs;
+// Date Of Birth
+  final dateOfBirth = TextEditingController().obs;
   final gender = TextEditingController().obs;
+
+  // filter field
+  final minWeightController = TextEditingController().obs;
+  final maxWeightController = TextEditingController().obs;
+  final minHeightController = TextEditingController().obs;
+  final maxHeightController = TextEditingController().obs;
+  final minIncomeController = TextEditingController().obs;
+  final maxIncomeController = TextEditingController().obs;
+  final minAgeController = TextEditingController().obs;
+  final maxAgeController = TextEditingController().obs;
+  final casteFilter = TextEditingController().obs;
+  final minAnnualIncomeController = TextEditingController().obs;
+  final maxAnnualIncomeController = TextEditingController().obs;
+
   var allProfiles;
-  var singleProfiles = {};
+  var singleProfiles = [];
   String? haveChildren;
   String? haveChildrenValue;
-  String? meritalStatus;
+  var meritalStatus = "1".obs;
   String? meritalStatusValue;
   final rxRequestStatus = Rx<Status>(Status.success);
-  var firstName = TextEditingController();
+  final firstName = TextEditingController().obs;
   var pageKey = 1;
   var perPage = 10;
   final usersList = RegisterModel().obs;
@@ -120,63 +135,162 @@ class AllProfilesListController extends GetxController {
     timeOfBirth.value.clear();
     haveChildrenValue = null;
     haveChildren = null;
-    meritalStatus = null;
+    meritalStatus.value = "1";
     meritalStatusValue = null;
-    age.value.clear();
+    dateOfBirth.value.clear();
     gender.value.clear();
+    selectedCheckBoxValue.clear();
   }
 
-  getAllProfiles({page, perPageRecord}) async {
+  //Api call allLanguages
+  final languageList = [].obs;
+  final selectedCheckBoxValue = [].obs;
+  getAllLanguages({int? page, int? perPageRecord, String? searchTerm}) async {
+    var url = Uri.parse(ApiNetwork.allLanguagesList);
+    var payload = {
+      "page": page ?? pageKey,
+      "per_page_record": perPageRecord ?? "10"
+    };
     try {
-      var payload = {
-        "page": "",
-        "per_page_record": "20",
-        "gender": SessionManager.getGender() == "1" ? "2" : "1",
-      };
-      print("payload $payload");
+      var response = await http.post(
+        url,
+        body: jsonEncode(payload),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "*/*",
+          'Authorization': 'Bearer ${SessionManager.getToken()}',
+          "Cookie": "jwtToken=${SessionManager.getToken()}",
+        },
+      );
+      if (response.statusCode == 200) {
+        rxRequestStatus.value = Status.success;
+        var responseData = json.decode(response.body);
+        var data = responseData["payload"]["data"];
+        languageList.value = data;
+      } else {
+        throw Exception('Failed to load cities data');
+      }
+    } catch (e) {
+      print('Error fetching cities: $e');
+      throw Exception('Failed to load cities: $e');
+    }
+  }
+
+  // Interested City
+  final cityList = [].obs;
+  final cityValue = [].obs;
+  getAllCity({int? page, int? perPageRecord, String? searchTerm}) async {
+    var url = Uri.parse(ApiNetwork.allCityList);
+    var payload = {
+      "page": page ?? pageKey,
+      "per_page_record": perPageRecord ?? "10"
+    };
+    try {
+      var response = await http.post(
+        url,
+        body: jsonEncode(payload),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "*/*",
+          'Authorization': 'Bearer ${SessionManager.getToken()}',
+          "Cookie": "jwtToken=${SessionManager.getToken()}",
+        },
+      );
+      if (response.statusCode == 200) {
+        rxRequestStatus.value = Status.success;
+        var responseData = json.decode(response.body);
+        var data = responseData["payload"]["data"];
+        cityList.value = data;
+      } else {
+        throw Exception('Failed to load cities data');
+      }
+    } catch (e) {
+      print('Error fetching cities: $e');
+      throw Exception('Failed to load cities: $e');
+    }
+  }
+
+  // All Profile List Api__________________________________________________________
+
+  getAllProfiles({int? page, int? perPageRecord, String? searchTerm}) async {
+    var payload = {
+      "id": null,
+      "gender": SessionManager.getInterestedGender() == "3"
+          ? null
+          : SessionManager.getInterestedGender(),
+      "caste": casteFilter.value.text == ""
+          ? null
+          : placeOfBirthController.value.text != "" &&
+                  casteFilter.value.text != ""
+              ? casteFilter.value.text
+              : placeOfBirthController.value.text != ""
+                  ? null
+                  : casteFilter.value.text,
+      "religion": religionController.value.text == ""
+          ? null
+          : placeOfBirthController.value.text != "" &&
+                  religionController.value.text != ""
+              ? religionController.value.text
+              : placeOfBirthController.value.text != ""
+                  ? null
+                  : religionController.value.text,
+      "minAge": minAgeController.value.text == ""
+          ? null
+          : minAgeController.value.text,
+      "maxAge": maxAgeController.value.text == ""
+          ? null
+          : maxAgeController.value.text,
+      "minHeight": minHeightController.value.text == ""
+          ? null
+          : minHeightController.value.text,
+      "maxHeight": maxHeightController.value.text == ""
+          ? null
+          : maxHeightController.value.text,
+      "minWeight": minWeightController.value.text == ""
+          ? null
+          : minWeightController.value.text,
+      "maxWeight": maxWeightController.value.text == ""
+          ? null
+          : maxWeightController.value.text,
+      "minAnnualIncome": minAnnualIncomeController.value.text == ""
+          ? null
+          : minAnnualIncomeController.value.text,
+      "maxAnnualIncome": maxAnnualIncomeController.value.text == ""
+          ? null
+          : maxAnnualIncomeController.value.text,
+      "languageSelectedList":
+          selectedCheckBoxValue.isEmpty ? null : selectedCheckBoxValue,
+      "citySelectedList": cityValue.isEmpty ? null : cityValue,
+      "page": page ?? pageKey,
+      "per_page_record": perPageRecord ?? "10"
+    };
+    print('payload $payload');
+    try {
       var value = await api.post(
           ApiNetwork.allProfilesList, jsonEncode(payload), true,
           isCookie: true);
       if (value['status'] == "success") {
-        allProfiles = value['payload']['data'];
-        print("object $allProfiles");
-        return allProfiles;
+        var singleProfiles = value['payload']['data'];
+        print("allprofiles, $singleProfiles");
+        return singleProfiles;
+      } else {
+        customFlutterToast(
+            backgroundColor: Colors.red, msg: "Failed to fetch users");
+        rxRequestStatus.value = Status.error;
       }
     } catch (e) {
       customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
       rxRequestStatus.value = Status.error;
-      print("Error , $e ");
+      print("the error display, $e");
     }
   }
 
-  getSingleProfile(String id) async {
-    print("single api call object $id");
-    var url = Uri.parse(ApiNetwork.singleProfile + id);
-
-    try {
-      var response = await http.get(url, headers: {
-        "Content-Type": "application/json",
-        "Accept": "*/*",
-        'Authorization': 'Bearer ${SessionManager.getToken()}',
-        "Cookie": "jwtToken=${SessionManager.getToken()}",
-      });
-      if (response.statusCode == 200) {
-        var responseData = json.decode(response.body);
-        singleProfiles = responseData['payload'];
-        print("objective data data data $singleProfiles");
-        return singleProfiles;
-      } else {
-        throw Exception('Failed to load data');
-      }
-    } catch (e) {
-      print('Error fetching profile: $e');
-      throw Exception('Failed to load profile: $e');
-    }
-  }
-
-  createProfile(String imageUrl1, String imageUrl2, String imageUrl3) async {
+  createProfile(
+    String imageUrl1,
+    String imageUrl2,
+    String imageUrl3,
+  ) async {
     var userId = await jsonDecode(SessionManager.getUserId().toString());
-
     // Select time of birth
     DateTime now = DateTime.now();
     String timeString = timeOfBirth.value.text;
@@ -189,10 +303,8 @@ class AllProfilesListController extends GetxController {
       dateTime.hour,
       dateTime.minute,
     );
-
     // select date of marriage;
     var dateOfMarriageFormatted;
-
     if (dateOfMarriage.value.text != "") {
       dateOfMarriageFormatted = TimeFormateMethod().getTimeFormate(
           formate: "yyyy-MM-ddTHH:mm:ss.SSSSSSZ+0000",
@@ -200,9 +312,11 @@ class AllProfilesListController extends GetxController {
     }
     var payload = {
       "createdBy": "1",
-      "maritalStatus": meritalStatus.toString(),
-      "haveChildren": haveChildren.toString(),
-      "numberOfChildren": numberOfChildrenController.value.text,
+      "maritalStatus": meritalStatus == null ? "2" : meritalStatus.toString(),
+      "haveChildren": haveChildren == null ? "2" : haveChildren.toString(),
+      "numberOfChildren": numberOfChildrenController.value.text == ""
+          ? '0'
+          : numberOfChildrenController.value.text,
       "weight": weightController.value.text,
       "height": heightController.value.text,
       "bodyType": bodyTypeController.value.text,
@@ -222,8 +336,12 @@ class AllProfilesListController extends GetxController {
       "bloodGroup": bloodGroupController.value.text,
       "annualIncome": annualIncomeController.value.text,
       "companyName": companyName.value.text,
-      "numberOfBrother": numberOfBrothersController.value.text,
-      "numberOfSister": numberOfSistersController.value.text,
+      "numberOfBrother": numberOfBrothersController.value.text == ""
+          ? null
+          : numberOfBrothersController.value.text,
+      "numberOfSister": numberOfSistersController.value.text == ""
+          ? null
+          : numberOfSistersController.value.text,
       "contactPersonPhoneNumber": contactPersonPhoneNumber.value.text,
       "contactPersonName": contactPersonNameController.value.text,
       "contactPersonRelationShip": relationshipController.value.text,
@@ -238,13 +356,14 @@ class AllProfilesListController extends GetxController {
       "preferredMovies": preferredMoviesController.value.text,
       "sports": sportsController.value.text,
       "favoriteCuisine": favoriteCuisineController.value.text,
-      "spokenLanguages": spokenLanguagesController.value.text,
+      "language": selectedCheckBoxValue,
+      "interestedCities": cityValue,
       "rasi": moonSignController.value.text,
       "nakshatra": nakshatraController.value.text,
       "astroprofile": astroprofileController.value.text,
-      "photo1": imageUrl1,
-      "photo2": imageUrl2,
-      "photo3": imageUrl3,
+      "photo1": imageUrl1 == "" ? null : imageUrl1,
+      "photo2": imageUrl2 == "" ? null : imageUrl2,
+      "photo3": imageUrl3 == "" ? null : imageUrl3,
       "motherName": motherNameController.value.text,
       "fatherName": fatherNameController.value.text,
       "facebookUrl": facebookLinkController.value.text,
@@ -252,15 +371,20 @@ class AllProfilesListController extends GetxController {
       "whatsappUrl": watsappNumberController.value.text,
       "user": {"id": userId}
     };
-    print("payload $payload");
+    print("payload data show $payload");
+
     rxRequestStatus.value = Status.loading;
     try {
       var value = await api.post(
           ApiNetwork.createProfile, jsonEncode(payload), true,
           isCookie: true);
-      if (value['success'] == true) {
+      print("$value , api data checking");
+      if (value['status'] == "success") {
         rxRequestStatus.value = Status.success;
-        Get.offNamed(AppRoutes.homeScreen);
+        Get.offAllNamed(AppRoutes.profileScreen);
+        var jsonData = value["payload"];
+        print("jaon Data , $jsonData");
+        await SessionManager.setUserProfileData(json.encode(jsonData));
         customFlutterToast(msg: value['message']);
       } else {
         rxRequestStatus.value = Status.error;
@@ -268,11 +392,12 @@ class AllProfilesListController extends GetxController {
         customFlutterToast(
             backgroundColor: Colors.green, msg: "Profile created successfully");
       }
-      Get.offNamed(AppRoutes.homeScreen);
     } catch (e) {
       rxRequestStatus.value = Status.error;
-      print("Error , $e ");
+      print("Error error error , $e ");
       customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
+      customFlutterToast(
+          backgroundColor: Colors.red, msg: "Please Upload Image");
     }
   }
 
@@ -289,9 +414,8 @@ class AllProfilesListController extends GetxController {
       dateTime.hour,
       dateTime.minute,
     );
-    print("hjhhhhhhhhhhhhhhhhh");
+    // print("hjhhhhhhhhhhhhhhhhh");
     var userId = await jsonDecode(SessionManager.getUserId().toString());
-
     var dateOfMarriageFormatted;
 
     if (dateOfMarriage.value.text != "") {
@@ -299,22 +423,36 @@ class AllProfilesListController extends GetxController {
           formate: "yyyy-MM-ddTHH:mm:ss.SSSSSSZ+0000",
           time: dateOfMarriage.value.text);
     }
-    // var timeOfBirthFormatted;
-
-    // if (timeOfBirth.value.text != "") {
-    //   timeOfBirthFormatted = TimeFormateMethod()
-    //       .getTimeFormate(formate: "HH:mm", time: timeOfBirth.value.text);
-    // }
-    print("zhdxjfghdsjfgfjx $id");
-    print("zhdxjfghdsjfgfjx $userId");
+    // Construct language payload
+    List<Map<String, String>> languages = [];
+    for (var languageId in languageList) {
+      // Ensure languageId is a map with "id" key
+      if (languageId is Map && languageId.containsKey("id")) {
+        var langObj = {"id": languageId["id"].toString()};
+        languages.add(langObj);
+        // print("$languages, languages");
+        // print("$langObj, langObj");
+      }
+    }
+    // Construct language payload
+    List<Map<String, String>> cities = [];
+    for (var cityId in cityList) {
+      // Ensure languageId is a map with "id" key
+      if (cityId is Map && cityId.containsKey("id")) {
+        var cityObj = {"id": cityId["id"].toString()};
+        cities.add(cityObj);
+      }
+    }
     var url = Uri.parse(ApiNetwork.updateProfile + id);
     var value = await http.put(
       url,
       body: jsonEncode({
         "createdBy": "1",
-        "maritalStatus": meritalStatus.toString(),
-        "haveChildren": haveChildren.toString(),
-        "numberOfChildren": numberOfChildrenController.value.text,
+        "maritalStatus": meritalStatus == null ? "2" : meritalStatus.toString(),
+        "haveChildren": haveChildren == null ? "2" : haveChildren.toString(),
+        "numberOfChildren": numberOfChildrenController.value.text == ""
+            ? '0'
+            : numberOfChildrenController.value.text,
         "weight": weightController.value.text,
         "height": heightController.value.text,
         "bodyType": bodyTypeController.value.text,
@@ -335,8 +473,12 @@ class AllProfilesListController extends GetxController {
         "annualIncome": annualIncomeController.value.text,
         "companyName": companyName.value.text,
         "nickName": nickNameController.value.text,
-        "numberOfBrother": numberOfBrothersController.value.text,
-        "numberOfSister": numberOfSistersController.value.text,
+        "numberOfBrother": numberOfBrothersController.value.text == ""
+            ? null
+            : numberOfBrothersController.value.text,
+        "numberOfSister": numberOfSistersController.value.text == ""
+            ? null
+            : numberOfSistersController.value.text,
         "contactPersonPhoneNumber": contactPersonPhoneNumber.value.text,
         "contactPersonName": contactPersonNameController.value.text,
         "contactPersonRelationShip": relationshipController.value.text,
@@ -345,23 +487,24 @@ class AllProfilesListController extends GetxController {
         "timeOFBirth": TimeFormateMethod().getTimeFormate(
             formate: "HH:mm", time: combinedDateTime.toString()),
         "hobbies": hobbiesController.value.text,
+        "whatsappUrl": watsappNumberController.value.text,
         "interests": interestsController.value.text,
         "favoriteReads": favoriteReadsController.value.text,
         "preferredMovies": preferredMoviesController.value.text,
         "sports": sportsController.value.text,
         "favoriteCuisine": favoriteCuisineController.value.text,
-        "spokenLanguages": spokenLanguagesController.value.text,
+        "language": selectedCheckBoxValue,
+        "interestedCities": cityValue,
         "rasi": moonSignController.value.text,
         "nakshatra": nakshatraController.value.text,
         "astroprofile": astroprofileController.value.text,
-        "photo1": imageUrl1,
-        "photo2": imageUrl2,
-        "photo3": imageUrl3,
+        "photo1": imageUrl1 == "" ? null : imageUrl1,
+        "photo2": imageUrl2 == "" ? null : imageUrl2,
+        "photo3": imageUrl3 == "" ? null : imageUrl3,
         "motherName": motherNameController.value.text,
         "fatherName": fatherNameController.value.text,
         "facebookUrl": facebookLinkController.value.text,
         "linkedinUrl": linkedinUrlController.value.text,
-        "whatsappUrl": watsappNumberController.value.text,
         "user": {"id": userId}
       }),
       headers: {
@@ -371,15 +514,16 @@ class AllProfilesListController extends GetxController {
         "Cookie": "jwtToken=${SessionManager.getToken()}",
       },
     );
-    print("payload ${value.body.toString()}");
     var response = jsonDecode(value.body.toString());
-    print("payload ${response}");
+    print("$response, body");
     rxRequestStatus.value = Status.loading;
     try {
       if (value.statusCode == 200) {
         rxRequestStatus.value = Status.success;
         Get.offNamed(AppRoutes.profileScreen);
-        print("object $response");
+        var jsonData = response["payload"];
+        await SessionManager.setUserProfileData(json.encode(jsonData));
+        print("object $jsonData");
         customFlutterToast(msg: response['message']);
       } else {
         rxRequestStatus.value = Status.error;

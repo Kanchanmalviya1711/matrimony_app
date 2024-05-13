@@ -19,10 +19,10 @@ class RegisterController extends GetxController {
       Get.put(ImagePickerController());
 
   final firstNameController = TextEditingController().obs;
-  final lastNameController = TextEditingController().obs;
   final emailController = TextEditingController().obs;
   final phoneController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
+  final confirmPasswordController = TextEditingController().obs;
   final addressController = TextEditingController().obs;
   final userTypeController = TextEditingController().obs;
   final userNameController = TextEditingController().obs;
@@ -30,6 +30,7 @@ class RegisterController extends GetxController {
   final dateOfBirth = TextEditingController().obs;
   final rxRequestStatus = Status.success.obs;
   var isPasswordVisible = true.obs;
+  var isConfirmPassword = true.obs;
   final usersList = RegisterModel().obs;
   final isEdit = true.obs;
 
@@ -38,10 +39,16 @@ class RegisterController extends GetxController {
   String? genderType;
   String? subscriptionType;
   String? subscriptionTypeValue;
+  String? interestedGenderType;
+  String? interestedGenderTypeValue;
   String? status;
   String? statusValue;
   togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
+  }
+
+  toggleConfimPasswordVisibility() {
+    isConfirmPassword.value = !isConfirmPassword.value;
   }
 
   @override
@@ -51,10 +58,10 @@ class RegisterController extends GetxController {
 
   clearInputField() {
     firstNameController.value.clear();
-    lastNameController.value.clear();
     emailController.value.clear();
     phoneController.value.clear();
     passwordController.value.clear();
+    confirmPasswordController.value.clear();
     addressController.value.clear();
     userTypeController.value.clear();
     userNameController.value.clear();
@@ -64,6 +71,8 @@ class RegisterController extends GetxController {
     status = null;
     gender = null;
     genderType = null;
+    interestedGenderType = null;
+    interestedGenderTypeValue = null;
     subscriptionType = null;
     subscriptionTypeValue = null;
   }
@@ -71,16 +80,17 @@ class RegisterController extends GetxController {
   register(String imageUrl) async {
     rxRequestStatus.value = Status.loading;
     var payload = {
-      "firstName": firstNameController.value.text,
-      "lastName": lastNameController.value.text,
+      "fullName": firstNameController.value.text,
       "emailAddress": emailController.value.text,
       "password": passwordController.value.text,
+      "confirmPassword": confirmPasswordController.value.text,
       "userType": userTypeController.value.text,
       "username": userNameController.value.text,
       "phone": phoneController.value.text,
       "address": addressController.value.text,
-      "imagePath": imageUrl,
+      "imagePath": imageUrl == "" ? null : imageUrl,
       "gender": gender.toString(),
+      "genderIntrest": interestedGenderType.toString(),
       "role": {"id": "1"},
       "subscriptionType": subscriptionType.toString(),
       "dateOfBirth": dateOfBirth.value.text,
@@ -92,6 +102,15 @@ class RegisterController extends GetxController {
           await api.post(ApiNetwork.addUser, jsonEncode(payload), true);
       if (response['status'] == "success") {
         rxRequestStatus.value = Status.success;
+        var jsonData = response["payload"];
+        await SessionManager.setUser(json.encode(jsonData));
+        // gender
+        var jsonGender = response["payload"]["gender"];
+        await SessionManager.setGender(json.encode(jsonGender));
+        // interested Gender Type
+        var jsonInterestedGender = response["payload"]["genderIntrest"];
+        await SessionManager.setInterestedGender(
+            json.encode(jsonInterestedGender));
         Get.offAllNamed(AppRoutes.loginScreen);
         customFlutterToast(
             backgroundColor: Colors.green, msg: "User Registered Successfully");
@@ -99,8 +118,10 @@ class RegisterController extends GetxController {
         print("Response Null");
       }
     } catch (e) {
+      customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
       customFlutterToast(
-          backgroundColor: Colors.red, msg: "Please Fill The Form");
+          backgroundColor: Colors.red, msg: "Please Upload Image");
+      print("error check $e");
       rxRequestStatus.value = Status.error;
     }
   }
@@ -121,34 +142,29 @@ class RegisterController extends GetxController {
     }
     rxRequestStatus.value = Status.loading;
     print("hjhhhhhhhhhhhhhhhhh,$id");
-
     var url = Uri.parse(ApiNetwork.updateUserDetails + id);
     var body = {
-      "firstName": firstNameController.value.text,
-      "lastName": lastNameController.value.text,
+      "fullName": firstNameController.value.text,
       "emailAddress": emailController.value.text,
-      "password": passwordController.value.text,
       "userType": userTypeController.value.text,
-      "username": userNameController.value.text,
       "phone": phoneController.value.text,
       "address": addressController.value.text,
-      "imagePath": imageUrl,
+      "imagePath": imageUrl == "" ? imageUrl : imageUrl,
       "resetOtp": null,
       "gender": gender.toString(),
+      "genderIntrest": interestedGenderType.toString(),
       "role": {"id": "1"},
       "subscriptionType": subscriptionType.toString(),
       "dateOfBirth": dateOfMarriageFormatted,
       "status": status.toString()
     };
-
     var headers = {
       "Content-Type": "application/json",
       "Accept": "*/*",
       'Authorization': 'Bearer ${SessionManager.getToken()}',
       "Cookie": "jwtToken=${SessionManager.getToken()}",
     };
-
-    print("Payload: $body");
+    print("$imageUrl ,Payload" + jsonEncode(body));
 
     try {
       var value = await http.put(
@@ -156,17 +172,22 @@ class RegisterController extends GetxController {
         body: jsonEncode(body),
         headers: headers,
       );
-
       print("Response Status Code: ${value.statusCode}");
-
       if (value.statusCode == 200) {
         var response = json.decode(value.body);
         print("Payload: $response");
-
         rxRequestStatus.value = Status.success;
-        // var jsonData = response["payload"];
-        // await SessionManager.setUser(json.encode(jsonData));
+        var jsonData = response["payload"];
+        await SessionManager.setUser(json.encode(jsonData));
+        // gender
+        var jsonGender = response["payload"]["gender"];
+        await SessionManager.setGender(json.encode(jsonGender));
+        // interested Gender Type
+        var jsonInterestedGender = response["payload"]["genderIntrest"];
+        await SessionManager.setInterestedGender(
+            json.encode(jsonInterestedGender));
         Get.offAndToNamed(AppRoutes.profileScreen);
+        print("checking Response $jsonData");
         customFlutterToast(msg: "User Updated Successfully");
       } else {
         var response = json.decode(value.body);
@@ -180,6 +201,8 @@ class RegisterController extends GetxController {
       rxRequestStatus.value = Status.error;
       print("Error: $e");
       customFlutterToast(backgroundColor: Colors.red, msg: e.toString());
+      // customFlutterToast(
+      // backgroundColor: Colors.red, msg: "Please Upload Image");
     }
   }
 }

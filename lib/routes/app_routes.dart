@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:matrimony_app/presentation/ProfileListScreen/binding/profileLists_binding.dart';
+import 'package:matrimony_app/presentation/ProfileListScreen/ui/profileLists_screen.dart';
 import 'package:matrimony_app/presentation/about/binding/about_binding.dart';
 import 'package:matrimony_app/presentation/about/ui/about_screen.dart';
 import 'package:matrimony_app/presentation/about/ui/viewOurTeam_screen.dart';
@@ -10,8 +12,9 @@ import 'package:matrimony_app/presentation/blog/binding/blog_binding.dart';
 import 'package:matrimony_app/presentation/blog/ui/blog_screen.dart';
 import 'package:matrimony_app/presentation/blog/ui/view_blog_screen.dart';
 import 'package:matrimony_app/presentation/chats/binding/chat_binding.dart';
-import 'package:matrimony_app/presentation/chats/ui/chatUi.dart';
+import 'package:matrimony_app/presentation/chats/ui/chatUiScreen.dart';
 import 'package:matrimony_app/presentation/chats/ui/chat_screen.dart';
+import 'package:matrimony_app/presentation/chats/ui/ownChatingCard.dart';
 import 'package:matrimony_app/presentation/contact/binding/contact_binding.dart';
 import 'package:matrimony_app/presentation/contact/contactusScreen.dart';
 import 'package:matrimony_app/presentation/friendRequestScreen/binding/friendRequest_binding.dart';
@@ -24,6 +27,8 @@ import 'package:matrimony_app/presentation/login/binding/login_binding.dart';
 import 'package:matrimony_app/presentation/login/forgotPassword_screen.dart';
 import 'package:matrimony_app/presentation/login/login_screen.dart';
 import 'package:matrimony_app/presentation/login/update_otpverify_screen.dart';
+import 'package:matrimony_app/presentation/myConnections/binding/myConnections_binding.dart';
+import 'package:matrimony_app/presentation/myConnections/ui/viewMyConnectionProfile.dart';
 import 'package:matrimony_app/presentation/notifications/binding/notifications_binding.dart';
 import 'package:matrimony_app/presentation/notifications/ui/notifications_screen.dart';
 import 'package:matrimony_app/presentation/onBoardingScreen/binding/onBoarding_binding.dart';
@@ -60,6 +65,8 @@ class AppRoutes {
   static const String allProfilesScreen = "/allProfilesScreen";
   static const String contactUsScreen = "/contactUsScreen";
   static const String viewAllProfilesScreen = "/viewAllProfilesScreen";
+  static const String viewAllMyConnectionsProfile =
+      "/viewAllMyConnectionsProfile";
   static const String blogScreen = "/blogScreen";
   static const String ourTeamScreen = "/ourTeamScreen";
   static const String ourServiceScreen = "/OurServiceScreen";
@@ -80,6 +87,7 @@ class AppRoutes {
   static const String plansAndPricingScreen = "/plansAndPricingScreen";
   static const String settings = "/setting";
   static const String onBoardingScreen = "/onboardingScreen";
+  static const String chatingCard = "/chatingCard";
 
   static List<GetPage> pages = [
     //splash screen
@@ -205,7 +213,7 @@ class AppRoutes {
     GetPage(
         binding: ChatBinding(),
         name: chatUiScreen,
-        page: () => (const ChatUIScreen())),
+        page: () => (const ChatUiScreen())),
     //Our Services
     GetPage(
       binding: OurServicesBinding(),
@@ -245,6 +253,20 @@ class AppRoutes {
     GetPage(
         binding: OnBoardingBinding(),
         name: onBoardingScreen,
-        page: () => const OnBoardingScreen())
+        page: () => const OnBoardingScreen()),
+    GetPage(
+        binding: profileListsBinding(),
+        name: profileListScreen,
+        page: () => ProfileListsScreen()),
+    GetPage(
+      binding: MyConnectionsBinding(),
+      name: viewAllMyConnectionsProfile,
+      page: () => const ViewMyConnectionsProfile(),
+    ),
+    GetPage(
+      binding: ChatBinding(),
+      name: chatingCard,
+      page: () => const ChatingCard(),
+    ),
   ];
 }

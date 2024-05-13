@@ -14,12 +14,10 @@ class CustomPaginationView extends StatelessWidget {
       this.onRefresh,
       this.noDataFound})
       : _pagingController = pagingController;
-
   final PagingController<int, dynamic> _pagingController;
   final Widget Function(BuildContext, dynamic, int) itemBuilder;
   Future<void> Function()? onRefresh;
   void Function()? noDataFound;
-
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(

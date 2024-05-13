@@ -11,12 +11,6 @@ class HomeController extends GetxController {
   Rx<bool> agreementText = false.obs;
   final rxRequestStatus = Status.success.obs;
 
-  final pagesList = [
-    const HomePage(),
-    const ProfileListsScreen(),
-    const MyConnectionsScreen(),
-  ];
-
   getProfileDetails(profileId) async {
     // print("profileId $profileId");
     // rxRequestStatus.value = Status.loading;

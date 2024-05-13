@@ -3,6 +3,7 @@ import 'package:matrimony_app/core/app_export.dart';
 import 'package:matrimony_app/core/constants/api_network.dart';
 import 'package:matrimony_app/presentation/myConnections/controller/myConnections_controller.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
+import 'package:matrimony_app/theme/theme_helper.dart';
 import 'package:matrimony_app/utils/image_constant.dart';
 import 'package:matrimony_app/widgets/custom_image_view.dart';
 import 'package:matrimony_app/widgets/custom_pagination_view.dart';
@@ -75,22 +76,24 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
             child: const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                "My Connection (10 People)",
+                "My Matches",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
           ),
           Expanded(
             child: CustomPaginationView(
               noDataFound: () {
-                Get.offNamed(AppRoutes.homeScreen);
+                Get.offAllNamed(AppRoutes.homeScreen);
               },
               onRefresh: () => Future.sync(() {
                 pagingController.refresh();
+                // Get.offAllNamed(AppRoutes.homeScreen);
               }),
               pagingController: pagingController,
               itemBuilder: (p0, p1, p2) {
@@ -120,12 +123,10 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
                               padding: const EdgeInsets.all(8),
                               child: ClipOval(
                                 child: MyImageWidget(
-                                  width: 80,
-                                  height: 80,
+                                  width: 60,
+                                  height: 60,
                                   imageUrl: ApiNetwork.imageUrl +
-                                      (p1["friendRequest"]["sender_id"]
-                                              ["imagePath"] ??
-                                          ""),
+                                      (p1["user"]["imagePath"]),
                                 ),
                               ),
                             ),
@@ -136,29 +137,69 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      // ignore: prefer_interpolation_to_compose_strings
-                                      "${p1["friendRequest"]["sender_id"]["firstName"]}"
-                                              " " +
-                                          p1["friendRequest"]["sender_id"]
-                                              ["lastName"],
+                                      p1["user"]["fullName"],
                                       style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
-                                      // ignore: prefer_interpolation_to_compose_strings
-                                      "${p1["friendRequest"]["sender_id"]["emailAddress"]}",
+                                      "${p1["user"]["emailAddress"]}",
                                       style: const TextStyle(
                                         fontSize: 14,
                                       ),
                                     ),
                                     Text(
-                                      "Phone- ${p1["friendRequest"]["sender_id"]["phone"]}",
+                                      "Phone- ${p1["user"]["phone"]}",
                                       style: const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold,
                                       ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            Get.toNamed(
+                                              AppRoutes
+                                                  .viewAllMyConnectionsProfile,
+                                              arguments: [p1],
+                                            );
+                                          },
+                                          child: Text(
+                                            "View Profile",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: appTheme.green600,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        GestureDetector(
+                                            child: Text(
+                                              "Remove",
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                color: appTheme.red600D8,
+                                              ),
+                                            ),
+                                            onTap: () {
+                                              myConnectionsController
+                                                  .removeRequest(
+                                                p1["friendRequest"]["id"]
+                                                    .toString(),
+                                                p1["friendRequest"]["sender_id"]
+                                                        ["id"]
+                                                    .toString(),
+                                                p1["friendRequest"]
+                                                        ["receiver_id"]["id"]
+                                                    .toString(),
+                                              );
+                                            }),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -182,49 +223,53 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
 class MyImageWidget extends StatelessWidget {
   final String? imageUrl;
   final double? width;
-  final double? height; // Make sure imageUrl is nullable
+  final double? height;
 
-  MyImageWidget(
-      {required this.imageUrl, required this.width, required this.height});
+  MyImageWidget({
+    required this.imageUrl,
+    required this.width,
+    required this.height,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return imageUrl != null
-        ? Image.network(
-            imageUrl!,
-            width: width,
-            height: height,
-            fit: BoxFit.cover,
-            loadingBuilder: (BuildContext context, Widget child,
-                ImageChunkEvent? loadingProgress) {
-              if (loadingProgress == null) {
-                return child; // Image is fully loaded
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            (loadingProgress.expectedTotalBytes ?? 1)
-                        : null,
-                  ),
-                );
-              }
-            },
-            errorBuilder:
-                (BuildContext context, Object error, StackTrace? stackTrace) {
-              return CustomImageView(
-                height: height,
-                width: width,
-                fit: BoxFit.cover,
-                imagePath: ImageConstant.couple1,
-              ); // Display an error icon if the image fails to load
-            },
-          )
-        : CustomImageView(
-            height: height,
-            width: width,
-            fit: BoxFit.cover,
-            imagePath: ImageConstant.couple1,
-          ); // Display a static image if imageUrl is null
+    if (imageUrl != null && imageUrl!.isNotEmpty) {
+      return Image.network(
+        imageUrl!,
+        width: width,
+        height: height,
+        fit: BoxFit.cover,
+        loadingBuilder: (BuildContext context, Widget child,
+            ImageChunkEvent? loadingProgress) {
+          if (loadingProgress == null) {
+            return child; // Image is fully loaded
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        (loadingProgress.expectedTotalBytes ?? 1)
+                    : null,
+              ),
+            );
+          }
+        },
+        errorBuilder:
+            (BuildContext context, Object error, StackTrace? stackTrace) {
+          return _buildErrorWidget();
+        },
+      );
+    } else {
+      return _buildErrorWidget();
+    }
+  }
+
+  Widget _buildErrorWidget() {
+    return CustomImageView(
+      height: height ?? 80,
+      width: width ?? 80,
+      fit: BoxFit.cover,
+      imagePath: ImageConstant.userProfile,
+    );
   }
 }

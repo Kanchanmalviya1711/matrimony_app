@@ -1,5 +1,6 @@
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:matrimony_app/core/app_export.dart';
+import 'package:matrimony_app/custom_widget/time_formate_method.dart';
 import 'package:matrimony_app/presentation/friendRequestScreen/ui/friendRequest_screen.dart';
 import 'package:matrimony_app/presentation/notifications/controller/notifications_controller.dart';
 import 'package:matrimony_app/routes/app_routes.dart';
@@ -94,7 +95,7 @@ class _NotificationsState extends State<Notifications> {
                 dividerColor: Colors.transparent,
                 tabs: [
                   Tab(
-                    text: "Notifications",
+                    text: "Recent Notifications",
                     icon: Icon(Icons.all_inbox),
                   ),
                   Tab(text: "Interested Request", icon: Icon(Icons.message)),
@@ -130,7 +131,7 @@ class _NotificationsState extends State<Notifications> {
                                 ),
                               ),
                               title: Text(
-                                p1["userId"]["firstName"].toString(),
+                                p1["userId"]["fullName"].toString(),
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -152,9 +153,11 @@ class _NotificationsState extends State<Notifications> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(5),
                                   child: Text(
-                                    p1["userId"]["createdAt"] == null
+                                    p1["createdAt"] == null
                                         ? "00:00"
-                                        : p1["userId"]["createdAt"].toString(),
+                                        : TimeFormateMethod().getTimeFormate(
+                                            time: p1["createdAt"].toString(),
+                                            formate: 'HH:mm'),
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,

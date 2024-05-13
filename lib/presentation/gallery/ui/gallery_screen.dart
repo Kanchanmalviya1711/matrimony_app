@@ -85,31 +85,29 @@ class _GalleryScreenState extends State<GalleryScreen> {
         ),
         title: "GALLERY",
       ),
-      body: Expanded(
-        child: CustomPaginationView(
-            noDataFound: () {
-              Get.offNamed(AppRoutes.homeScreen);
-            },
-            onRefresh: () => Future.sync(() {
-                  pagingController.refresh();
-                }),
-            pagingController: pagingController,
-            itemBuilder: (p0, p1, p2) {
-              return Container(
-                padding: const EdgeInsets.all(0),
-                child: Column(
-                  children: [
-                    MyImageWidget(
-                      width: double.infinity,
-                      imageUrl: p1 == null
-                          ? ImageConstant.couple1
-                          : ApiNetwork.imageUrl + p1["image"],
-                    ),
-                  ],
-                ),
-              );
-            }),
-      ),
+      body: CustomPaginationView(
+          noDataFound: () {
+            Get.offNamed(AppRoutes.homeScreen);
+          },
+          onRefresh: () => Future.sync(() {
+                pagingController.refresh();
+              }),
+          pagingController: pagingController,
+          itemBuilder: (p0, p1, p2) {
+            return Container(
+              padding: const EdgeInsets.all(0),
+              child: Column(
+                children: [
+                  MyImageWidget(
+                    width: double.infinity,
+                    imageUrl: p1 == null
+                        ? ImageConstant.couple1
+                        : ApiNetwork.imageUrl + p1["image"],
+                  ),
+                ],
+              ),
+            );
+          }),
       drawer: const SideMenu(),
       // Home page
     );

@@ -15,7 +15,6 @@ class ProfileListFilter extends StatefulWidget {
 class _ProfileListFilterState extends State<ProfileListFilter> {
   final _formKey = GlobalKey<FormState>();
   late ProfileListController profileListController;
-
   @override
   void initState() {
     super.initState();

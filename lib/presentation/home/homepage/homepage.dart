@@ -89,8 +89,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                               Text(
                                 homepageController.getAppSettingsDetails[index]
-                                        ["app_name"]
-                                    .toString(),
+                                        ["app_name"] ??
+                                    "SaulMate".toString(),
                                 style: TextStyle(
                                     color: appTheme.red600D8,
                                     fontSize: 30,
@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                 // Slider module
                 CarouselSlider(
                     options: CarouselOptions(
-                      height: MediaQuery.of(context).size.height * 0.56,
+                      height: MediaQuery.of(context).size.height * 0.5,
                       autoPlay: true,
                       enlargeCenterPage: true,
                       enableInfiniteScroll: true,
@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                                     .capitalizeFirst!,
                                 status: homepageController.slidersList[index]
                                             ['status'] ==
-                                        0
+                                        1
                                     ? "Active"
                                     : "Inactive",
                                 description: homepageController
@@ -216,7 +216,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 // ---------Slider module end--------------
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 const Divider(),
                 const SizedBox(height: 20),
                 const Text(
@@ -311,8 +311,8 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              top: 20, left: 20, right: 20),
+                          padding:
+                              const EdgeInsets.only(top: 0, left: 0, right: 0),
                           child: MyImageWidget(
                             imageUrl: ApiNetwork.imageUrl +
                                 homepageController.getAppSettingsDetails[index]
@@ -324,10 +324,10 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           'Soulmate Contact Info',
                           style: TextStyle(
-                            color: appTheme.heading,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                              color: appTheme.heading,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "CinzelDecorative"),
                         ),
                         Column(
                           children: [
@@ -347,7 +347,7 @@ class _HomePageState extends State<HomePage> {
                                 leading: const Icon(Icons.phone),
                                 title: const Text('Support Contact Number'),
                                 subtitle: Text(
-                                    "+91 - ${homepageController.getAppSettingsDetails[index]['support_contact_number']}")),
+                                    "${homepageController.getAppSettingsDetails[index]['support_contact_number']}")),
                             ListTile(
                                 leading: const Icon(Icons.email),
                                 title: const Text('Support Email'),
@@ -505,7 +505,9 @@ class _HomePageState extends State<HomePage> {
                                             padding: const EdgeInsets.all(8.0),
                                             child: CustomIconButton(
                                               child: SvgPicture.asset(
-                                                ImageConstant.whatsapp,
+                                                ImageConstant.instagram,
+                                                width: 40,
+                                                height: 40,
                                               ),
                                             ),
                                           ),
@@ -610,13 +612,13 @@ class MyImageWidget extends StatelessWidget {
             errorBuilder:
                 (BuildContext context, Object error, StackTrace? stackTrace) {
               return CustomImageView(
-                imagePath: ImageConstant.couple1,
+                imagePath: ImageConstant.logoImg,
               ); // Display an error icon if the image fails to load
             },
           )
         : CustomImageView(
             fit: BoxFit.cover,
-            imagePath: ImageConstant.couple1,
+            imagePath: ImageConstant.logoImg,
           ); // Display a static image if imageUrl is null
   }
 }

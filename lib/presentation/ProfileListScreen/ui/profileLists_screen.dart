@@ -12,7 +12,8 @@ import 'package:matrimony_app/widgets/custom_pagination_view.dart';
 // import 'package:cached_network_image/cached_network_image.dart';
 
 class ProfileListsScreen extends StatefulWidget {
-  const ProfileListsScreen({Key? key}) : super(key: key);
+  String? searchItem;
+  ProfileListsScreen({Key? key, this.searchItem}) : super(key: key);
 
   @override
   State<ProfileListsScreen> createState() => _ProfileListsScreenState();
@@ -52,6 +53,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems = await profileListController.getUsers(
+        searchTerm: widget.searchItem,
         page: pageKey,
         perPageRecord: profileListController.perPage,
       );
@@ -79,6 +81,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.all(
@@ -91,6 +94,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     fontFamily: "CinzelDecorative"),
+                textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(
@@ -110,120 +114,134 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
         Expanded(
           child: CustomPaginationView(
             noDataFound: () {
-              Get.offNamed(AppRoutes.homeScreen);
+              Get.offAllNamed(AppRoutes.homeScreen);
             },
             onRefresh: () => Future.sync(() {
+              profileListController.clearInputField();
               pagingController.refresh();
+              //profileListController.getUsers(searchTerm: null);
+              Get.offAllNamed(AppRoutes.homeScreen, arguments: [1, null]);
             }),
             pagingController: pagingController,
             itemBuilder: (p0, p1, p2) {
               return Padding(
                 padding: const EdgeInsets.only(left: 5, right: 5),
-                child: Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Container(
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(color: appTheme.black900),
-                    child: Column(
-                      children: [
-                        Column(
-                          children: [
-                            Stack(
-                              children: [
-                                MyImageWidget(
-                                    height: size.height * 0.4,
-                                    width: double.maxFinite,
-                                    imageUrl: ApiNetwork.imageUrl +
-                                        p1["user"]["imagePath"]),
-                              ],
-                            ),
-                          ],
+                child: p1["user"] == null
+                    ? const SizedBox(height: 250)
+                    : Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "${p1["user"]["firstName"].toString().capitalizeFirst!} ${p1["user"]["lastName"].toString().capitalizeFirst!}",
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
+                        child: Container(
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(color: appTheme.whiteA700),
+                          child: Column(
+                            children: [
+                              Column(
+                                children: [
+                                  Stack(
+                                    children: [
+                                      MyImageWidget(
+                                          height: size.height * 0.4,
+                                          width: double.maxFinite,
+                                          imageUrl: ApiNetwork.imageUrl +
+                                              p1["user"]["imagePath"]),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                p1["user"]["fullName"]
+                                                    .toString()
+                                                    .capitalizeFirst!,
+                                                style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
                                           ),
+                                          Text(
+                                            p1["user"]["emailAddress"]
+                                                .toString()
+                                                .capitalizeFirst!,
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              color: appTheme.black908,
+                                            ),
+                                          ),
+                                          Text(
+                                            "+91- ${p1["user"]["phone"].toString()}",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: appTheme.black908,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 150,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            profileListController
+                                                .sendFriendRequest(
+                                              p1["user"]["id"].toString(),
+                                              status[1]["id"].toString(),
+                                            );
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            primary: p1["friendRequest"]
+                                                            ?["sender_id"]
+                                                        ["status"] ==
+                                                    1
+                                                ? appTheme.siteName
+                                                : appTheme.newGreen,
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 20,
+                                              vertical: 15,
+                                            ),
+                                          ),
+                                          child: p1["friendRequest"]
+                                                          ?["sender_id"]
+                                                      ["status"] ==
+                                                  1
+                                              ? Text(
+                                                  'Pending...',
+                                                  style: TextStyle(
+                                                      color: appTheme.whiteA700,
+                                                      fontSize: 15),
+                                                )
+                                              : Text(
+                                                  'Send Interest',
+                                                  style: TextStyle(
+                                                      color: appTheme.whiteA700,
+                                                      fontSize: 15),
+                                                ),
                                         ),
-                                      ],
-                                    ),
-                                    Text(
-                                      p1["user"]["emailAddress"].toString(),
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: appTheme.black908,
                                       ),
-                                    ),
-                                    Text(
-                                      "+91- ${p1["user"]["phone"]}",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: appTheme.black908,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 150,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      profileListController.sendFriendRequest(
-                                        p1["user"]["id"].toString(),
-                                        status[1]["id"].toString(),
-                                      );
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      primary: p1["friendRequest"]?["sender_id"]
-                                                  ["status"] ==
-                                              1
-                                          ? appTheme.siteName
-                                          : appTheme.newGreen,
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 20,
-                                        vertical: 15,
-                                      ),
-                                    ),
-                                    child: p1["friendRequest"]?["sender_id"]
-                                                ["status"] ==
-                                            1
-                                        ? Text(
-                                            'Pending...',
-                                            style: TextStyle(
-                                                color: appTheme.whiteA700,
-                                                fontSize: 15),
-                                          )
-                                        : Text(
-                                            'Send Interest',
-                                            style: TextStyle(
-                                                color: appTheme.whiteA700,
-                                                fontSize: 15),
-                                          ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
+                      ),
               );
             },
           ),
@@ -277,9 +295,6 @@ class MyImageWidget extends StatelessWidget {
           ); // Display a static image if imageUrl is null
   }
 }
-
-
-
     //  Container(
     //       margin: const EdgeInsets.only(left: 10, right: 10),
     //       width: double.infinity,

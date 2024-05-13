@@ -105,7 +105,7 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
                                   child: CustomImageView(
                                       height: 50,
                                       width: 50,
-                                      imagePath: ImageConstant.couple1),
+                                      imagePath: ImageConstant.userProfile),
                                 ),
                               ),
                               const SizedBox(
@@ -115,7 +115,9 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "${p1["friendRequest"]["sender_id"]["firstName"] ?? ""} ${p1["friendRequest"]["sender_id"]["lastName"] ?? ""}",
+                                    p1["friendRequest"]["sender_id"]
+                                            ["fullName"] ??
+                                        "",
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,

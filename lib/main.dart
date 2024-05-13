@@ -49,8 +49,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
 // final router = GoRouter(
 //   routes: [
 //     GoRoute(
@@ -70,4 +68,4 @@ class MyApp extends StatelessWidget {
 //   ],
 // );
 
-
+// how to center a div

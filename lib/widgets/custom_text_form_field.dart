@@ -33,6 +33,7 @@ class CustomTextFormField extends StatelessWidget {
       this.readOnly = false,
       this.onTap,
       this.labelText,
+      this.keyboardType,
       this.maxLength,
       this.inputFormatters,
       this.footerText,
@@ -60,9 +61,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool? obscureText;
   final bool readOnly;
   final TextInputAction? textInputAction;
-
   final TextInputType? textInputType;
-
   final int? maxLines;
   final int? maxlength;
 
@@ -91,6 +90,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? labelText;
 
   final int? maxLength;
+  final TextInputType? keyboardType;
 
   final List<TextInputFormatter>? inputFormatters;
 
@@ -128,7 +128,7 @@ class CustomTextFormField extends StatelessWidget {
               style: textStyle ?? CustomTextStyles.titleSmall14,
               obscureText: obscureText!,
               textInputAction: textInputAction,
-              keyboardType: textInputType,
+              keyboardType: keyboardType,
               maxLines: maxLines ?? 1,
               decoration: decoration,
               validator: validator,
