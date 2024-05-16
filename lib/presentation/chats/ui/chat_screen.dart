@@ -74,7 +74,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   textAlign: TextAlign.center,
                                 ),
                                 Text(
-                                  "Hii Aditi, How are you?",
+                                  "Hey Ashish, How are you?",
                                   style: TextStyle(
                                     color: appTheme.black900,
                                     fontSize: 13,
@@ -126,7 +126,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   textAlign: TextAlign.center,
                                 ),
                                 Text(
-                                  "Hii, How are you?",
+                                  "Hey Advik, How are you?",
                                   style: TextStyle(
                                     color: appTheme.black900,
                                     fontSize: 13,
@@ -180,7 +180,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   textAlign: TextAlign.center,
                                 ),
                                 Text(
-                                  "Hii Manju, How are you?",
+                                  "Hey aniket, How are you?",
                                   style: TextStyle(
                                     color: appTheme.black900,
                                     fontSize: 13,
@@ -226,7 +226,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Rudra Jat",
+                                  "Rudrah Jat",
                                   style: TextStyle(
                                     color: appTheme.black900,
                                     fontSize: 18,
@@ -234,7 +234,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   textAlign: TextAlign.center,
                                 ),
                                 Text(
-                                  "Hii Manju, How are you?",
+                                  "Hey Rudrah, How are you?",
                                   style: TextStyle(
                                     color: appTheme.black900,
                                     fontSize: 13,

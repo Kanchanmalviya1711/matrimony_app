@@ -80,36 +80,38 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
     Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(
-                10,
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(
+                  10,
+                ),
+                child: Text(
+                  "Showing All Members For You",
+                  style: TextStyle(
+                      color: appTheme.heading,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "CinzelDecorative"),
+                  textAlign: TextAlign.center,
+                ),
               ),
-              child: Text(
-                "Showing All Members For You",
-                style: TextStyle(
-                    color: appTheme.heading,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "CinzelDecorative"),
-                textAlign: TextAlign.center,
+              const SizedBox(
+                width: 10,
               ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            GestureDetector(
-              onTap: () {
-                filterDialog(context, size, const ProfileListFilter());
-              },
-              child: Icon(
-                Icons.search,
-                color: appTheme.black900,
+              GestureDetector(
+                onTap: () {
+                  filterDialog(context, size, const ProfileListFilter());
+                },
+                child: Icon(
+                  Icons.search,
+                  color: appTheme.black900,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         Expanded(
           child: CustomPaginationView(
@@ -127,7 +129,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
               return Padding(
                 padding: const EdgeInsets.only(left: 5, right: 5),
                 child: p1["user"] == null
-                    ? const SizedBox(height: 250)
+                    ? const SizedBox()
                     : Card(
                         elevation: 4,
                         shape: RoundedRectangleBorder(
@@ -205,7 +207,7 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
                                             );
                                           },
                                           style: ElevatedButton.styleFrom(
-                                            primary: p1["friendRequest"]
+                                            backgroundColor: p1["friendRequest"]
                                                             ?["sender_id"]
                                                         ["status"] ==
                                                     1

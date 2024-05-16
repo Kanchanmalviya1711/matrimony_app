@@ -51,20 +51,33 @@ class CustomPaginationView extends StatelessWidget {
                   future: Future.delayed(const Duration(seconds: 2)),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
+                      // Show loading indicator
                       return CustomLoading(
                         color: appTheme.orange,
                         size: 20,
                       );
                     } else {
-                      return const Text(
-                        'No more items to load',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black,
-                          // Optional: Change text color
-                        ),
+                      // After 2 seconds, show the "No more items to load" message
+                      return FutureBuilder(
+                        future: Future.delayed(const Duration(seconds: 2)),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            // Show the message
+                            return const Text(
+                              'No more items to load',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.black,
+                                // Optional: Change text color
+                              ),
+                            );
+                          } else {
+                            // After 2 seconds, hide the message
+                            return Container(); // Or null, depending on your layout requirements
+                          }
+                        },
                       );
-                      // Hide the message
                     }
                   },
                 ),

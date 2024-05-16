@@ -63,6 +63,7 @@ dependencies:
   socket_io_client: ^2.0.0
   web_socket_channel: ^2.4.0
   dropdown_search: ^5.0.6
+  stomp_dart_client: ^2.0.0
 
 dev_dependencies:
   flutter_test:

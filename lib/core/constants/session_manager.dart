@@ -11,6 +11,7 @@ class SessionManager {
   static const _userProfile = "userProfile";
   static const _profileCreated = "profileCreated";
   static const _myConnections = "myConnections";
+  static const _userLoginProfileData = "userLoginProfileData";
 
   static Future init() async =>
       preferences = await SharedPreferences.getInstance();
@@ -38,6 +39,14 @@ class SessionManager {
 
   static dynamic getUserProfileData() {
     return preferences!.getString(_userProfile);
+  }
+
+  static dynamic setLoginUserProfileData(String userLoginProfileData) {
+    return preferences!.setString(_userLoginProfileData, userLoginProfileData);
+  }
+
+  static dynamic getLoginUserProfileData() {
+    return preferences!.getString(_userLoginProfileData);
   }
 
   static dynamic setUserId(String userId) {

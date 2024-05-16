@@ -12,6 +12,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'package:web_socket_channel/status.dart' as status;
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/io.dart';
+//stomp ui client
 
 class ChatUiScreen extends StatefulWidget {
   const ChatUiScreen({Key? key}) : super(key: key);
@@ -27,43 +28,81 @@ class _ChatUiScreenState extends State<ChatUiScreen> {
   @override
   void initState() {
     super.initState();
-    connectToServer();
+    connectToSocket();
+
+    // connectToServer();
   }
 
-  // void connectToSocket() async {
-  //   //  final url = Uri.parse('ws://192.168.1.32:9091');
-  //   final url = Uri.parse('wss://192.168.1.25:9091');
-  //   final channel = WebSocketChannel.connect(url);
+  void connectToSocket() async {
+    //  final url = Uri.parse('ws://192.168.1.32:9091');
+    final url = Uri.parse('wss://192.168.1.46:9091');
+    final channel = WebSocketChannel.connect(url);
 
-  //   await channel.ready;
+    await channel.ready;
 
-  //   channel.stream.listen((message) {
-  //     channel.sink.add('received!');
-  //     channel.sink.close(status.goingAway);
+    channel.stream.listen((message) {
+      channel.sink.add('received!');
+      channel.sink.close(status.goingAway);
+    });
+  }
+
+  // void connectToServer() {
+  //   try {
+  //     // Configure socket transports must be specified
+  //     socket = io('http://192.168.1.46:9091', <String, dynamic>{
+  //       'transports': ['websocket'],
+  //       'autoConnect': false,
+  //     });
+
+  //     // Connect to websocket
+  //     socket.connect();
+  //     socket.onConnect((data) => print("$data , connected"));
+  //     print(socket.connected);
+
+  //     // Handle socket events
+  //     socket.on('connect', (_) => print('connect: ${socket.id}'));
+  //     socket.on('disconnect', (_) => print('disconnect'));
+  //     socket.on('fromServer', (_) => print(_));
+  //   } catch (e) {
+  //     print("$e , tttttttttttttttttttttttttttttttt");
+  //   }
+  // }
+
+  // void onConnect(StompFrame frame) {
+  //   stompClient.subscribe(
+  //     destination: '/topic/test/subscription',
+  //     callback: (frame) {
+  //       List<dynamic>? result = json.decode(frame.body!);
+  //       print(result);
+  //     },
+  //   );
+
+  //   Timer.periodic(const Duration(seconds: 10), (_) {
+  //     stompClient.send(
+  //       destination: '/app/test/endpoints',
+  //       body: json.encode({'a': 123}),
+  //     );
   //   });
   // }
 
-  void connectToServer() {
-    try {
-      // Configure socket transports must be specified
-      socket = io('http://192.168.1.25:9091', <String, dynamic>{
-        'transports': ['websocket'],
-        'autoConnect': false,
-      });
+  // final stompClient = StompClient(
+  //   config: StompConfig(
+  //     url: 'ws://localhost:8080',
+  //     onConnect: onConnect,
+  //     beforeConnect: () async {
+  //       print('waiting to connect...');
+  //       await Future.delayed(const Duration(milliseconds: 200));
+  //       print('connecting...');
+  //     },
+  //     onWebSocketError: (dynamic error) => print(error.toString()),
+  //     stompConnectHeaders: {'Authorization': 'Bearer yourToken'},
+  //     webSocketConnectHeaders: {'Authorization': 'Bearer yourToken'},
+  //   ),
+  // );
 
-      // Connect to websocket
-      socket.connect();
-      socket.onConnect((data) => print("$data , connected"));
-      print(socket.connected);
-
-      // Handle socket events
-      socket.on('connect', (_) => print('connect: ${socket.id}'));
-      socket.on('disconnect', (_) => print('disconnect'));
-      socket.on('fromServer', (_) => print(_));
-    } catch (e) {
-      print("$e , tttttttttttttttttttttttttttttttt");
-    }
-  }
+  // void main() {
+  //   stompClient.activate();
+  // }
 
   @override
   Widget build(BuildContext context) {

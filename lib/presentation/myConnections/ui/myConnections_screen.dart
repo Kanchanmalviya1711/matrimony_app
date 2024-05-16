@@ -97,25 +97,24 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
               }),
               pagingController: pagingController,
               itemBuilder: (p0, p1, p2) {
-                return Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color.fromARGB(255, 248, 245, 242),
-                        Color.fromARGB(255, 224, 223, 217)
-                      ],
+                return Padding(
+                  padding: const EdgeInsets.all(0.2),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color.fromARGB(255, 211, 109, 7),
+                          Color.fromARGB(255, 214, 213, 209)
+                        ],
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Card(
-                        elevation: 6,
-                        surfaceTintColor: Colors.white,
-                        child: Row(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -138,77 +137,115 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
                                   children: [
                                     Text(
                                       p1["user"]["fullName"],
-                                      style: const TextStyle(
-                                        fontSize: 14,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: appTheme.whiteA700,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
                                       "${p1["user"]["emailAddress"]}",
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                      ),
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: appTheme.whiteA700,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     Text(
                                       "Phone- ${p1["user"]["phone"]}",
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 15,
+                                        color: appTheme.whiteA700,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     const SizedBox(height: 5),
-                                    Row(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            Get.toNamed(
-                                              AppRoutes
-                                                  .viewAllMyConnectionsProfile,
-                                              arguments: [p1],
-                                            );
-                                          },
-                                          child: Text(
-                                            "View Profile",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
+                                    Container(
+                                      width: double.infinity,
+                                      child: Row(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              Get.toNamed(
+                                                AppRoutes
+                                                    .viewAllMyConnectionsProfile,
+                                                arguments: [p1],
+                                              );
+                                            },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               color: appTheme.green600,
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        GestureDetector(
-                                            child: Text(
-                                              "Remove",
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                color: appTheme.red600D8,
+                                              child: Text(
+                                                "View Profile",
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: appTheme.whiteA700,
+                                                ),
                                               ),
                                             ),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          GestureDetector(
                                             onTap: () {
-                                              myConnectionsController
-                                                  .removeRequest(
-                                                p1["friendRequest"]["id"]
-                                                    .toString(),
-                                                p1["friendRequest"]["sender_id"]
-                                                        ["id"]
-                                                    .toString(),
-                                                p1["friendRequest"]
-                                                        ["receiver_id"]["id"]
-                                                    .toString(),
+                                              Get.toNamed(
+                                                AppRoutes.chatUiScreen,
+                                                arguments: [p1],
                                               );
-                                            }),
-                                      ],
-                                    ),
+                                            },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              color: appTheme.tealColor,
+                                              child: Text(
+                                                "Chat Now",
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: appTheme.whiteA700,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          GestureDetector(
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                color: appTheme.red600D8,
+                                                child: Text(
+                                                  "Remove",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: appTheme.whiteA700,
+                                                  ),
+                                                ),
+                                              ),
+                                              onTap: () {
+                                                myConnectionsController
+                                                    .removeRequest(
+                                                  p1["friendRequest"]["id"]
+                                                      .toString(),
+                                                  p1["friendRequest"]
+                                                          ["sender_id"]["id"]
+                                                      .toString(),
+                                                  p1["friendRequest"]
+                                                          ["receiver_id"]["id"]
+                                                      .toString(),
+                                                );
+                                              }),
+                                        ],
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },

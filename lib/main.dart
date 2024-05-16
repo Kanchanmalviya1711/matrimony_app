@@ -9,7 +9,6 @@ import 'package:matrimony_app/routes/app_routes.dart';
 import 'package:matrimony_app/utils/initial_bindings.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -68,4 +67,6 @@ class MyApp extends StatelessWidget {
 //   ],
 // );
 
-// how to center a div
+
+
+

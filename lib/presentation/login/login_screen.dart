@@ -21,7 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   late LoginController controller;
   bool isLoading = false;
-
   @override
   void initState() {
     super.initState();
@@ -75,16 +74,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return "";
+                                return null;
                               }
                               // Convert the email to lowercase
                               String lowercaseValue = value.toLowerCase();
-
                               // Check if the email contains the "@" character
                               if (!lowercaseValue.contains('@')) {
                                 return "Please enter a valid email address";
                               }
-
                               // Check if the email contains any uppercase letters
                               if (value != lowercaseValue) {
                                 return "Email should be correct";
@@ -95,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               vertical: 10,
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 10),
                           CustomTextFormField(
                             obscureText: controller.isPasswordVisible.value,
                             suffix: CustomIconButton(
@@ -120,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return "";
+                                return null;
                               }
                               // Check if the password meets the required conditions
                               if (!RegExp(
@@ -189,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 width: double.infinity,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: appTheme.green600,
+                                    backgroundColor: appTheme.green600,
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 20,
                                       vertical: 15,

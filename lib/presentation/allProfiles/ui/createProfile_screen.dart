@@ -596,7 +596,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                             hintStyle: CustomTextStyles.titleSmallSemiBold_1,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return "Please enter weight value";
+                                return null;
                               }
                               return null;
                             },
@@ -1622,6 +1622,28 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                           child: Divider(),
                         ),
                         const SizedBox(height: 10),
+                        // Padding(
+                        //   padding: EdgeInsets.symmetric(horizontal: 10.h),
+                        //   child: CustomTextFormField(
+                        //     prefix: Icon(
+                        //       Icons.info,
+                        //       color: appTheme.black900,
+                        //     ),
+                        //     controller: allProfilesListController
+                        //         .aboutYourselfController.value,
+                        //     labelText: "About Yourself",
+                        //     hintStyle: CustomTextStyles.titleSmallSemiBold_1,
+                        //     validator: (value) {
+                        //       if (value!.isEmpty) {
+                        //         return null;
+                        //       } else if (value.trim().split(' ').length >= 20) {
+                        //         return "Please limit your about yourself to 120 words";
+                        //       }
+                        //       return null;
+                        //     },
+                        //     contentPadding: const EdgeInsets.symmetric(),
+                        //   ),
+                        // ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10.h),
                           child: CustomTextFormField(
@@ -1637,7 +1659,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                               if (value!.isEmpty) {
                                 return null;
                               } else if (value.trim().split(' ').length >= 20) {
-                                return "Please limit your about yourself to 120 words";
+                                print("$value,ttttttttttttt");
+                                return "Please limit your 'About Yourself' to 20 words.";
                               }
                               return null;
                             },

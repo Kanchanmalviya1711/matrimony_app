@@ -58,9 +58,10 @@ class LoginController extends GetxController {
         await SessionManager.setToken(response["payload"]["userToken"]);
         var jsonData = response["payload"]["user"];
         await SessionManager.setUser(json.encode(jsonData));
-        // var jsonProfileData = response["payload"]["profile"];
-        // await SessionManager.setUserProfileData(json.encode(jsonProfileData));
-        //  print("sfglogin json data, $jsonProfileData");
+        var jsonProfileData = response["payload"]["profile"];
+        await SessionManager.setLoginUserProfileData(
+            json.encode(jsonProfileData));
+        print("sfglogin json data, $jsonProfileData");
         // Registered Gender
         await SessionManager.setGender(
             response["payload"]["user"]["gender"].toString());

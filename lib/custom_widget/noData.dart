@@ -25,8 +25,8 @@ class MyNoDataScreen extends StatelessWidget {
           const SizedBox(height: 20),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Colors.red,
-              onPrimary: Colors.white,
+              backgroundColor: Colors.red,
+              disabledBackgroundColor: Colors.white,
             ),
             onPressed: () {
               Get.offNamed(

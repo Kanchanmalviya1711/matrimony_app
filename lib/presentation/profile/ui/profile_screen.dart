@@ -35,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   getProfileData() async {
     getUserProfileData =
-        json.decode(SessionManager.getUserProfileData().toString());
+        json.decode(SessionManager.getLoginUserProfileData().toString());
     print("getUserprofileData rrrrrrrrrrrrrr ${getUserProfileData}");
   }
 
@@ -409,7 +409,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       leading: const Icon(Icons.face),
                       title: const Text('Name'),
                       subtitle: Text(
-                        '${getUserData["firstName"] ?? "No"} ${getUserData["lastName"] ?? "Name found"}',
+                        getUserData["fullName"].toString(),
                       ),
                     ),
                     ListTile(

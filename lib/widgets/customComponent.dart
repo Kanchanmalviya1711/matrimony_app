@@ -2,6 +2,8 @@
 // import 'package:flutter/material.dart';
 // import '../core/app_export.dart';
 // import 'text_label.dart';
+// // ignore: unused_import
+// import 'package:multiselect_dropdown_flutter/multiselect_dropdown_flutter.dart';
 
 // // ignore: must_be_immutable
 // class CustomDropdown extends StatefulWidget {
@@ -66,9 +68,9 @@
 //             ),
 //             widget.isMultiselect
 //                 ? DropdownSearch.multiSelection(
-//                     mode: Mode.MENU,
-//                     isFilteredOnline: true,
-//                     maxHeight: widget.listName.length <= 3 ? 200 : 400,
+//                     key: Mode.MENU,
+//                     filterFn: true,
+//                     hei: widget.listName.length <= 3 ? 200 : 400,
 //                     dropdownBuilderSupportsNullItem: true,
 //                     popupBackgroundColor: Colors.white,
 //                     showFavoriteItems: true,
@@ -225,7 +227,3 @@
 //     );
 //   }
 // }
-
-
-
-

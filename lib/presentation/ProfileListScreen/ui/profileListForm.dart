@@ -44,7 +44,7 @@ class _ProfileFormState extends State<ProfileForm> {
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: appTheme.red600D8,
+                  backgroundColor: appTheme.red600D8,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -61,7 +61,7 @@ class _ProfileFormState extends State<ProfileForm> {
               const SizedBox(width: 10),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: appTheme.blue1600,
+                  backgroundColor: appTheme.blue1600,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

@@ -38,6 +38,7 @@ class _ViewAllProfilesState extends State<ViewAllProfiles> {
   }
 
   var singleProfiles;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

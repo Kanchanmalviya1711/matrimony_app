@@ -62,7 +62,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               width: 300,
               height: 300,
               title: "Ready to Get Started?",
-              description: "Click 'Arrow' to proceed to login.",
+              description:
+                  "Click 'Arrow' to proceed to login and start your Soulmate Matrimony Journey.",
             ),
           ],
         ),
