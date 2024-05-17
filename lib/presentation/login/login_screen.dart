@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           const SizedBox(height: 25),
                           Text(
-                            "Welcome to India's Best Matrimony App",
+                            "Welcome to India's Best Matrimony App In The World.",
                             style: TextStyle(
                               fontSize: 15,
                               color: appTheme.black900,
