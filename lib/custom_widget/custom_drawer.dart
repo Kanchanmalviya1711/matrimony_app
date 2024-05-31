@@ -140,28 +140,28 @@ class _SideMenuState extends State<SideMenu> {
                   Get.offAllNamed(AppRoutes.settings);
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                child: CustomElevatedButton(
-                  buttonStyle: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.red),
-                  ),
-                  text: "Logout",
-                  buttonTextStyle: CustomTextStyles.titleMediumBlackA700,
-                  onTap: () {
-                    showAlertDialog(
-                      context,
-                      () {
-                        Get.back();
-                      },
-                      () {
-                        SessionManager.removeToken();
-                        Get.offAllNamed(AppRoutes.loginScreen);
-                      },
-                    );
-                  },
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+              //   child: CustomElevatedButton(
+              //     buttonStyle: ButtonStyle(
+              //       backgroundColor: MaterialStateProperty.all(Colors.red),
+              //     ),
+              //     text: "Logout",
+              //     buttonTextStyle: CustomTextStyles.titleMediumBlackA700,
+              //     onTap: () {
+              //       showAlertDialog(
+              //         context,
+              //         () {
+              //           Get.back();
+              //         },
+              //         () {
+              //           SessionManager.removeToken();
+              //           Get.offAllNamed(AppRoutes.loginScreen);
+              //         },
+              //       );
+              //     },
+              //   ),
+              // ),
             ],
           ),
         ),

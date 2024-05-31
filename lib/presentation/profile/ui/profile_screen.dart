@@ -27,10 +27,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   var getUserData;
   var getUserProfileData;
+  var profileData;
 
   getData() async {
     getUserData = json.decode(SessionManager.getUser().toString());
-    print("getregisterData ttttttttt ${getUserData}");
+    //print("getregisterData ttttttttt ${getUserData}");
   }
 
   getProfileData() async {
@@ -39,10 +40,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     print("getUserprofileData rrrrrrrrrrrrrr ${getUserProfileData}");
   }
 
+  // setUserProfileData() async {
+  //   profileData = json.decode(SessionManager.getUserProfileData().toString());
+  //   print("getUserprofileData fghgjkkkkkkkkkkkkkkk ${profileData}");
+  // }
+
   @override
   void initState() {
     getData();
     getProfileData();
+    //setUserProfileData();
     super.initState();
   }
 
@@ -153,6 +160,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               setState(() {
                 getData();
                 getProfileData();
+                //  setUserProfileData();
               });
             },
             child: Stack(
@@ -880,39 +888,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        // Container(
-                        //   decoration: BoxDecoration(
-                        //     borderRadius: BorderRadius.circular(5),
-                        //     color: appTheme.hobbies,
-                        //   ),
-                        //   child: GestureDetector(
-                        //     onTap: () {
-                        //       if (getUserProfileData != null) {
-                        //         String whatsappUrl =
-                        //             getUserProfileData['whatsappUrl']
-                        //                     .toString() ??
-                        //                 "No Data found";
-
-                        //         if (whatsappUrl.isNotEmpty) {
-                        //           launchUrl(Uri.parse(whatsappUrl));
-                        //         } else {
-                        //           print('LinkedIn URL is empty.');
-                        //         }
-                        //       } else {
-                        //         print('getUserData is null.');
-                        //       }
-                        //       launch("https://www.whatsapp.com/");
-                        //     },
-                        //     child: Padding(
-                        //       padding: const EdgeInsets.all(8.0),
-                        //       child: CustomIconButton(
-                        //         child: SvgPicture.asset(
-                        //           ImageConstant.whatsapp,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),

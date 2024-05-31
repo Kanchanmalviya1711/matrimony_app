@@ -127,129 +127,158 @@ class _ProfileListsScreenState extends State<ProfileListsScreen> {
             pagingController: pagingController,
             itemBuilder: (p0, p1, p2) {
               return Padding(
-                padding: const EdgeInsets.only(left: 5, right: 5),
-                child: p1["user"] == null
-                    ? const SizedBox()
-                    : Card(
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Container(
-                          width: double.maxFinite,
-                          decoration: BoxDecoration(color: appTheme.whiteA700),
-                          child: Column(
-                            children: [
-                              Column(
-                                children: [
-                                  Stack(
-                                    children: [
-                                      MyImageWidget(
-                                          height: size.height * 0.4,
-                                          width: double.maxFinite,
-                                          imageUrl: ApiNetwork.imageUrl +
-                                              p1["user"]["imagePath"]),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                p1["user"]["fullName"]
-                                                    .toString()
-                                                    .capitalizeFirst!,
-                                                style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Text(
-                                            p1["user"]["emailAddress"]
-                                                .toString()
-                                                .capitalizeFirst!,
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              color: appTheme.black908,
-                                            ),
-                                          ),
-                                          Text(
-                                            "+91- ${p1["user"]["phone"].toString()}",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: appTheme.black908,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 150,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            profileListController
-                                                .sendFriendRequest(
-                                              p1["user"]["id"].toString(),
-                                              status[1]["id"].toString(),
-                                            );
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: p1["friendRequest"]
-                                                            ?["sender_id"]
-                                                        ["status"] ==
-                                                    1
-                                                ? appTheme.siteName
-                                                : appTheme.newGreen,
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 20,
-                                              vertical: 15,
-                                            ),
-                                          ),
-                                          child: p1["friendRequest"]
-                                                          ?["sender_id"]
-                                                      ["status"] ==
-                                                  1
-                                              ? Text(
-                                                  'Pending...',
-                                                  style: TextStyle(
-                                                      color: appTheme.whiteA700,
-                                                      fontSize: 15),
-                                                )
-                                              : Text(
-                                                  'Send Interest',
-                                                  style: TextStyle(
-                                                      color: appTheme.whiteA700,
-                                                      fontSize: 15),
-                                                ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-              );
+                  padding: const EdgeInsets.only(left: 5, right: 5),
+                  child: p1["user"] == null
+                      ? const SizedBox()
+                      // : CustomCard(
+                      //     imageUrl: ApiNetwork.imageUrl + p1["user"]["imagePath"],
+                      //     heading: 'Card Heading',
+                      //     subtitle: 'Card Subtitle',
+                      //     content:
+                      //         'This is the content of the card. Here you can put more details about the item.',
+                      //   ),
+                      //  Card(
+                      //     elevation: 4,
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(10),
+                      //     ),
+                      //     child: Container(
+                      //       width: double.maxFinite,
+                      //       decoration: BoxDecoration(color: appTheme.whiteA700),
+                      //       child: Column(
+                      //         children: [
+                      //           Column(
+                      //             children: [
+                      //               Stack(
+                      //                 children: [
+                      //                   MyImageWidget(
+                      //                       height: size.height * 0.4,
+                      //                       width: double.maxFinite,
+                      //                       imageUrl: ApiNetwork.imageUrl +
+                      //                           p1["user"]["imagePath"]),
+                      //                 ],
+                      //               ),
+                      //             ],
+                      //           ),
+                      //           Padding(
+                      //             padding: const EdgeInsets.all(10),
+                      //             child: SizedBox(
+                      //               width: double.infinity,
+                      //               child: Row(
+                      //                 mainAxisAlignment:
+                      //                     MainAxisAlignment.spaceBetween,
+                      //                 children: [
+                      //                   Column(
+                      //                     crossAxisAlignment:
+                      //                         CrossAxisAlignment.start,
+                      //                     children: [
+                      //                       Row(
+                      //                         children: [
+                      //                           Text(
+                      //                             p1["user"]["fullName"]
+                      //                                 .toString()
+                      //                                 .capitalizeFirst!,
+                      //                             style: const TextStyle(
+                      //                               fontSize: 18,
+                      //                               fontWeight: FontWeight.bold,
+                      //                             ),
+                      //                           ),
+                      //                         ],
+                      //                       ),
+                      //                       Text(
+                      //                         p1["user"]["emailAddress"]
+                      //                             .toString()
+                      //                             .capitalizeFirst!,
+                      //                         style: TextStyle(
+                      //                           fontSize: 15,
+                      //                           color: appTheme.black908,
+                      //                         ),
+                      //                       ),
+                      //                       Text(
+                      //                         "+91- ${p1["user"]["phone"].toString()}",
+                      //                         style: TextStyle(
+                      //                           fontSize: 14,
+                      //                           color: appTheme.black908,
+                      //                         ),
+                      //                       ),
+                      //                     ],
+                      //                   ),
+                      //                   SizedBox(
+                      //                     width: 150,
+                      //                     child: ElevatedButton(
+                      //                       onPressed: () {
+                      //                         profileListController
+                      //                             .sendFriendRequest(
+                      //                           p1["user"]["id"].toString(),
+                      //                           status[1]["id"].toString(),
+                      //                         );
+                      //                       },
+                      //                       style: ElevatedButton.styleFrom(
+                      //                         backgroundColor: p1["friendRequest"]
+                      //                                         ?["sender_id"]
+                      //                                     ["status"] ==
+                      //                                 1
+                      //                             ? appTheme.siteName
+                      //                             : appTheme.newGreen,
+                      //                         padding: const EdgeInsets.symmetric(
+                      //                           horizontal: 20,
+                      //                           vertical: 15,
+                      //                         ),
+                      //                       ),
+                      //                       child: p1["friendRequest"]
+                      //                                       ?["sender_id"]
+                      //                                   ["status"] ==
+                      //                               1
+                      //                           ? Text(
+                      //                               'Pending...',
+                      //                               style: TextStyle(
+                      //                                   color: appTheme.whiteA700,
+                      //                                   fontSize: 15),
+                      //                             )
+                      //                           : Text(
+                      //                               'Send Interest',
+                      //                               style: TextStyle(
+                      //                                   color: appTheme.whiteA700,
+                      //                                   fontSize: 15),
+                      //                             ),
+                      //                     ),
+                      //                   ),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      : MyCard(
+                          imageUrl:
+                              ApiNetwork.imageUrl + p1["user"]["imagePath"],
+                          heading: p1["user"]["fullName"].toString(),
+                          email: p1["user"]["emailAddress"].toString(),
+                          phone: "+91- ${p1["user"]["phone"].toString()}",
+                          isPending:
+                              p1["friendRequest"]?["sender_id"]["status"] == 1,
+                          onPressed: () {
+                            profileListController.sendFriendRequest(
+                              p1["user"]["id"].toString(),
+                              status[1]["id"].toString(),
+                            );
+                          },
+                        ));
             },
           ),
         ),
       ],
     );
+  }
+}
+
+extension StringExtension on String {
+  String get capitalizeFirst {
+    return this.length > 0
+        ? '${this[0].toUpperCase()}${this.substring(1)}'
+        : '';
   }
 }
 
@@ -297,31 +326,128 @@ class MyImageWidget extends StatelessWidget {
           ); // Display a static image if imageUrl is null
   }
 }
-    //  Container(
-    //       margin: const EdgeInsets.only(left: 10, right: 10),
-    //       width: double.infinity,
-    //       child: ElevatedButton(
-    //         style: ElevatedButton.styleFrom(
-    //             primary: appTheme.gray400,
-    //             shape: RoundedRectangleBorder(
-    //                 borderRadius: BorderRadius.circular(10))),
-    //         onPressed: () {
-    //           filterDialog(context, size, const ProfileListFilter());
-    //         },
-    //         child: Row(
-    //           children: [
-    //             Icon(
-    //               Icons.search,
-    //               color: appTheme.gray500,
-    //             ),
-    //             const SizedBox(
-    //               width: 5,
-    //             ),
-    //             Text(
-    //               "Search By Name",
-    //               style: TextStyle(color: appTheme.gray500),
-    //             )
-    //           ],
-    //         ),
-    //       ),
-    //     ),
+
+class MyCard extends StatelessWidget {
+  final String imageUrl;
+  final String heading;
+  final String email;
+  final String phone;
+  final bool isPending;
+  final Function onPressed;
+
+  const MyCard({
+    super.key,
+    required this.imageUrl,
+    required this.heading,
+    required this.email,
+    required this.phone,
+    required this.isPending,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Card(
+      elevation: 5,
+      surfaceTintColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            // Image
+            Image.network(
+              imageUrl,
+              height: size.height * 0.4,
+              width: double.maxFinite,
+              fit: BoxFit.cover,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              (loadingProgress.expectedTotalBytes ?? 1)
+                          : null,
+                    ),
+                  );
+                }
+              },
+            ),
+            const SizedBox(height: 10),
+            // Heading
+            Container(
+              width: double.infinity,
+              child: Text(
+                heading,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+            const SizedBox(height: 10),
+            // Email
+            Row(
+              children: [
+                const Icon(Icons.email, color: Colors.black),
+                const SizedBox(width: 10),
+                Text(
+                  email.toLowerCase(),
+                  style: const TextStyle(fontSize: 16, color: Colors.black),
+                ),
+              ],
+            ),
+            // Phone number//Button
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.phone, color: Colors.black),
+                    const SizedBox(width: 10),
+                    Text(
+                      phone,
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                    ),
+                    SizedBox(
+                      width: 150,
+                      child: ElevatedButton(
+                        onPressed: () => onPressed(),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              isPending ? appTheme.siteName : appTheme.newGreen,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 15,
+                          ),
+                        ),
+                        child: Text(
+                          isPending ? 'Pending...' : 'Send Interest',
+                          style: TextStyle(
+                            color: appTheme.whiteA700,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                // Button
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

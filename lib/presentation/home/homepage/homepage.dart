@@ -191,7 +191,7 @@ class _HomePageState extends State<HomePage> {
                         : [
                             const Center(
                               child: Text(
-                                'No data available',
+                                'No sliders available',
                                 style: TextStyle(fontSize: 16),
                               ),
                             ),
@@ -218,7 +218,9 @@ class _HomePageState extends State<HomePage> {
                 // ---------Slider module end--------------
                 const SizedBox(height: 20),
                 const Divider(),
+
                 const SizedBox(height: 20),
+
                 const Text(
                   "Trusted Brands ",
                   style: TextStyle(

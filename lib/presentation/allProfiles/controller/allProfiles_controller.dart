@@ -372,7 +372,6 @@ class AllProfilesListController extends GetxController {
       "user": {"id": userId}
     };
     print("payload data show $payload");
-
     rxRequestStatus.value = Status.loading;
     try {
       var value = await api.post(
@@ -384,7 +383,7 @@ class AllProfilesListController extends GetxController {
         Get.offAllNamed(AppRoutes.profileScreen);
         var jsonData = value["payload"];
         print("jaon Data , $jsonData");
-        await SessionManager.setUserProfileData(json.encode(jsonData));
+        await SessionManager.setLoginUserProfileData(json.encode(jsonData));
         customFlutterToast(msg: value['message']);
       } else {
         rxRequestStatus.value = Status.error;

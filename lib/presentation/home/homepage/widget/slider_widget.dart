@@ -99,7 +99,7 @@ Widget buildCarouselItem({
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      title.toLowerCase(),
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -127,9 +127,9 @@ Widget buildCarouselItem({
               padding: const EdgeInsets.all(10),
               child: CustomElevatedButton(
                 buttonStyle: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.pink),
+                  backgroundColor: MaterialStateProperty.all(Colors.red),
                 ),
-                text: "Explore",
+                text: "Explore ghfghf fgcfd",
                 onTap: () {},
               ),
             ),

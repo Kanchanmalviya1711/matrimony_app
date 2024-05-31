@@ -474,106 +474,91 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                                       "2"
                                   ? false
                                   : true,
-                          child: Container(
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 10.h),
-                                  child: CustomTextFormField(
-                                    readOnly: true,
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return null;
-                                      }
-                                      // Parse the entered date of birth string into a DateTime object
-                                      DateTime? enteredDate =
-                                          DateTime.tryParse(value);
-
-                                      if (enteredDate == null) {
-                                        return "Invalid date format";
-                                      }
-                                      // Calculate the age by subtracting the entered date of birth from the current date
-                                      int age = DateTime.now().year -
-                                          enteredDate.year;
-
-                                      // Check if the age is less than 18
-                                      if (age < 18) {
-                                        return "You must be 18 years or older";
-                                      }
-
-                                      return null;
-                                    },
-                                    controller: allProfilesListController
-                                        .dateOfMarriage.value,
-                                    labelText: "Date Of Marriage *",
-                                    onTap: () {
-                                      DateTimePickerController().selectDob1(
-                                        allProfilesListController
-                                            .dateOfMarriage.value,
-                                      );
-                                    },
-                                    contentPadding: const EdgeInsets.only(
-                                        left: 10,
-                                        right: 10,
-                                        top: 18,
-                                        bottom: 18),
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 10.h),
-                                  child: CustomDropdown(
-                                    labelText: 'Have Children',
-                                    listName: haveChildren
-                                        .map((e) => e['title'].toString())
-                                        .toList(),
-                                    selectedItem: allProfilesListController
-                                        .haveChildrenValue,
-                                    onChng: (value) {
-                                      for (var element in haveChildren) {
-                                        if (element['title'] == value) {
-                                          allProfilesListController
-                                                  .haveChildren =
-                                              element['id'].toString();
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10.h),
+                                child: Column(
+                                  children: [
+                                    CustomTextFormField(
+                                      readOnly: true,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Date of marriage is required";
                                         }
-                                      }
-                                      print(
-                                          "have children ${allProfilesListController.meritalStatus}");
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 10.h),
-                                  child: CustomTextFormField(
-                                    prefix: Icon(
-                                      Icons.child_care,
-                                      color: appTheme.black900,
+                                        DateTime? enteredDate =
+                                            DateTime.tryParse(value);
+                                        if (enteredDate == null) {
+                                          return "Invalid date format";
+                                        }
+                                      },
+                                      controller: allProfilesListController
+                                          .dateOfMarriage.value,
+                                      labelText: "Date Of Marriage *",
+                                      onTap: () {
+                                        DateTimePickerController().selectDob1(
+                                          allProfilesListController
+                                              .dateOfMarriage.value,
+                                        );
+                                      },
+                                      contentPadding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 18,
+                                          bottom: 18),
                                     ),
-                                    controller: allProfilesListController
-                                        .numberOfChildrenController.value,
-                                    labelText: "No. Of Children",
-                                    hintStyle:
-                                        CustomTextStyles.titleSmallSemiBold_1,
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return null;
-                                      }
-                                      if (!RegExp(r'^[0-9]{1,}$')
-                                          .hasMatch(value)) {
-                                        return "Please enter a valid numeric data";
-                                      }
-                                      return null;
-                                    },
-                                    contentPadding:
-                                        const EdgeInsets.symmetric(),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                              const SizedBox(height: 8),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10.h),
+                                child: CustomDropdown(
+                                  labelText: 'Have Children',
+                                  listName: haveChildren
+                                      .map((e) => e['title'].toString())
+                                      .toList(),
+                                  selectedItem: allProfilesListController
+                                      .haveChildrenValue,
+                                  onChng: (value) {
+                                    for (var element in haveChildren) {
+                                      if (element['title'] == value) {
+                                        allProfilesListController.haveChildren =
+                                            element['id'].toString();
+                                      }
+                                    }
+                                    print(
+                                        "have children ${allProfilesListController.meritalStatus}");
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10.h),
+                                child: CustomTextFormField(
+                                  prefix: Icon(
+                                    Icons.child_care,
+                                    color: appTheme.black900,
+                                  ),
+                                  controller: allProfilesListController
+                                      .numberOfChildrenController.value,
+                                  labelText: "No. Of Children",
+                                  hintStyle:
+                                      CustomTextStyles.titleSmallSemiBold_1,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return null;
+                                    }
+                                    if (!RegExp(r'^[0-9]{1,}$')
+                                        .hasMatch(value)) {
+                                      return "Please enter a valid numeric data";
+                                    }
+                                    return null;
+                                  },
+                                  contentPadding: const EdgeInsets.symmetric(),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
 
@@ -1872,7 +1857,6 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                                                   setState(() {
                                                     isLoading =
                                                         true; // Start loading
-
                                                     _timer = Timer(
                                                         const Duration(
                                                             seconds: 2), () {

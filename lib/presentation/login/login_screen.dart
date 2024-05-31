@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               String lowercaseValue = value.toLowerCase();
                               // Check if the email contains the "@" character
                               if (!lowercaseValue.contains('@')) {
-                                return "Please enter a valid email address";
+                                return null;
                               }
                               // Check if the email contains any uppercase letters
                               if (value != lowercaseValue) {
