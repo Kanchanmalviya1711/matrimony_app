@@ -418,31 +418,28 @@ class MyCard extends StatelessWidget {
                       phone,
                       style: const TextStyle(fontSize: 16, color: Colors.black),
                     ),
-                    SizedBox(
-                      width: 150,
-                      child: ElevatedButton(
-                        onPressed: () => onPressed(),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              isPending ? appTheme.siteName : appTheme.newGreen,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 15,
-                          ),
-                        ),
-                        child: Text(
-                          isPending ? 'Pending...' : 'Send Interest',
-                          style: TextStyle(
-                            color: appTheme.whiteA700,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
 
                 // Button
+                ElevatedButton(
+                  onPressed: () => onPressed(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        isPending ? appTheme.siteName : appTheme.newGreen,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 13,
+                    ),
+                  ),
+                  child: Text(
+                    isPending ? 'Pending...' : 'Send Interest',
+                    style: TextStyle(
+                      color: appTheme.whiteA700,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
